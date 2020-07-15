@@ -8,26 +8,30 @@ const AppError = require('../utils/appError');
 const User = require('../models/userModel');
 const Task = require('../models/taskModel');
 const Discuss = require('../models/discussModel');
-// get all user tasks
-exports.getAllTasks = catchAsync(async (req, res, next) => {
+
+// get all discusses
+exports.discuss = catchAsync(async (req, res, next) => {
+  const { taskId, body } = req.body;
+
+  if (!taskId || !body)
+    return next(new AppError('Please enter all fields 🙂', 400));
+
   // find user by id
   const user = await User.findById(req.user.id);
 
   // if user not found
   if (!user) return next(new AppError('User not found!', 404));
 
-  // get all task by user email
-  const tasks = await Task.find({ user: user.email }).sort({ createdAt: -1 });
+  const task = await Task.findOne({ _id: taskId });
 
-  // tasks.discuss = [];
+  if (!task) return next(new AppError('Task not found with that ID', 404));
 
-  // const discusses = await Discuss.find({taskId: "5f0e8a47b70f2134fc08c1bd"});
-
-  // tasks.map(task => console.log(task.id))
-
-  // tasks.discuss.push(discusses)
-  // console.log(discusses);
+  const newDiscuss = await Discuss.create({
+    userEmail: user.email,
+    taskId,
+    body,
+  });
 
   // SEND RESPONSE
-  res.status(200).json(tasks);
+  res.status(201).json(newDiscuss);
 });
