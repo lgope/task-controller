@@ -1,0 +1,53 @@
+<%- include('./adminNavBar.ejs') %>
+
+<div class="row">
+    <div class="col-sm-7">
+        <h3>Add New Task!</h3>
+        <form action="/auth/login" method="POST">
+            <div class="form-group">
+                <label for="taskName">Task Name</label>
+                <input type="text" id="taskName" name="taskName" class="form-control" placeholder="Enter Task Name" />
+            </div>
+            <div class="form-group">
+                <label for="email">User Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </form>
+    </div>
+    <div class="col-sm-5">
+        <h3>Task List 📃</h3>
+        <div class="card mt-4" style="overflow-y:auto; height: 850px;">
+            <% if (tasks.length > 0) { %>
+            <% tasks.forEach(task => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- Project Title -->
+                    <h4 class="card-title text-info"><%= task.taskName %></h4>
+                    <!-- Student Id -->
+                    <span>Assigned To : <%= task.user %></span>
+                    <!-- Project Submission Time -->
+                    <div class="card-subtitle text-muted mb-2">
+                        <p>Created At : <%= task.createdAt.toLocaleDateString() %></p>
+                    </div>
+
+                    <div class="buttons">
+                        <div class="mt-2">
+                            <a href="/task/<%= task.id %>" class="btn btn-primary">Discuss</a>
+
+                            <a href="/task/" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <% }) %>
+            <div class="m-2"></div>
+            <% } else { %>
+            <div class="">
+                <p class="text-dark">NO tasks assigned yet! 🙂</p>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
