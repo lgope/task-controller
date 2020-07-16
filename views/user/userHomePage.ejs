@@ -1,0 +1,36 @@
+<div class="">
+
+    <!-- navbar -->
+    <%- include('../common/navbar.ejs') %>
+
+    <h1>Welcome <span class="text-capitalize"> <%= userName %> 🎉 </span></h1>
+
+    <% if (tasks.length > 0) { %>
+    <% tasks.forEach(task => { %>
+    <div class="card mt-4">
+        <div class="card-body">
+            <!-- Project Title -->
+            <h4 class="card-title"><%= task.taskName %></h4>
+            <!-- Student Id -->
+            <span>Assigned To : <%= task.user %></span>
+            <!-- Project Submission Time -->
+            <div class="card-subtitle text-muted mb-2">
+                <p>Created At : <%= task.createdAt.toLocaleDateString() %></p>
+            </div>
+
+            <div class="mt-2">
+                <a href="/task/<%= task.id %>" class="btn btn-primary">Discuss</a>
+            </div>
+
+        </div>
+    </div>
+    <% }) %>
+    <div class="m-2"></div>
+    <% } else { %>
+    <div class="">
+        <p class="text-dark">NO tasks assigned yet! 🙂</p>
+    </div>
+    <% } %>
+
+</div>
+</div>

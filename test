@@ -1,0 +1,60 @@
+exports.createUser = catchAsync(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  //   Simple validation
+  if (!name || !email || !password) {
+    // return next(new AppError('Please enter all fields 🙂', 400));
+  }
+
+  // Check for existing user
+  User.findOne({ email }).then(user => {
+    if (user) {
+      // return next(
+      //   new AppError(
+      //     'Sorry. A user with that email address already exists, or the email was invalid.',
+      //     400
+      //   )
+      // );
+    }
+
+    // const newUser = new User({
+    //   name,
+    //   email,
+    //   password,
+    // });
+
+    await User.create({name, email, password});
+    req.flash('success_msg', 'You are now registered and can log in');
+    
+    // Create salt & Hash
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser.save().then(user => {
+          jwt.sign(
+            { id: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: 3600 },
+            (err, token) => {
+              if (err) throw err;
+
+              return res.status(201).json({
+                success: 'User added',
+                token,
+                user: {
+                  id: user.id,
+                  name: user.name,
+                  email: user.email,
+                  role: user.role,
+                },
+              });
+            }
+          );
+        });
+      });
+    });
+  });
+
+  // next();
+});

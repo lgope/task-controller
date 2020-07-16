@@ -1,0 +1,75 @@
+<%- include('./navbar.ejs') %>
+
+<div class="">
+    <div class="card mt-4">
+        <div class="card-body">
+            <!-- tast Title -->
+            <h4 class="card-title text-info"><%= task.taskName %></h4>
+            <!-- task user -->
+            <span>Assigned To : <%= task.user %></span>
+            <!-- Task Submission Time -->
+            <div class="card-subtitle text-muted mb-2">
+                <p>Created At : <%= task.createdAt.toLocaleDateString() %></p>
+            </div>
+
+        </div>
+    </div>
+    <div class="card mt-4">
+        <h4 class="card-title">Discuss Form</h4>
+
+        <% if (discusses.length > 0) { %>
+
+        <% discusses.forEach(discuss => { %>
+        <div class="mt-0">
+            <div class="card-body">
+                <small><%= discuss.userEmail %></small>
+                <small><%= discuss.createdAt.toLocaleDateString() %></small>
+
+                <div class="card-subtitle text-muted mb-0">
+                    <h5><%= discuss.body %></h5>
+                </div>
+            </div>
+
+
+
+
+            <%if (discuss.userEmail === requestedUser && discuss.createdAt.toLocaleDateString() === new Date().toLocaleDateString()) {%>
+            <form action="/discuss/delete/<%= discuss._id %>?_method=DELETE" method="POST" class="pl-2">
+                <small>
+
+                    <button type="submit" title="Delete!" class="btn-danger">Delete</button>
+                </small>
+            </form>
+            <%}%>
+        
+        <hr>
+    </div>
+    <% }) %>
+            <% } else { %>
+            <div class="">
+                <p class="text-dark">NO Discuss started yet! 🙂</p>
+            </div>
+            <%}%>
+            
+        </div>
+        <br>
+        <div class="form text-form">
+        <% if (day === 'Fri') {%>
+            <textarea rows="4" cols="80" readonly>It's Friday. Enjoy your Holiday!🎉</textarea>
+            <% } else {%>
+
+            <%- include('../common/error.ejs') %>
+
+
+            <form action="/discuss" method="POST" class="pb-4">
+                <input type="text" name="taskId" id="taskId" class="form-control" value="<%= task.id %>" hidden>
+                <textarea id='body' name='body' rows="4" cols="80" placeholder="Start Discuss!"></textarea>
+
+                <br>
+                <button type="submit" class="btn btn-primary">Save</button>
+
+            </form>
+            <% } %>
+
+        </div>
+    </div>
