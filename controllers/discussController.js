@@ -16,7 +16,7 @@ exports.discuss = async (req, res, next) => {
     console.log(taskId, body, req.user);
 
     if (!taskId || body.length <= 0) {
-      req.flash('wrong', 'Please enter Something!');
+      req.flash('msg', 'Please enter Something!');
       return res.redirect('back');
     }
 
@@ -25,14 +25,14 @@ exports.discuss = async (req, res, next) => {
 
     //   if user not found
     if (!user) {
-      req.flash('wrong', 'User not found!');
+      req.flash('msg', 'User not found!');
       return res.redirect('back');
     }
 
     const task = await Task.findOne({ _id: taskId });
 
     if (!task) {
-      req.flash('wrong', 'Task not found with that ID');
+      req.flash('msg', 'Task not found with that ID');
       return res.redirect('back');
     }
 
@@ -42,7 +42,7 @@ exports.discuss = async (req, res, next) => {
       body,
     });
 
-    res.redirect('back');
+    return res.redirect('back');
   } catch (error) {
     req.flash('wrong', error);
     return res.redirect('back');

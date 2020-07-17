@@ -16,12 +16,12 @@
             </div>
             <div class="form-group">
                 <label for="email">User Email</label>
-                <select class="selectpicker form-control" name="userEmail" data-live-search="true" data-size="2"
-                    searchable="Search here.." required>
+                <select class="selectpicker form-control" data-style="btn-outline-secondary" name="userEmail"
+                    data-live-search="true" data-size="6" searchable="Search here.." required>
                     <option value="" disabled selected>Assigned User</option>
                     <% if (users.length > 0) { %>
                     <% users.forEach(user => { %>
-                    <option><%= user.email %></option>
+                    <option data-subtext="<%= user.name %>"><%= user.email %></option>
                     <% }) %>
                     <% } else { %>
                     <div class="">

@@ -30,7 +30,7 @@ exports.getTask = catchAsync(async (req, res, next) => {
   // todays day
   const day = weekdays[new Date().getDay()];
 
-  const errorMsg = req.flash('msg')[0];
+  const msg = req.flash('msg')[0];
 
   const requestedUser = req.user.email;
   return res.render('common/taskDiscussPage.ejs', {
@@ -38,7 +38,7 @@ exports.getTask = catchAsync(async (req, res, next) => {
     discusses,
     requestedUser,
     day,
-    wrong: errorMsg,
+    msg,
   });
 });
 
