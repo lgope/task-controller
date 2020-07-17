@@ -3,19 +3,24 @@
 <div class="row">
     <div class="col-sm-7">
         <h3>Add New User!</h3>
-        <form action="/auth/login" method="POST">
+
+        <% if (msg) { %>
+        <%- include('../common/msg.ejs', {msg}) %>
+        <% } %>
+
+        <form action="/admin/create-user" method="POST">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name" />
+                <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name" required />
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control"
-                    placeholder="Enter Password" />
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+                    required />
             </div>
             <button type="submit" class="btn btn-primary btn-block">Save</button>
         </form>

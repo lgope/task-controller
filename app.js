@@ -1,7 +1,7 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const passport = require('passport');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
@@ -30,10 +30,9 @@ app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
 app.use(
   session({
-    secret: 'secret',
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
   })
 );
 

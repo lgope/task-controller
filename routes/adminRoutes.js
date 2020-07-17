@@ -21,7 +21,7 @@ router.get('/user-info', ensureAuthenticated, ensureAdmin, adminController.getAl
 // @route POST api/admin/create-user
 // @desc Create An User
 // @access only For Admin and Private
-// router.post('/create-user', ensureAuthenticated, ensureAdmin, adminController.createUser);
+router.post('/create-user', ensureAuthenticated, ensureAdmin, adminController.createUser);
 
 // @route DELETE api/admin/:id
 // @desc Delete An User

@@ -31,8 +31,6 @@
             </div>
 
 
-
-
             <%if (discuss.userEmail === requestedUser && discuss.createdAt.toLocaleDateString() === new Date().toLocaleDateString()) {%>
             <form action="/discuss/delete/<%= discuss._id %>?_method=DELETE" method="POST" class="pl-2">
                 <small>
@@ -58,7 +56,9 @@
             <textarea rows="4" cols="80" readonly>It's Friday. Enjoy your Holiday!🎉</textarea>
             <% } else {%>
 
-            <%- include('../common/error.ejs') %>
+            <% if (msg) { %>
+            <%- include('./msg.ejs', {msg}) %>
+            <% } %>
 
 
             <form action="/discuss" method="POST" class="pb-4">
