@@ -18,5 +18,10 @@ router.get(
 // @access only For user and Private
 router.get('/:id', ensureAuthenticated, taskController.getTask);
 
+// @route POST api/admin/assign-task
+// @desc Create An assign task
+// @access only For Admin and Private
+router.post('/assign-task', ensureAuthenticated, ensureAdmin, taskController.assignTask);
+
 
 module.exports = router;

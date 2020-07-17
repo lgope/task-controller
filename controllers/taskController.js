@@ -3,20 +3,20 @@ const catchAsync = require('../utils/catchAsync');
 
 const Task = require('../models/taskModel');
 const Discuss = require('../models/discussModel');
+const User = require('../models/userModel');
 
-// exports.assignTask = catchAsync(async (req, res, next) => {
-//   const { taskName, user } = req.body;
+exports.assignTask = catchAsync(async (req, res, next) => {
+  const { taskName, userEmail } = req.body;
 
-//   const verifyUser = await User.findOne({ email: user });
+  console.log(taskName, userEmail);
+  // next(new AppError('User not found with that email!', 404));
 
-//   if (!verifyUser)
-//     return req.flash('error_msg', 'You are now registered and can log in');
-//     // next(new AppError('User not found with that email!', 404));
+  const newTask = await Task.create({ taskName, user: userEmail });
 
-//   const newTask = await Task.create({ taskName, user });
-
-//   res.status(201).json(newTask);
-// });
+  // res.status(201).json(newTask);
+  req.flash('msg', 'Task Added!');
+  res.redirect('back');
+});
 
 // get one taks
 exports.getTask = catchAsync(async (req, res, next) => {
@@ -30,7 +30,7 @@ exports.getTask = catchAsync(async (req, res, next) => {
   // todays day
   const day = weekdays[new Date().getDay()];
 
-  const errorMsg = req.flash('wrong')[0]
+  const errorMsg = req.flash('msg')[0];
 
   const requestedUser = req.user.email;
   return res.render('common/taskDiscussPage.ejs', {
@@ -45,13 +45,19 @@ exports.getTask = catchAsync(async (req, res, next) => {
 // get all tasks
 exports.getAllTasks = catchAsync(async (req, res, next) => {
   const tasks = await Task.find().sort({ createdAt: -1 });
-
+  const users = await User.find({ role: { $ne: 'admin' } })
+    .sort({ createdAt: -1 })
+    .select('-password');
   // SEND RESPONSE
   // res.status(200).json(tasks);
 
+  const msg = req.flash('msg')[0];
+
   res.render('admin/tasksInfo.ejs', {
     userName: req.user.name,
+    users,
     tasks,
+    msg,
   });
 });
 
