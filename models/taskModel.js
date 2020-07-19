@@ -10,6 +10,11 @@ const taskSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Task must belong to a user.'],
   },
+  progress: {
+    type: String,
+    default: 0,
+    required: [true, 'Task must have a progress'],
+  },
   createdAt: {
     type: Date,
     default: Date.now,

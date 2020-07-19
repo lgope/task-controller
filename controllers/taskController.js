@@ -1,5 +1,6 @@
 // assign task to a user
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 const Task = require('../models/taskModel');
 const Discuss = require('../models/discussModel');
@@ -13,16 +14,17 @@ exports.assignTask = catchAsync(async (req, res, next) => {
 
   const newTask = await Task.create({ taskName, user: userEmail });
 
-  // res.status(201).json(newTask);
-  req.flash('msg', 'Task Added!');
-  res.redirect('back');
+  return res.status(201).json({
+    status: 'success',
+    newTask,
+  });
 });
 
 // get one taks
 exports.getTask = catchAsync(async (req, res, next) => {
   const task = await Task.findById(req.params.id);
 
-  if (!task) req.flash('error_msg', 'Task not found with ID!');
+  if (!task) return next(new AppError('Task not found with ID!', 404));
 
   const discusses = await Discuss.find({ taskId: task.id });
 
@@ -30,34 +32,26 @@ exports.getTask = catchAsync(async (req, res, next) => {
   // todays day
   const day = weekdays[new Date().getDay()];
 
-  const msg = req.flash('msg')[0];
-
-  const requestedUser = req.user.email;
-  return res.render('common/taskDiscussPage.ejs', {
+  return res.status(200).json({
+    status: 'success',
     task,
     discusses,
-    requestedUser,
-    day,
-    msg,
   });
 });
 
 // get all tasks
 exports.getAllTasks = catchAsync(async (req, res, next) => {
-  const tasks = await Task.find().sort({ createdAt: -1 });
+  const tasks = await Task.find().sort({ user: -1, createdAt: -1 });
   const users = await User.find({ role: { $ne: 'admin' } })
     .sort({ createdAt: -1 })
     .select('-password');
+
+  if (!tasks) return next(new AppError('Tasks not found!', 404));
+
   // SEND RESPONSE
-  // res.status(200).json(tasks);
-
-  const msg = req.flash('msg')[0];
-
-  res.render('admin/tasksInfo.ejs', {
-    userName: req.user.name,
-    users,
+  return res.status(200).json({
+    status: 'success',
     tasks,
-    msg,
   });
 });
 

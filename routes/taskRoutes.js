@@ -1,27 +1,21 @@
 const express = require('express');
-const router = express.Router();
 const taskController = require('../controllers/taskController');
-const {
-  ensureAuthenticated,
-  ensureUser,
-  ensureAdmin,
-} = require('../config/authConfig');
+const { auth, ensureAdmin } = require('../middleware/auth');
 
-router.get(
-  '/get-all-task',
-  ensureAuthenticated,
-  ensureAdmin,
-  taskController.getAllTasks
-);
+const router = express.Router();
+
 // @route GET api/user/
 // @desc Get All User task
 // @access only For user and Private
-router.get('/:id', ensureAuthenticated, taskController.getTask);
+router
+  .route('/get-all-task')
+  .get(auth, ensureAdmin, taskController.getAllTasks);
 
+router.get('/:id', auth, taskController.getTask);
+// router.route('/tour-stats').get(tourController.getTourStats);
 // @route POST api/admin/assign-task
 // @desc Create An assign task
 // @access only For Admin and Private
-router.post('/assign-task', ensureAuthenticated, ensureAdmin, taskController.assignTask);
-
+router.post('/assign-task', auth, ensureAdmin, taskController.assignTask);
 
 module.exports = router;

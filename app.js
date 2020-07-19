@@ -1,61 +1,51 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
-const passport = require('passport');
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
-const session = require('express-session');
-const methodOverride = require('method-override');
+const morgan = require('morgan');
+const cors = require('cors');
+const path = require('path');
 
-const authRouter = require('./routes/authRoutes');
-const indexRouter = require('./routes/indexRoutes');
-const adminRoutes = require('./routes/adminRoutes');
+const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const discussRoutes = require('./routes/discussRoutes');
 
 const app = express();
 
-// Passport Config
-require('./config/passportConfig')(passport);
+// Implement CORS
+app.use(cors());
 
-// EJS
-app.use(expressLayouts);
-app.set('view engine', 'ejs');
+app.options('*', cors());
 
-// Express body parser
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
+// Development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
-// Express session
-app.use(cookieParser('secret'));
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+// Body Parser Middleware
+app.use(express.json());
 
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+// auth Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/task', taskRoutes);
+app.use('/api/discuss', discussRoutes);
 
-// Connect flash
-app.use(flash());
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
 
-// Global variables
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+app.all('*', (req, res, next) => {
+  next(
+    new AppError(`Sorry! Can't find ${req.originalUrl} on this server!`, 404)
+  );
 });
 
-// Routes
-app.use('/', indexRouter);
-app.use('/auth', authRouter);
-app.use('/admin', adminRoutes);
-app.use('/user', userRoutes);
-app.use('/task', taskRoutes);
-app.use('/discuss', discussRoutes);
+app.use(globalErrorHandler);
+
 module.exports = app;

@@ -1,42 +1,29 @@
-const chalk = require('chalk');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const chalk = require('chalk');
 
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
-// const DB = process.env.DATABASE.replace(
-//   '<PASSWORD>',
-//   process.env.DATABASE_PASSWORD
-// );
+// DB Config
+const DB = process.env.DATABASE_URI.replace(
+  '<password>',
+  process.env.DATABASE_PASSWORD
+);
 
-// mongo atlas cloud database connetion
-// mongoose
-//   .connect(DB, {
-//     useUnifiedTopology: true,
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false,
-//   })
-//   .then(() => console.log('DB connection successful!'))
-//   .catch((err) => {
-//     console.log(Error, err.message);
-//   });
-
-// Connect to MongoDB with localhost
+// Connect to Mongo
 mongoose
+    // .connect(DB, {
   .connect('mongodb://localhost/task-manager-local', {
-    useNewUrlParser: true,
     useUnifiedTopology: true,
+    useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
   })
   .then(() => console.log('DB connection successful!'))
-  .catch((err) => {
-    console.log(Error, err.message);
-  });
+  .catch((err) => console.log(chalk.redBright(err)));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 app.listen(port, () =>
-  console.log(`Server is running at ${chalk.greenBright(port)}`)
+  console.log(`App running on port ${chalk.greenBright(port)}...`)
 );
