@@ -17,7 +17,11 @@ const User = ({ user, getUserTasks, tasks, error }) => {
       </h2>
       <br />
 
-      <TaskSummarizeTable tasks={tasks} />
+      {tasks.length > 0 ? (
+        <TaskSummarizeTable tasks={tasks} />
+      ) : (
+        <h4>No tasks assigned yet!! 🙂</h4>
+      )}
     </Fragment>
   );
 };

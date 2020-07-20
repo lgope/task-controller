@@ -1,3 +1,6 @@
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const USERS_LOADING = 'USERS_LOADING';
+
 export const GET_USER_TASKS = 'GET_USER_TASKS';
 
 export const GET_TASKS = 'GET_TASKS';

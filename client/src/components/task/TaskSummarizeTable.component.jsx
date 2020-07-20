@@ -25,6 +25,7 @@ const TaskSummarizeTable = ({ tasks }) => {
               <th scope='row'>{count++}</th>
               <td>
                 <TaskDiscussPage id={task._id} btnName={task.taskName} />
+                {/* <a onClick={() => setId(task._id)}>{task.taskName}</a> */}
               </td>
               <td>{task.user}</td>
               <td>
@@ -36,6 +37,7 @@ const TaskSummarizeTable = ({ tasks }) => {
           </tbody>
         ))}
       </Table>
+      {/* {id && <TaskDiscussPage id={id} btnName={'click'} />} */}
     </Fragment>
   );
 };
