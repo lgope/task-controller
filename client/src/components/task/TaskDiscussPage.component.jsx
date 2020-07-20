@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useCallback } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Moment from 'react-moment';
 import dayjs from 'dayjs';
@@ -18,27 +18,49 @@ const TaskDiscussPage = ({
   error,
 }) => {
   const [modal, setModal] = useState(false);
-  const [disBody, setDisBody] = useState('');
-  const [getNewDis, setGetNewDis] = useState('');
+  const [disBody, setDisBody] = useState(null);
+  const [getNewDis, setGetNewDis] = useState(false);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // todays day
   const day = weekdays[new Date().getDay()];
-  // setGetNewDis(task);
 
-  console.log('ddiscusses: ', discusses);
+  // console.log('ddiscusses: ', discusses);
+  // console.log('taskkkkkk: ', task);
+  // console.log('idddddddddddddddd', id);
 
   const callOnClick = () => {
-    console.log('on clicked');
-    getTask(id);
+    // console.log('on clicked');
+    // setSid(id);
+    // getTask(disTaskId); // TODO: REmove for test auto call funtion
     toggle();
-    setGetNewDis(task);
+    // setAllTasks(task);
+    // setGetNewDis(!getNewDis);
+    setGetNewDis(!getNewDis);
   };
 
+  // (function () {
+  //   // do some stuff
+  //   taskSetFunc = setTimeout(function () {
+  //     if (disTaskId) {
+  //       getTask(disTaskId);
+  //     }
+  //   }, 10000);
+  // })();
+
+  // const closeClick = () => {
+  //   setDisTaskId(null);
+  //   clearTimeout(taskSetFunc);
+  //   toggle();
+  // };
+  // const closeAll = () => {
+  //   setModal(!modal);
+  // };
+
   // TODO:
-  // useEffect(() => {
-  //   console.log('useEffect Called!');
-  //   getTask(id);
-  // }, [discusses]);
+
+  useEffect(() => {
+    getTask(id);
+  }, [getNewDis]);
 
   const toggle = () => setModal(!modal);
   const txtBodyChange = e => setDisBody(e.target.value);
@@ -53,7 +75,7 @@ const TaskDiscussPage = ({
 
     setDisBody('');
 
-    setGetNewDis(task);
+    setGetNewDis(!getNewDis);
   };
 
   return (
@@ -62,7 +84,7 @@ const TaskDiscussPage = ({
         {btnName}
       </Button>
       {task.task ? (
-        <Modal isOpen={modal} toggle={toggle} className={'className'}>
+        <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Discuss Page.</ModalHeader>
           <ModalBody>
             <div className=''>
@@ -84,7 +106,6 @@ const TaskDiscussPage = ({
               </div>
             </div>
           </ModalBody>
-          {/* style="overflow-y:auto; height: 850px;" */}
 
           <div
             className='discusses'
@@ -150,3 +171,4 @@ export default connect(mapStateToProps, { getTask, submitDiscuss })(
 );
 
 // TODO: Task | discuss delete option
+// TODO: discuss form auto update (real time discuss | comment)

@@ -6,6 +6,7 @@ const path = require('path');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const discussRoutes = require('./routes/discussRoutes');
@@ -27,6 +28,7 @@ app.use(express.json());
 
 // auth Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/task', taskRoutes);
 app.use('/api/discuss', discussRoutes);

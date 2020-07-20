@@ -12,9 +12,7 @@ import './App.css';
 
 import LogInForm from './components/auth/LogInForm.component';
 
-const ShopPage = () => (
-  <p>Hello Form <strong>Shoping Page</strong> </p>
-)
+import UsersInfo from './components/admin/UsersInfo.component'
 
 const App = () => {
   useEffect(() => {
@@ -28,7 +26,7 @@ const App = () => {
           {/* < /> */}
           <Switch>
           <Route exact path='/' component={LogInForm} />
-          <Route path='/shop' component={ShopPage} />
+          <Route path='/users-info' component={UsersInfo} />
         </Switch>
         </Container>
       </div>

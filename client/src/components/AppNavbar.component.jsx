@@ -30,9 +30,11 @@ const AppNavbar = ({ auth }) => {
       </NavItem>
       <NavItem>
         <Logout />
-        <Link className='option' to='/shop'>
-          Shop
-        </Link>
+        {auth && auth.user && (
+          <Link className='option' to='/users-info'>
+            User Info
+          </Link>
+        )}
       </NavItem>
     </Fragment>
   );
@@ -49,7 +51,7 @@ const AppNavbar = ({ auth }) => {
     <div>
       <Navbar color='dark' dark expand='sm' className='mb-5'>
         <Container>
-          <NavbarBrand href='/'>React Auth</NavbarBrand>
+          <NavbarBrand href='/'>Task Controller</NavbarBrand>
           <NavbarToggler onClick={handleToggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='ml-auto' navbar>
@@ -61,6 +63,8 @@ const AppNavbar = ({ auth }) => {
     </div>
   );
 };
+
+// TODO: render navbar based on user rolo (auth)
 
 const mapStateToProps = state => ({
   auth: state.auth,

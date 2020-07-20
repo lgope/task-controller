@@ -1,20 +1,20 @@
 import * as actions from '../actions/actionTypes';
 
 const initialState = {
-  discusses: [],
+  allUsers: [],
   loading: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case actions.SUBMIT_DISCUSS:
+    case actions.GET_ALL_USERS:
       return {
         ...state,
-        discusses: [action.payload, ...state.discusses],
+        allUsers: action.payload,
         loading: false,
       };
 
-    case actions.DISCUSS_LOADING:
+    case actions.USERS_LOADING:
       return {
         ...state,
         loading: true,

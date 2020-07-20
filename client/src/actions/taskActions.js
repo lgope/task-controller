@@ -23,14 +23,14 @@ export const getAllTask = () => (dispatch, getState) => {
   axios
     .get(`/api/task/get-all-task`, tokenConfig(getState))
     .then(res => {
-      console.log('task data 1:', res.data);
+      // console.log('task data 1:', res.data);
       dispatch({
         type: actions.GET_TASKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('err', err.response);
+      // console.log('err', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

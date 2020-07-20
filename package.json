@@ -1,7 +1,7 @@
 {
-  "name": "shopping-list",
+  "name": "task-controller",
   "version": "1.0.0",
-  "description": "Shopping List The MERN Stack Web Application",
+  "description": "Task Controller The MERN Stack Web Application",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lgope/shopping-list.git"
+    "url": "git+https://github.com/lgope/task-controller.git"
   },
   "author": "Lakshman Gope",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lgope/shopping-list/issues"
+    "url": "https://github.com/lgope/task-controller/issues"
   },
-  "homepage": "https://github.com/lgope/shopping-list#readme",
+  "homepage": "https://github.com/lgope/task-controller#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.0",
@@ -32,7 +32,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.12",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
