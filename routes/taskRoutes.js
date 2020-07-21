@@ -1,6 +1,6 @@
 const express = require('express');
 const taskController = require('../controllers/taskController');
-const { auth, ensureAdmin } = require('../middleware/auth');
+const { auth, ensureAdmin, ensureUser } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -17,5 +17,7 @@ router.get('/:id', auth, taskController.getTask);
 // @desc Create An assign task
 // @access only For Admin and Private
 router.post('/assign-task', auth, ensureAdmin, taskController.assignTask);
+
+router.put('/progress-update/:id', auth, ensureUser, taskController.updateProgress)
 
 module.exports = router;

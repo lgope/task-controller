@@ -35,6 +35,23 @@ export const getAllTask = () => (dispatch, getState) => {
     });
 };
 
+export const updateTaskProgress = (id, body) => (dispatch, getState) => {
+  dispatch(setItemsLoading());
+  console.log('object 12');
+  axios
+    .put(`/api/task/progress-update/${id}`, body, tokenConfig(getState))
+    .then(res => {
+      console.log('updated tasks 🔔🔔🔔🔔', res.data);
+      dispatch({
+        type: actions.UPDATE_PROGRESS,
+      });
+    })
+    .catch(err => {
+      console.log('err', err.response);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
 export const setItemsLoading = () => {
   return {
     type: actions.TASK_LOADING,

@@ -15,10 +15,11 @@ const TaskDiscussPage = ({
   getTask,
   submitDiscuss,
   discusses,
+  discussChange,
   error,
 }) => {
   const [modal, setModal] = useState(false);
-  const [disBody, setDisBody] = useState(null);
+  const [disBody, setDisBody] = useState('');
   const [getNewDis, setGetNewDis] = useState(false);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // todays day
@@ -27,6 +28,7 @@ const TaskDiscussPage = ({
   // console.log('ddiscusses: ', discusses);
   // console.log('taskkkkkk: ', task);
   // console.log('idddddddddddddddd', id);
+  console.log('discussChange  :', discussChange);
 
   const callOnClick = () => {
     // console.log('on clicked');
@@ -35,7 +37,7 @@ const TaskDiscussPage = ({
     toggle();
     // setAllTasks(task);
     // setGetNewDis(!getNewDis);
-    setGetNewDis(!getNewDis);
+    // setGetNewDis(!getNewDis);
   };
 
   // (function () {
@@ -60,7 +62,7 @@ const TaskDiscussPage = ({
 
   useEffect(() => {
     getTask(id);
-  }, [getNewDis]);
+  }, [discussChange]);
 
   const toggle = () => setModal(!modal);
   const txtBodyChange = e => setDisBody(e.target.value);
@@ -75,7 +77,7 @@ const TaskDiscussPage = ({
 
     setDisBody('');
 
-    setGetNewDis(!getNewDis);
+    // setGetNewDis(!getNewDis);
   };
 
   return (
@@ -109,20 +111,33 @@ const TaskDiscussPage = ({
 
           <div
             className='discusses'
-            style={{ maxHeight: '400px', overflowY: 'auto' }}
+            style={{
+              margin: '0 0 0 10px',
+              maxHeight: '400px',
+              overflowY: 'auto',
+            }}
           >
             <ScrollableFeed>
               {task.discusses.map(dis => (
-                <div className='card-body' key={dis._id}>
-                  <small>{dis.userEmail}</small>
-                  <small>
-                    {' '}
-                    <Moment fromNow>{dis.createdAt}</Moment>
-                  </small>
-                  <div className='card-subtitle text-muted mb-0'>
-                    <h5>{dis.body}</h5>
+                <div className='card border-light mb-3' key={dis._id}>
+                  <div
+                    className='card-body'
+                    style={{
+                      backgroundColor: '#f7f7f5',
+                    }}
+                  >
+                    <p>{dis.userEmail}</p>
+                    <h4>{dis.body}</h4>
+                    <div>
+                      <img
+                        src='https://user-images.githubusercontent.com/58518192/87974907-9fc80580-caec-11ea-9967-f805ee8131f5.png'
+                        alt='clock'
+                      />{' '}
+                      <small>
+                        <Moment fromNow>{dis.createdAt}</Moment>
+                      </small>
+                    </div>
                   </div>
-                  <hr />
                 </div>
               ))}
             </ScrollableFeed>
@@ -134,7 +149,7 @@ const TaskDiscussPage = ({
                   It's Friday. Enjoy your Holiday!🎉
                 </textarea>
               ) : (
-                <form className='pb-4' onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <textarea
                     id='body'
                     name='body'
@@ -163,6 +178,7 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   task: state.task.task,
   discusses: state.discusses.discusses,
+  discussChange: state.discusses.discussChange,
   error: state.error,
 });
 
