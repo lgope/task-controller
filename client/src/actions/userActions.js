@@ -20,6 +20,7 @@ export const getUserTasks = () => (dispatch, getState) => {
     });
 };
 
+
 export const setItemsLoading = () => {
   return {
     type: actions.TASKS_LOADING,

@@ -55,6 +55,22 @@ exports.getAllTasks = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateProgress = catchAsync(async (req, res, next) => {
+  const task = await Task.findById(req.params.id);
+  if (!task) return next(new AppError('Task not found with ID!', 404));
+  const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updatedTask) return next(new AppError('Something wrong!', 400));
+
+  return res.status(201).json({
+    status: 'success',
+    task: updatedTask,
+  });
+});
+
 // update a task by id
 // exports.updateTask = catchAsync(async (req, res, next) => {
 //   const { taskName, user } = req.body;

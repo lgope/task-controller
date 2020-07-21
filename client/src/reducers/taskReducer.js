@@ -2,7 +2,7 @@ import * as actions from '../actions/actionTypes';
 
 const initialState = {
   task: [],
-  tasks:[],
+  tasks: [],
   loading: false,
 };
 
@@ -18,6 +18,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         tasks: action.payload,
+        loading: false,
+      };
+
+    case actions.UPDATE_PROGRESS:
+      return {
+        ...state,
         loading: false,
       };
 

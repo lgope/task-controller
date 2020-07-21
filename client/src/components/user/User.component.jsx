@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getUserTasks } from '../../actions/userActions';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
 
-const User = ({ user, getUserTasks, tasks, error }) => {
+const User = ({ user, getUserTasks, userTasks, task, error }) => {
   useEffect(() => {
     getUserTasks();
   }, ['']);
@@ -17,8 +17,8 @@ const User = ({ user, getUserTasks, tasks, error }) => {
       </h2>
       <br />
 
-      {tasks.length > 0 ? (
-        <TaskSummarizeTable tasks={tasks} />
+      {userTasks.length > 0 ? (
+        <TaskSummarizeTable tasks={userTasks} />
       ) : (
         <h4>No tasks assigned yet!! 🙂</h4>
       )}
@@ -29,7 +29,8 @@ const User = ({ user, getUserTasks, tasks, error }) => {
 // TODO: progress change
 const mapStateToProps = state => ({
   user: state.auth.user,
-  tasks: state.userRoutes.tasks,
+  userTasks: state.userRoutes.tasks,
+  task: state.task.task,
   error: state.error,
 });
 export default connect(mapStateToProps, { getUserTasks })(User);
