@@ -15,30 +15,42 @@ const TaskDiscussPage = ({
   getTask,
   submitDiscuss,
   discusses,
-  discussChange,
   error,
 }) => {
   const [modal, setModal] = useState(false);
   const [disBody, setDisBody] = useState('');
-  const [getNewDis, setGetNewDis] = useState(false);
+  const [getNewDis, setGetNewDis] = useState(true);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // todays day
   const day = weekdays[new Date().getDay()];
 
-  // console.log('ddiscusses: ', discusses);
-  // console.log('taskkkkkk: ', task);
-  // console.log('idddddddddddddddd', id);
-  console.log('discussChange  :', discussChange);
-
   const callOnClick = () => {
     // console.log('on clicked');
     // setSid(id);
-    // getTask(disTaskId); // TODO: REmove for test auto call funtion
+    getTask(id); // TODO: REmove for test auto call funtion
     toggle();
     // setAllTasks(task);
-    // setGetNewDis(!getNewDis);
-    // setGetNewDis(!getNewDis);
+    setGetNewDis(!getNewDis);
   };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newDiscuss = {
+      taskId: id,
+      body: disBody,
+    };
+    submitDiscuss(newDiscuss);
+
+    setDisBody('');
+
+    setGetNewDis(!getNewDis);
+  };
+
+  useEffect(() => {
+    getTask(id);
+    console.log('useEffect called');
+    // setGetNewDis(!getNewDis);
+  }, [getNewDis]);
 
   // (function () {
   //   // do some stuff
@@ -60,25 +72,8 @@ const TaskDiscussPage = ({
 
   // TODO:
 
-  useEffect(() => {
-    getTask(id);
-  }, [discussChange]);
-
   const toggle = () => setModal(!modal);
   const txtBodyChange = e => setDisBody(e.target.value);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const newDiscuss = {
-      taskId: id,
-      body: disBody,
-    };
-    submitDiscuss(newDiscuss);
-
-    setDisBody('');
-
-    // setGetNewDis(!getNewDis);
-  };
 
   return (
     <Fragment>
@@ -178,7 +173,6 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   task: state.task.task,
   discusses: state.discusses.discusses,
-  discussChange: state.discusses.discussChange,
   error: state.error,
 });
 

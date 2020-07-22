@@ -29,6 +29,28 @@ const AddUserForm = ({ buttonLabel }) => {
         <ModalBody>
           <Form>
             <FormGroup>
+              <Label for='name'>Name</Label>
+              <Input
+                type='name'
+                name='name'
+                id='name'
+                className='mb-3'
+                placeholder='Name'
+                required
+                // onChange={handleChangeEmail}
+              />
+
+              <Label for='designation'>Designation</Label>
+              <Input
+                type='text'
+                name='designation'
+                id='designation'
+                className='mb-3'
+                placeholder='Designation'
+                required
+                // onChange={handleChangeEmail}
+              />
+
               <Label for='email'>Email</Label>
               <Input
                 type='email'
@@ -56,7 +78,7 @@ const AddUserForm = ({ buttonLabel }) => {
                 block
                 // onClick={handleOnSubmit}
               >
-                Login
+                Save
               </Button>
             </FormGroup>
           </Form>
