@@ -5,6 +5,7 @@ import adminReducer from './adminReducer';
 import userReducer from './userReducer';
 import taskReducer from './taskReducer';
 import discussReducer from './discussReducer';
+import dailyWorkReducer from './dailyWorkReducer';
 
 export default combineReducers({
   error: errorReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   userRoutes: userReducer,
   task: taskReducer,
   discusses: discussReducer,
+  dailyWorks: dailyWorkReducer,
 });
