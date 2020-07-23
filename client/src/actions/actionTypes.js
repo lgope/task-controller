@@ -1,5 +1,13 @@
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 
+export const GET_USER_WORKS = 'GET_USER_WORKS';
+
+export const SAVE_TODAY_WORKS = 'SAVE_TODAY_WORKS';
+
+export const GET_ALL_WORK = 'GET_ALL_WORK';
+
+export const WORKS_LOADING = 'WORKS_LOADING';
+
 export const USERS_LOADING = 'USERS_LOADING';
 
 export const GET_USER_TASKS = 'GET_USER_TASKS';

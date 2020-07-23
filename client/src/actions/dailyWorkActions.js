@@ -3,26 +3,25 @@ import * as actions from './actionTypes';
 import { returnErrors } from './errorActions';
 import { tokenConfig } from './authActions';
 
-export const getUserTasks = () => (dispatch, getState) => {
-  dispatch(setTasksLoading());
+// save todays work | user route
+export const saveTodayWork = body => (dispatch, getState) => {
+  dispatch(ssetWorksLoading());
   axios
-    .get('/api/user', tokenConfig(getState))
+    .get(`api/daily-work/save-today-work`, body, tokenConfig(getState))
     .then(res => {
-      console.log('tasks', res.data);
+      console.log(res.data);
       dispatch({
-        type: actions.GET_USER_TASKS,
+        type: actions.SAVE_TODAY_WORKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('err', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
-
-export const setTasksLoading = () => {
+export const setWorksLoading = () => {
   return {
-    type: actions.TASKS_LOADING,
+    type: actions.WORKS_LOADING,
   };
 };

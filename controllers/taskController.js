@@ -9,6 +9,8 @@ const User = require('../models/userModel');
 exports.assignTask = catchAsync(async (req, res, next) => {
   const { taskName, userEmail } = req.body;
 
+  if (!taskName || !userEmail) return next(new AppError('Please enter all fields 🙂', 400));
+
   console.log(taskName, userEmail);
   // next(new AppError('User not found with that email!', 404));
 
@@ -42,9 +44,9 @@ exports.getTask = catchAsync(async (req, res, next) => {
 // get all tasks
 exports.getAllTasks = catchAsync(async (req, res, next) => {
   const tasks = await Task.find().sort({ user: -1, createdAt: -1 });
-  const users = await User.find({ role: { $ne: 'admin' } })
-    .sort({ createdAt: -1 })
-    .select('-password');
+  // const users = await User.find({ role: { $ne: 'admin' } })
+  //   .sort({ createdAt: -1 })
+  //   .select('-password');
 
   if (!tasks) return next(new AppError('Tasks not found!', 404));
 
