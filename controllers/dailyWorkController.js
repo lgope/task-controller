@@ -16,7 +16,7 @@ exports.saveDailyWork = catchAsync(async (req, res, next) => {
   if (!userId || !title || !description)
     return next(new AppError('Please enter all fields 🙂', 400));
 
-  const user = await User.findById({_id: userId});
+  const user = await User.findById({ _id: userId });
 
   if (!user) return next(new AppError('No User found with that Id!', 404));
 
@@ -41,10 +41,9 @@ exports.getUserDailyWorks = catchAsync(async (req, res, next) => {
 
   if (!user) return next(new AppError('User not found with that ID!', 404));
 
-  const userDailyWorks = await DailyWork.find({userId: user.id});
+  const userDailyWorks = await DailyWork.find({ userId: user.id });
 
-  if (!userDailyWorks)
-    return next(new AppError('Something Wrong to get user daily works! Try again.', 404));
+  if (!userDailyWorks) return next(new AppError('No daily works found.', 404));
 
   return res.status(200).json({
     status: 'success',
