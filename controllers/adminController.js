@@ -10,10 +10,10 @@ const User = require('../models/userModel');
 
 // create user
 exports.createUser = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, designation, email, password } = req.body;
 
   //   Simple validation
-  if (!name || !email || !password) {
+  if (!name || !designation || !email || !password) {
     return next(new AppError('Please enter all fields!', 400));
   }
 
@@ -27,7 +27,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
     );
   }
 
-  const newUser = await User.create({ name, email, password });
+  const newUser = await User.create({ name, designation, email, password });
 
   if (!newUser) {
     return next(new AppError('Something wrong! Try again.', 400));
