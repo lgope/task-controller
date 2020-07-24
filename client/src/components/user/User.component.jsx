@@ -3,7 +3,7 @@ import React, { useEffect, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-import { getUserTasks } from '../../actions/userActions';
+// import { getUserTasks } from '../../actions/userActions';
 import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
 
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
@@ -13,7 +13,6 @@ import { showAlert } from '../alert';
 
 const User = ({
   user,
-  getUserTasks,
   getUserWorks,
   saveTodayWork,
   dailyWorks,
@@ -30,9 +29,10 @@ const User = ({
   console.log('working page error ', error);
 
   console.log('user id::: check 11 :: ', dailyWorks.userDailyWorks);
+  console.log('isData Changged: ', isDataChange);
 
   useEffect(() => {
-    // getUserTasks();
+    console.log('useEffect called user com');
     getUserWorks(user._id);
   }, [isDataChange]);
 
@@ -123,27 +123,29 @@ const User = ({
               </div>
             </td>
             <td>
-              <div className='form-group  p-4'>
-                <input
-                  type='text'
-                  className='form-control'
+              <div className='form-group  p-2'>
+                <textarea
+                  class='form-control'
                   id='title'
+                  rows='2'
+                  cols='26'
                   placeholder='Daily Work Title'
                   required
                   onChange={handleTitleChange}
-                />
+                ></textarea>
               </div>
             </td>
             <td>
-              <div className='form-group  p-4'>
-                <input
-                  type='text'
-                  className='form-control'
+              <div className='form-group  p-2'>
+                <textarea
+                  class='form-control'
                   id='des'
+                  rows='2'
+                  cols='40'
                   placeholder='Description'
                   required
                   onChange={handleDescriptionChange}
-                />
+                ></textarea>
               </div>
             </td>
             <td>
@@ -151,29 +153,35 @@ const User = ({
                 type='submit'
                 className='btn btn-success'
                 onClick={handleSaveBtnClick}
+                title='Save'
                 style={{ borderRadius: '10px' }}
               >
-                Save
+                <i
+                  className='far fa-check-circle'
+                  style={{ fontSize: '20px' }}
+                ></i>
               </button>
 
               <button
                 type='button'
                 className='btn btn-outline-warning'
+                title='Cancle'
                 onClick={cancelBtnClick}
                 style={{ borderRadius: '10px' }}
               >
-                Cancel
+                <i
+                  className='fas fa-minus cc_pointer'
+                  style={{ fontSize: '15px' }}
+                ></i>
               </button>
             </td>
           </tr>
         </form>
       )}
 
-      {/* {userTasks.length > 0 ? (
-        <TaskSummarizeTable tasks={userTasks} />
-      ) : (
-        <h4>No tasks assigned yet!! 🙂</h4>
-      )} */}
+      <br />
+
+      <TaskSummarizeTable />
     </Fragment>
   );
 };
@@ -181,14 +189,14 @@ const User = ({
 // TODO: progress change
 const mapStateToProps = state => ({
   user: state.auth.user,
-  userTasks: state.userRoutes.tasks,
+  // userTasks: state.userRoutes.tasks,
   task: state.task.task,
   error: state.error,
   dailyW: state.dailyWorks,
   dailyWorks: state.dailyWorks.userWorks,
 });
 export default connect(mapStateToProps, {
-  getUserTasks,
+  // getUserTasks,
   getUserWorks,
   saveTodayWork,
 })(User);

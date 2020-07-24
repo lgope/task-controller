@@ -14,6 +14,12 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
+      case actions.USER_TASKS_LOADING:
+        return {
+          ...state,
+          loading: true
+        }
+
     default:
       return state;
   }

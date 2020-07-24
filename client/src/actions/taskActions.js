@@ -4,7 +4,7 @@ import { returnErrors } from './errorActions';
 import { tokenConfig } from './authActions';
 
 export const getTask = id => (dispatch, getState) => {
-  dispatch(setItemsLoading());
+  dispatch(setTasksLoading());
   axios
     .get(`/api/task/${id}`, tokenConfig(getState))
     .then(res => {
@@ -19,7 +19,7 @@ export const getTask = id => (dispatch, getState) => {
 };
 
 export const getAllTask = () => (dispatch, getState) => {
-  dispatch(setItemsLoading());
+  dispatch(setTasksLoading());
   axios
     .get(`/api/task/get-all-task`, tokenConfig(getState))
     .then(res => {
@@ -36,7 +36,7 @@ export const getAllTask = () => (dispatch, getState) => {
 };
 
 export const updateTaskProgress = (id, body) => (dispatch, getState) => {
-  dispatch(setItemsLoading());
+  dispatch(setTasksLoading());
   console.log('object 12');
   axios
     .put(`/api/task/progress-update/${id}`, body, tokenConfig(getState))
@@ -52,8 +52,8 @@ export const updateTaskProgress = (id, body) => (dispatch, getState) => {
     });
 };
 
-export const setItemsLoading = () => {
+export const setTasksLoading = () => {
   return {
-    type: actions.TASK_LOADING,
+    type: actions.TASKS_LOADING,
   };
 };

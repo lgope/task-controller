@@ -8,6 +8,8 @@ import store from './store';
 import { loadUser } from './actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'mdbreact/dist/css/mdb.css';
 import './App.css';
 
 import LogInForm from './components/auth/LogInForm.component';
@@ -23,7 +25,6 @@ const App = () => {
       <div className='App'>
         <AppNavbar />
         <Container>
-          {/* < /> */}
           <Switch>
           <Route exact path='/' component={LogInForm} />
           <Route path='/users-info' component={UsersInfo} />
