@@ -1,5 +1,9 @@
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 
+export const SAVE_USER = 'SAVE_USER';
+
+export const GET_ALL_USERS_WORK = 'GET_ALL_USERS_WORK';
+
 export const GET_USER_WORKS = 'GET_USER_WORKS';
 
 export const SAVE_TODAY_WORKS = 'SAVE_TODAY_WORKS';

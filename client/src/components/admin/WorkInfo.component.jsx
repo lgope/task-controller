@@ -8,7 +8,7 @@ const DailyWorksTable = ({ dailyWorks }) => {
 
   dailyWorks.map(da => {
     rowsData.push({
-      another: '5%',
+      userName: da.userName,
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
@@ -17,6 +17,14 @@ const DailyWorksTable = ({ dailyWorks }) => {
 
   const data = {
     columns: [
+      {
+        label: 'User Name',
+        field: 'userName',
+        sort: 'asc',
+        width: 90,
+        height: 40,
+        overflowY: 'scroll',
+      },
       {
         label: 'Date',
         field: 'date',

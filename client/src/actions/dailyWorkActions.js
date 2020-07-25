@@ -41,6 +41,24 @@ export const getUserWorks = id => (dispatch, getState) => {
     });
 };
 
+// get all daily works | admin route
+export const getAllWorks = id => (dispatch, getState) => {
+  dispatch(setWorksLoading());
+  axios
+    .get(`api/daily-work/get-all-work`, tokenConfig(getState))
+    .then(res => {
+      console.log('get-ALL-user-works', res.data);
+      dispatch({
+        type: actions.GET_ALL_USERS_WORK,
+        payload: res.data,
+      });
+    })
+    .catch(err => {
+      console.log('get-user-works errors : ', err.response);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
 export const setWorksLoading = () => {
   return {
     type: actions.WORKS_LOADING,

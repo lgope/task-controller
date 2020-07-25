@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
@@ -8,10 +8,15 @@ import UserListTable from './UserListTable.component';
 import AddUserForm from './AddUserForm.component';
 
 function UsersInfo({ auth, user, getAllUsers, allUsers, error }) {
-  console.log('all users : ', allUsers);
+  const [isDataChanged, setIsDataChanged] = useState(false);
+  console.log('isDataChanged : ', isDataChanged);
   useEffect(() => {
     getAllUsers();
-  }, ['']);
+  }, [isDataChanged]);
+
+  if (auth && !auth.user) {
+    return <Redirect to='/' />;
+  }
 
   if (user && user.role === 'user') {
     swal(
@@ -23,12 +28,16 @@ function UsersInfo({ auth, user, getAllUsers, allUsers, error }) {
   }
   return (
     <div>
-      <AddUserForm buttonLabel={'Add New User'} />
       {allUsers.users ? (
         <UserListTable users={allUsers.users} />
       ) : (
         <div>Loading</div>
       )}
+      <AddUserForm
+        buttonLabel={'Add New User'}
+        isDataChanged={isDataChanged}
+        setIsDataChanged={setIsDataChanged}
+      />
     </div>
   );
 }
@@ -42,3 +51,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { getAllUsers })(UsersInfo);
+
+// TODO: add user check any error

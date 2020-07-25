@@ -23,6 +23,13 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
+    case actions.GET_ALL_USERS_WORK:
+      return {
+        ...state,
+        allWorks: action.payload,
+        loading: false,
+      };
+
     case actions.WORKS_LOADING:
       return {
         ...state,

@@ -30,10 +30,13 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create({ name, designation, email, password });
 
   if (!newUser) {
-    return next(new AppError('Something wrong! Try again.', 400));
+    return next(new AppError('Something wrong To add new user! Try again.', 400));
   }
 
-  return next(new AppError('User Successfully Inserted!', 201));
+  return res.status(201).json({
+    status: 'success',
+    newUser,
+  });
 });
 
 // get all users excluding admin data and password field

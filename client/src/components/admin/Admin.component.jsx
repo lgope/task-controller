@@ -1,31 +1,31 @@
 import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import Logout from '../auth/Logout.component';
 import { getAllTask } from '../../actions/taskActions';
+import { getAllWorks } from '../../actions/dailyWorkActions';
 
-import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
-const Admin = ({ user, getAllTask, tasks, error }) => {
-  console.log('tasks 22222', tasks);
+import WorkInfo from './WorkInfo.component';
+
+const Admin = ({ user, getAllTask, getAllWorks, allWorks, error }) => {
   useEffect(() => {
+    getAllWorks();
     getAllTask();
-  }, ['tasks']);
+  }, ['']);
   return (
     <Fragment>
-      <h2>
-        Admin name: {user.name}, role: {user.role}, email: {user.email}
-      </h2>
+      <h2>Welcome to Admin Panel {user.name} 🎉</h2>
       <br />
-      {tasks && <TaskSummarizeTable tasks={tasks} />}
-      <br />
-      <Logout />
+      <h4>All daily works info: 👇</h4>
+      {allWorks.dailyWorks && allWorks.dailyWorks.length > 0 && (
+        <WorkInfo dailyWorks={allWorks.dailyWorks} />
+      )}
     </Fragment>
   );
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  tasks: state.task.tasks.tasks,
+  allWorks: state.dailyWorks.allWorks,
   error: state.error,
 });
 
-export default connect(mapStateToProps, { getAllTask })(Admin);
+export default connect(mapStateToProps, { getAllTask, getAllWorks })(Admin);

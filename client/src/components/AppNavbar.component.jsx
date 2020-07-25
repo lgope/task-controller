@@ -7,6 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
+  NavLink,
   Container,
 } from 'reactstrap';
 
@@ -28,13 +29,33 @@ const AppNavbar = ({ auth }) => {
           </strong>
         </span>
       </NavItem>
+
+      {auth && auth.user && auth.user.role === 'admin' && (
+        <>
+          <NavItem>
+            <NavLink>
+              <Link className='option' to='/users-info'>
+                User Info
+              </Link>
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink>
+              <Link
+                className='option'
+                style={{ color: '#fff' }}
+                to='/tasks-info'
+              >
+                Task Info
+              </Link>
+            </NavLink>
+          </NavItem>
+        </>
+      )}
+
       <NavItem>
         <Logout />
-        {auth && auth.user && (
-          <Link className='option' to='/users-info'>
-            User Info
-          </Link>
-        )}
       </NavItem>
     </Fragment>
   );

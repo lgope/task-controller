@@ -48,10 +48,12 @@ const User = ({
   const handleTitleChange = e => setTitle(e.target.value);
   const handleDescriptionChange = e => setDes(e.target.value);
 
-  const handleSaveBtnClick = () => {
+  const handleSaveBtnClick = e => {
+    e.preventDefault();
     if (title && des) {
       const body = {
         userId: user._id,
+        userName: user.name,
         title,
         description: des,
       };
@@ -74,114 +76,123 @@ const User = ({
       </div>
       <br />
 
-      {dailyW.loading && <Loading />}
+      <div className='row'>
+        <div className='col-sm-12 col-md-8 col-mx-8'>
+          {dailyW.loading && <Loading />}
 
-      {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
-        <>
-          <DailyWorksTable dailyWorks={dailyWorks.userDailyWorks} />
-          <div className='add_btn'>
-            <button
-              type='button'
-              className='btn btn-outline-success'
-              style={{ borderRadius: '10px' }}
-              onClick={handleAddBtnClick}
-            >
-              Add New
-            </button>
-          </div>
-        </>
-      )}
-
-      {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length === 0 && (
-        <>
-          <h4>No daily works Saved Yet! Add Now.. 👇</h4>
-          <div className='add_btn'>
-            <button
-              type='button'
-              className='btn btn-outline-success'
-              style={{ borderRadius: '10px' }}
-              onClick={handleAddBtnClick}
-            >
-              Add New
-            </button>
-          </div>
-        </>
-      )}
-
-      {isopen && (
-        <form id='works_input_form'>
-          <tr className='text-center'>
-            <td>
-              <div className='form-group p-3'>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='date'
-                  value={dayjs(Date.now()).format('MMMM DD YYYY')}
-                  readOnly
-                />
+          {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
+            <>
+              <h4>Daily Works : 👇</h4>
+              <DailyWorksTable dailyWorks={dailyWorks.userDailyWorks} />
+              <div className='add_btn'>
+                <button
+                  type='button'
+                  className='btn btn-outline-success'
+                  style={{ borderRadius: '10px' }}
+                  onClick={handleAddBtnClick}
+                >
+                  Add New
+                </button>
               </div>
-            </td>
-            <td>
-              <div className='form-group  p-2'>
-                <textarea
-                  class='form-control'
-                  id='title'
-                  rows='2'
-                  cols='26'
-                  placeholder='Daily Work Title'
-                  required
-                  onChange={handleTitleChange}
-                ></textarea>
+            </>
+          )}
+
+          {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length === 0 && (
+            <>
+              <h4>No daily works Saved Yet! Add Now.. 👇</h4>
+              <div className='add_btn'>
+                <button
+                  type='button'
+                  className='btn btn-outline-success'
+                  style={{ borderRadius: '10px' }}
+                  onClick={handleAddBtnClick}
+                >
+                  Add New
+                </button>
               </div>
-            </td>
-            <td>
-              <div className='form-group  p-2'>
-                <textarea
-                  class='form-control'
-                  id='des'
-                  rows='2'
-                  cols='40'
-                  placeholder='Description'
-                  required
-                  onChange={handleDescriptionChange}
-                ></textarea>
-              </div>
-            </td>
-            <td>
-              <button
-                type='submit'
-                className='btn btn-success'
-                onClick={handleSaveBtnClick}
-                title='Save'
-                style={{ borderRadius: '10px' }}
-              >
-                <i
-                  className='far fa-check-circle'
-                  style={{ fontSize: '20px' }}
-                ></i>
-              </button>
+            </>
+          )}
+        </div>
 
-              <button
-                type='button'
-                className='btn btn-outline-warning'
-                title='Cancle'
-                onClick={cancelBtnClick}
-                style={{ borderRadius: '10px' }}
-              >
-                <i
-                  className='fas fa-minus cc_pointer'
-                  style={{ fontSize: '15px' }}
-                ></i>
-              </button>
-            </td>
-          </tr>
-        </form>
-      )}
+        <div className='col-sm-12 col-md-4 col-mx-4'>
+          <TaskSummarizeTable />
+        </div>
+      </div>
 
-      <br />
+      <div className='row'>
+        <div className='col-mx-12 col-md-12 col-sm-12'>
+          {isopen && (
+            <form id='works_input_form'>
+              <tr className='text-center'>
+                <td>
+                  <div className='form-group p-3'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='date'
+                      value={dayjs(Date.now()).format('MMMM DD YYYY')}
+                      readOnly
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div className='form-group  p-2'>
+                    <textarea
+                      class='form-control'
+                      id='title'
+                      rows='2'
+                      cols='26'
+                      placeholder='Daily Work Title'
+                      required
+                      onChange={handleTitleChange}
+                    ></textarea>
+                  </div>
+                </td>
+                <td>
+                  <div className='form-group  p-2'>
+                    <textarea
+                      class='form-control'
+                      id='des'
+                      rows='2'
+                      cols='40'
+                      placeholder='Description'
+                      required
+                      onChange={handleDescriptionChange}
+                    ></textarea>
+                  </div>
+                </td>
+                <td>
+                  <button
+                    type='submit'
+                    className='btn btn-success'
+                    onClick={handleSaveBtnClick}
+                    title='Save'
+                    style={{ borderRadius: '10px' }}
+                  >
+                    <i
+                      className='far fa-check-circle'
+                      style={{ fontSize: '20px' }}
+                    ></i>
+                  </button>
 
-      <TaskSummarizeTable />
+                  <button
+                    type='button'
+                    className='btn btn-outline-warning'
+                    title='Cancle'
+                    onClick={cancelBtnClick}
+                    style={{ borderRadius: '10px' }}
+                  >
+                    <i
+                      className='fas fa-minus cc_pointer'
+                      style={{ fontSize: '15px' }}
+                    ></i>
+                  </button>
+                </td>
+              </tr>
+            </form>
+          )}
+        </div>
+      </div>
     </Fragment>
   );
 };
