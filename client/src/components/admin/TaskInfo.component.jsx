@@ -35,11 +35,12 @@ const TaskInfo = ({
     getAllTask();
   }, [isDataChanged]);
 
+  //   TODO: fixed paste link not to redirect.
   if (auth && !auth.user) {
     return <Redirect to='/' />;
   }
 
-  if (user && user.role === 'user') {
+  if ((user && user.role === 'user') || (auth && !auth.user)) {
     showAlert('error', 'This route is only for ADMIN! You are Not allowed ✋');
     return <Redirect to='/' />;
   }

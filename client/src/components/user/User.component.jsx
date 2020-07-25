@@ -78,7 +78,7 @@ const User = ({
 
       <div className='row'>
         <div className='col-sm-12 col-md-8 col-mx-8'>
-          {dailyW.loading && <Loading />}
+          {/* {dailyW.loading && <Loading />} */}
 
           {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
             <>

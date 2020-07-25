@@ -20,15 +20,7 @@ const LogInForm = ({ auth, isLoading }) => {
   }
 
   if (isLoading) {
-    return (
-      <Loading />
-      // <h4 className='mb-3 ml-4'>
-      //   {/* <img
-      //     src='https://user-images.githubusercontent.com/58518192/88335995-0ac84500-cd56-11ea-8ea4-6898756f9cfd.gif'
-      //     alt='ssdsd'
-      //   /> */}
-      // </h4>
-    );
+    return <Loading />;
   }
 
   return (

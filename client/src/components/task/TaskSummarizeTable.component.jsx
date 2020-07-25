@@ -96,6 +96,17 @@ const TaskSummarizeTable = ({
     console.log(data.rows);
     return (
       <Fragment>
+        {loading && (
+          <div class='text-center'>
+            <img
+              className='rounded'
+              src='https://user-images.githubusercontent.com/58518192/88464981-ddf46900-cee0-11ea-8205-5bee3eda6d4a.gif'
+              alt='loading'
+              height='250px'
+              width='250px'
+            />
+          </div>
+        )}
         {!loading && (
           <>
             <h4>Tasks : 👇</h4>
