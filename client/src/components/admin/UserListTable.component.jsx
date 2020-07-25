@@ -1,43 +1,45 @@
 import React, { Fragment } from 'react';
-// import { connect } from 'react-redux';
+import { MDBDataTable } from 'mdbreact';
 
 import { Table } from 'reactstrap';
 import Moment from 'react-moment';
 import dayjs from 'dayjs';
 
 function UserListTable({ users }) {
-  console.log('all users 22 : ', users);
-  let count = 1;
-  return (
-    <Fragment>
-      <Table size='sm' bordered hover>
-        <thead>
-          <tr className='text-center'>
-            <th>#</th>
-            <th>User Name</th>
-            <th>User Email</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        {users.map(user => (
-          <tbody key={user._id}>
-            <tr className='text-center'>
-              <th scope='row'>{count++}</th>
-              <td>
-                {/* <TaskDiscussPage id={task._id} btnName={task.taskName} /> */}
-                <p>{user.name}</p>
-              </td>
-              <td>{user.email}</td>
-              <td>
-                {dayjs(user.createdAt).format('h:mm a, MMMM DD, YYYY')} |{' '}
-                <Moment fromNow>{user.createdAt}</Moment>
-              </td>
-            </tr>
-          </tbody>
-        ))}
-      </Table>
-    </Fragment>
-  );
+  let rowsData = [];
+
+  users.map(user => {
+    rowsData.push({
+      userName: user.name,
+      designation: user.designation,
+      email: user.email,
+    });
+  });
+  const data = {
+    columns: [
+      {
+        label: 'User Name',
+        field: 'userName',
+        sort: 'asc',
+        width: 90,
+      },
+      {
+        label: 'Designation',
+        field: 'designation',
+        sort: 'asc',
+        width: 90,
+      },
+      {
+        label: 'Email',
+        field: 'email',
+        sort: 'asc',
+        width: 90,
+      },
+    ],
+    rows: rowsData,
+  };
+
+  return <MDBDataTable striped bordered hover small data={data} />;
 }
 
 const mapStateToProps = state => ({

@@ -11,9 +11,9 @@ const User = require('../models/userModel');
 // TODO: update | delete functionality on demand
 
 exports.saveDailyWork = catchAsync(async (req, res, next) => {
-  const { userId, title, description } = req.body;
+  const { userId, userName, title, description } = req.body;
 
-  if (!userId || !title || !description)
+  if (!userId || !userName || !title || !description)
     return next(new AppError('Please enter all fields 🙂', 400));
 
   const user = await User.findById({ _id: userId });
@@ -22,6 +22,7 @@ exports.saveDailyWork = catchAsync(async (req, res, next) => {
 
   const todaysWork = await DailyWork.create({
     userId,
+    userName,
     title,
     description,
   });
@@ -56,7 +57,7 @@ exports.getAllDailyWorks = catchAsync(async (req, res, next) => {
   const dailyWorks = await DailyWork.find();
 
   if (!dailyWorks)
-    return next(new AppError('Something Wrong! Try again.', 404));
+    return next(new AppError('Something Wrong To get all works! Try again.', 404));
 
   return res.status(200).json({
     status: 'success',

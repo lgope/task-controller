@@ -6,6 +6,11 @@ const dailyWorkSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Daily work must belong to a user.'],
   },
+  userName: {
+    type: String,
+    ref: 'User',
+    required: [true, 'Daily work must have an user name'],
+  },
   title: {
     type: String,
     ref: 'Task',

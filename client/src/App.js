@@ -10,7 +10,7 @@ import { loadUser } from './actions/authActions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import './App.css';
+// import './App.css';
 
 import LogInForm from './components/auth/LogInForm.component';
 
