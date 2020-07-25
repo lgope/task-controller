@@ -12,6 +12,8 @@ export const USERS_LOADING = 'USERS_LOADING';
 
 export const GET_USER_TASKS = 'GET_USER_TASKS';
 
+export const USER_TASKS_LOADING = 'USER_TASKS_LOADING';
+
 export const GET_TASKS = 'GET_TASKS';
 
 export const GET_TASK = 'GET_TASK';

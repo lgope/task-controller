@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
               token,
               message: `Welcome ${user.name} to Admin Panel`,
               user: {
-                id: user.id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
@@ -56,7 +56,7 @@ router.post('/', (req, res, next) => {
               token,
               message: 'Welcome User',
               user: {
-                id: user.id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role,

@@ -23,6 +23,6 @@ export const getUserTasks = () => (dispatch, getState) => {
 
 export const setTasksLoading = () => {
   return {
-    type: actions.TASKS_LOADING,
+    type: actions.USER_TASKS_LOADING,
   };
 };

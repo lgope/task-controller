@@ -1,15 +1,19 @@
 import React from 'react';
 import { MDBDataTable } from 'mdbreact';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
+
 import dayjs from 'dayjs';
 
 const DailyWorksTable = ({ dailyWorks }) => {
   let rowsData = [];
 
+  const handleProgressChange = e => {
+    console.log('pro value 🔔🔔', e.target.value);
+    console.log('pro id 🔔', e.target.id);
+  };
+
   dailyWorks.map(da => {
     rowsData.push({
+      another: '5%',
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
@@ -40,9 +44,7 @@ const DailyWorksTable = ({ dailyWorks }) => {
     rows: rowsData,
   };
 
-  //   console.log('table: ', dailyWorks);
-
-  return <MDBDataTable striped bordered small hover data={data} />;
+  return <MDBDataTable striped bordered hover data={data} />;
 };
 
 export default DailyWorksTable;
