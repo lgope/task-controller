@@ -30,23 +30,29 @@ const AppNavbar = ({ auth }) => {
         </span>
       </NavItem>
 
-      <NavItem>
-        <NavLink>
-          {auth && auth.user && (
-            <Link className='option' to='/users-info'>
-              User Info
-            </Link>
-          )}
-        </NavLink>
-      </NavItem>
+      {auth && auth.user && auth.user.role === 'admin' && (
+        <>
+          <NavItem>
+            <NavLink>
+              <Link className='option' to='/users-info'>
+                User Info
+              </Link>
+            </NavLink>
+          </NavItem>
 
-      <NavItem>
-        <NavLink>
-          <Link className='option' style={{ color: '#fff' }} to='/users-info'>
-            Task Info
-          </Link>
-        </NavLink>
-      </NavItem>
+          <NavItem>
+            <NavLink>
+              <Link
+                className='option'
+                style={{ color: '#fff' }}
+                to='/tasks-info'
+              >
+                Task Info
+              </Link>
+            </NavLink>
+          </NavItem>
+        </>
+      )}
 
       <NavItem>
         <Logout />

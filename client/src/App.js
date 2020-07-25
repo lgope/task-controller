@@ -15,6 +15,7 @@ import 'mdbreact/dist/css/mdb.css';
 import LogInForm from './components/auth/LogInForm.component';
 
 import UsersInfo from './components/admin/UsersInfo.component'
+import TaskInfo from './components/admin/TaskInfo.component'
 
 const App = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = () => {
           <Switch>
           <Route exact path='/' component={LogInForm} />
           <Route path='/users-info' component={UsersInfo} />
+          <Route path='/tasks-info' component={TaskInfo} />
         </Switch>
         </Container>
       </div>

@@ -27,8 +27,6 @@ const TaskSummarizeTable = ({
 
   let rowsData = [];
   const handleProgressChange = e => {
-    console.log('pro value 🔔🔔', e.target.value);
-    console.log('pro id 🔔', e.target.id);
     const body = {
       progress: e.target.value,
     };
@@ -37,20 +35,6 @@ const TaskSummarizeTable = ({
     setIsDataChanged(!isDataChanged);
     showAlert('success', 'Progress updated!');
   };
-
-  // if (loading) {
-  //   return (
-  //     <img
-  //       src='https://user-images.githubusercontent.com/58518192/88430211-dd44cf80-ce19-11ea-9b5c-199202e7bfa8.gif'
-  //       alt='loading'
-  //     />
-  //   );
-  // }
-
-  // <img
-  //   src='https://user-images.githubusercontent.com/58518192/88430211-dd44cf80-ce19-11ea-9b5c-199202e7bfa8.gif'
-  //   alt='loading'
-  // />;
 
   if (tasks.length > 0) {
     tasks.map(task => {
@@ -112,16 +96,18 @@ const TaskSummarizeTable = ({
     console.log(data.rows);
     return (
       <Fragment>
-        <h4>Tasks : 👇</h4>
-        <MDBDataTable striped bordered hover data={data} />;
+        {!loading && (
+          <>
+            <h4>Tasks : 👇</h4>
+            <MDBDataTable striped bordered hover data={data} />;
+          </>
+        )}
       </Fragment>
     );
   }
 
   return <h2>{!tasks && tasks.length <= 0 && <h1>No task!</h1>}</h2>;
 };
-
-// TODO: ensure user for visible taks progress edit option (get user from state.auth.user)
 
 const mapStateToProps = state => ({
   tasks: state.userRoutes.tasks,

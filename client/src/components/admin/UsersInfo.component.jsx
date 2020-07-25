@@ -14,6 +14,10 @@ function UsersInfo({ auth, user, getAllUsers, allUsers, error }) {
     getAllUsers();
   }, [isDataChanged]);
 
+  if (auth && !auth.user) {
+    return <Redirect to='/' />;
+  }
+
   if (user && user.role === 'user') {
     swal(
       'Oops!',

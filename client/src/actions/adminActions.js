@@ -36,6 +36,23 @@ export const addUser = body => (dispatch, getState) => {
     });
 };
 
+// assign task
+export const assignTask = body => (dispatch, getState) => {
+  axios
+    .post('api/task/assign-task', body, tokenConfig(getState))
+    .then(res => {
+      console.log('new task 🚀', res.data);
+      dispatch({
+        type: actions.ADD_TASK,
+        payload: res.data,
+      });
+    })
+    .catch(err => {
+      console.log('error: 11', err.response);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
 export const setUsersLoading = () => {
   return {
     type: actions.USERS_LOADING,
