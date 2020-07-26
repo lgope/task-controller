@@ -1,14 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Table } from 'reactstrap';
-import Moment from 'react-moment';
-import dayjs from 'dayjs';
 import { getUserTasks } from '../../actions/userActions';
 
 import { connect } from 'react-redux';
 import { updateTaskProgress } from '../../actions/taskActions';
 import { MDBDataTable } from 'mdbreact';
 
-import Loading from '../loading/Loading.component';
+// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
 
 const TaskSummarizeTable = ({
@@ -19,6 +16,7 @@ const TaskSummarizeTable = ({
   error,
 }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
+  let data;
 
   console.log('task loading', loading);
   useEffect(() => {
@@ -75,7 +73,7 @@ const TaskSummarizeTable = ({
         ),
       });
     });
-    const data = {
+    data = {
       columns: [
         {
           label: 'Task',
@@ -94,30 +92,34 @@ const TaskSummarizeTable = ({
     };
 
     console.log(data.rows);
-    return (
-      <Fragment>
-        {loading && (
-          <div class='text-center'>
-            <img
-              className='rounded'
-              src='https://user-images.githubusercontent.com/58518192/88464981-ddf46900-cee0-11ea-8205-5bee3eda6d4a.gif'
-              alt='loading'
-              height='250px'
-              width='250px'
-            />
-          </div>
-        )}
-        {!loading && (
-          <>
-            <h4>Tasks : 👇</h4>
-            <MDBDataTable striped bordered hover data={data} />;
-          </>
-        )}
-      </Fragment>
-    );
   }
 
-  return <h2>{!tasks && tasks.length <= 0 && <h1>No task!</h1>}</h2>;
+  return (
+    <Fragment>
+      {loading && (
+        <div
+          class='text-center justify-content-center'
+          style={{ right: '80px' }}
+        >
+          <img
+            className='rounded'
+            src='https://user-images.githubusercontent.com/58518192/88486811-40616e00-cfa2-11ea-89ef-f9bd3a0662d0.gif'
+            alt='loading'
+            height='250px'
+            width='350px'
+          />
+        </div>
+      )}
+      {!loading && data && (
+        <>
+          <h4>Tasks : 👇</h4>
+          <MDBDataTable striped bordered hover data={data} />;
+        </>
+      )}
+
+      <p>{!tasks && <h3>No task assigned yet! 🙂</h3>}</p>
+    </Fragment>
+  );
 };
 
 const mapStateToProps = state => ({

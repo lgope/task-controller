@@ -32,7 +32,7 @@ export const addUser = body => (dispatch, getState) => {
     })
     .catch(err => {
       console.log('error: 11', err.response);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status, 'ADD_USER_FAIL'));
     });
 };
 
@@ -49,7 +49,7 @@ export const assignTask = body => (dispatch, getState) => {
     })
     .catch(err => {
       console.log('error: 11', err.response);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status, 'ASSIGN_TASK_FAIL'));
     });
 };
 

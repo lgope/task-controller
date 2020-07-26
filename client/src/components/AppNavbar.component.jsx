@@ -42,11 +42,7 @@ const AppNavbar = ({ auth }) => {
 
           <NavItem>
             <NavLink>
-              <Link
-                className='option'
-                style={{ color: '#fff' }}
-                to='/tasks-info'
-              >
+              <Link className='option' to='/tasks-info'>
                 Task Info
               </Link>
             </NavLink>
@@ -69,19 +65,17 @@ const AppNavbar = ({ auth }) => {
   );
 
   return (
-    <div>
-      <Navbar color='dark' dark expand='sm' className='mb-5'>
-        <Container>
-          <NavbarBrand href='/'>Task Controller</NavbarBrand>
-          <NavbarToggler onClick={handleToggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className='ml-auto' navbar>
-              {auth && auth.isAuthenticated ? authLinks : guestLinks}
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    </div>
+    <Navbar expand='sm' className='mb-5'>
+      <Container>
+        <NavbarBrand href='/'>Task Controller</NavbarBrand>
+        <NavbarToggler onClick={handleToggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className='ml-auto' navbar>
+            {auth && auth.isAuthenticated ? authLinks : guestLinks}
+          </Nav>
+        </Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

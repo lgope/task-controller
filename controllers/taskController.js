@@ -3,8 +3,6 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 const Task = require('../models/taskModel');
-const Discuss = require('../models/discussModel');
-const User = require('../models/userModel');
 
 exports.assignTask = catchAsync(async (req, res, next) => {
   const { taskName, userEmail } = req.body;
@@ -28,8 +26,6 @@ exports.getTask = catchAsync(async (req, res, next) => {
 
   if (!task) return next(new AppError('Task not found with ID!', 404));
 
-  const discusses = await Discuss.find({ taskId: task.id });
-
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // todays day
   const day = weekdays[new Date().getDay()];
@@ -37,7 +33,6 @@ exports.getTask = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     status: 'success',
     task,
-    discusses,
   });
 });
 

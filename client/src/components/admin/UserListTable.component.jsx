@@ -1,10 +1,6 @@
 import React, { Fragment } from 'react';
 import { MDBDataTable } from 'mdbreact';
 
-import { Table } from 'reactstrap';
-import Moment from 'react-moment';
-import dayjs from 'dayjs';
-
 function UserListTable({ users }) {
   let rowsData = [];
 
@@ -42,10 +38,4 @@ function UserListTable({ users }) {
   return <MDBDataTable striped bordered hover small data={data} />;
 }
 
-const mapStateToProps = state => ({
-  allUsers: state.admin.allUsers,
-  error: state.error,
-});
-
-// export default connect(mapStateToProps, null)(UserListTable);
 export default UserListTable;
