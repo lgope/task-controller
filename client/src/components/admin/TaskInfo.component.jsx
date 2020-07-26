@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Table } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
-import Moment from 'react-moment';
 import dayjs from 'dayjs';
 import { getAllTask } from '../../actions/taskActions';
 import { getAllUsers } from '../../actions/adminActions';
@@ -10,7 +8,7 @@ import { assignTask } from '../../actions/adminActions';
 import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 
-import Loading from '../loading/Loading.component';
+// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
 
 const TaskInfo = ({
@@ -35,11 +33,12 @@ const TaskInfo = ({
     getAllTask();
   }, [isDataChanged]);
 
+  //   TODO: fixed paste link not to redirect.
   if (auth && !auth.user) {
     return <Redirect to='/' />;
   }
 
-  if (user && user.role === 'user') {
+  if ((user && user.role === 'user') || (auth && !auth.user)) {
     showAlert('error', 'This route is only for ADMIN! You are Not allowed ✋');
     return <Redirect to='/' />;
   }

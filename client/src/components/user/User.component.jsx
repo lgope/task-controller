@@ -8,7 +8,7 @@ import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
 
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
-import Loading from '../loading/Loading.component';
+// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
 
 const User = ({
@@ -16,10 +16,10 @@ const User = ({
   getUserWorks,
   saveTodayWork,
   dailyWorks,
-  userTasks,
-  task,
-  dailyW,
   error,
+  // userTasks,
+  // task,
+  // dailyW,
 }) => {
   const [isopen, setIsopen] = useState(false);
   const [isDataChange, setIsDataChange] = useState(false);
@@ -78,7 +78,7 @@ const User = ({
 
       <div className='row'>
         <div className='col-sm-12 col-md-8 col-mx-8'>
-          {dailyW.loading && <Loading />}
+          {/* {dailyW.loading && <Loading />} */}
 
           {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
             <>

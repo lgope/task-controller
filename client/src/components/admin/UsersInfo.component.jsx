@@ -6,8 +6,9 @@ import { Redirect } from 'react-router-dom';
 import { getAllUsers } from '../../actions/adminActions';
 import UserListTable from './UserListTable.component';
 import AddUserForm from './AddUserForm.component';
+// import Loading from '../loading/Loading.component';
 
-function UsersInfo({ auth, user, getAllUsers, allUsers, error }) {
+function UsersInfo({ auth, user, getAllUsers, allUsers, loading, error }) {
   const [isDataChanged, setIsDataChanged] = useState(false);
   console.log('isDataChanged : ', isDataChanged);
   useEffect(() => {
@@ -26,6 +27,7 @@ function UsersInfo({ auth, user, getAllUsers, allUsers, error }) {
     );
     return <Redirect to='/' />;
   }
+
   return (
     <div>
       {allUsers.users ? (
@@ -46,6 +48,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   user: state.auth.user,
   allUsers: state.admin.allUsers,
+  loading: state.admin.loading,
   tasks: state.userRoutes.tasks,
   error: state.error,
 });

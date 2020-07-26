@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Label,
   Input,
-  // Alert,
-} from 'reactstrap';
+  Alert,
+} from 'reactstrap'; // ADD_USER_FAIL
 
 import { addUser } from '../../actions/adminActions';
+import { clearErrors } from '../../actions/errorActions';
+// import { showAlert } from '../alert';
 
 // TODO: Name input field and save
 
@@ -22,6 +23,7 @@ const AddUserForm = ({
   isDataChanged,
   setIsDataChanged,
   addUser,
+  clearErrors,
   error,
 }) => {
   const [modal, setModal] = useState(false);
@@ -29,8 +31,22 @@ const AddUserForm = ({
   const [desi, setDesi] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [msg, setMsg] = useState('');
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    clearErrors();
+    setModal(!modal);
+  };
+
+  useEffect(() => {
+    // Check for register error
+    if (error.id === 'ADD_USER_FAIL') {
+      setMsg(error.msg.message);
+      console.log(error.msg.message);
+    } else {
+      setMsg(null);
+    }
+  }, [error]);
 
   const handleChangeName = event => setName(event.target.value);
   const handleChangeDesignation = event => setDesi(event.target.value);
@@ -45,10 +61,15 @@ const AddUserForm = ({
       email,
       password: pass,
     };
-    console.log(name, desi, email, pass);
     addUser(body);
     setIsDataChanged(!isDataChanged);
-    toggle();
+    clearErrors();
+    setName('');
+    setDesi('');
+    setEmail('');
+    setPass('');
+    // toggle();
+    // showAlert('success', 'New user Saved!');
   };
 
   return (
@@ -59,6 +80,7 @@ const AddUserForm = ({
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add New User Form.</ModalHeader>
         <ModalBody>
+          {msg ? <Alert color='danger'>{msg}</Alert> : null}
           <Form>
             <FormGroup>
               <Label for='name'>Name</Label>
@@ -69,6 +91,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Name'
                 required
+                value={name}
                 onChange={handleChangeName}
               />
 
@@ -80,6 +103,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Designation'
                 required
+                value={desi}
                 onChange={handleChangeDesignation}
               />
 
@@ -91,6 +115,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Email'
                 required
+                value={email}
                 onChange={handleChangeEmail}
               />
 
@@ -102,6 +127,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Password'
                 required
+                value={pass}
                 onChange={handleChangePassword}
               />
               <Button
@@ -124,4 +150,4 @@ const mapStateToProps = state => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { addUser })(AddUserForm);
+export default connect(mapStateToProps, { addUser, clearErrors })(AddUserForm);

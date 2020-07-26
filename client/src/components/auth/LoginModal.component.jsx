@@ -17,7 +17,7 @@ import {
 import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 
-const LoginModal = ({ isAuthenticated, user, error, login, clearErrors }) => {
+const LoginModal = ({ isAuthenticated, error, login, clearErrors }) => {
   const [modal, setModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -109,7 +109,6 @@ const LoginModal = ({ isAuthenticated, user, error, login, clearErrors }) => {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated, // getting from ../../reducers/index.js
   error: state.error,
-  User: state.auth.user,
 });
 
 export default connect(mapStateToProps, { login, clearErrors })(LoginModal);

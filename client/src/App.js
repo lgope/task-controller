@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import AppNavbar from './components/AppNavbar.component';
+import AppFooter from './components/AppFooter.component';
 import { Container } from 'reactstrap';
 
 import { Provider } from 'react-redux';
@@ -14,8 +15,8 @@ import 'mdbreact/dist/css/mdb.css';
 
 import LogInForm from './components/auth/LogInForm.component';
 
-import UsersInfo from './components/admin/UsersInfo.component'
-import TaskInfo from './components/admin/TaskInfo.component'
+import UsersInfo from './components/admin/UsersInfo.component';
+import TaskInfo from './components/admin/TaskInfo.component';
 
 const App = () => {
   useEffect(() => {
@@ -27,11 +28,12 @@ const App = () => {
         <AppNavbar />
         <Container>
           <Switch>
-          <Route exact path='/' component={LogInForm} />
-          <Route path='/users-info' component={UsersInfo} />
-          <Route path='/tasks-info' component={TaskInfo} />
-        </Switch>
+            <Route exact path='/' component={LogInForm} />
+            <Route path='/users-info' component={UsersInfo} />
+            <Route path='/tasks-info' component={TaskInfo} />
+          </Switch>
         </Container>
+        <AppFooter />
       </div>
     </Provider>
   );

@@ -11,6 +11,10 @@ const UserDiv = ({ user }) => (
 );
 
 const LogInForm = ({ auth, isLoading }) => {
+  if (isLoading) {
+    return <Loading />;
+  }
+
   if (auth && auth.user && auth.user.role === 'admin') {
     return <AdminHomePage />;
   }
@@ -19,25 +23,37 @@ const LogInForm = ({ auth, isLoading }) => {
     return <UserHomePage />;
   }
 
-  if (isLoading) {
-    return (
-      <Loading />
-      // <h4 className='mb-3 ml-4'>
-      //   {/* <img
-      //     src='https://user-images.githubusercontent.com/58518192/88335995-0ac84500-cd56-11ea-8ea4-6898756f9cfd.gif'
-      //     alt='ssdsd'
-      //   /> */}
-      // </h4>
-    );
-  }
-
   return (
     <Fragment>
       {auth && auth.user && <UserDiv user={auth.user} />}
 
       {!auth ||
         (!auth.user && (
-          <h4 className='mb-3 ml-4'>Please Login to Process....</h4>
+          <section className='banner-area relative'>
+            <div className='overlay overlay-bg'></div>
+            <div className='container'>
+              <div className='row fullscreen align-items-center justify-content-between'>
+                <div className='col-lg-6 col-md-7 col-sm-8'>
+                  <div className='banner-content'>
+                    <h1>
+                      Task Controller <br />
+                    </h1>
+                    <p>
+                      Task controller this app will help to track daily tasks
+                      and works
+                    </p>
+                  </div>
+                </div>
+                <div className='col-lg-5 col-md-5 col-sm-4'>
+                  <img
+                    src='https://user-images.githubusercontent.com/58518192/88472695-774e6a00-cf37-11ea-970c-df3f66b3bfcb.png'
+                    alt='image'
+                    className='img-fluid'
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
         ))}
     </Fragment>
   );

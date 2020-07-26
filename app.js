@@ -9,7 +9,6 @@ const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
-const discussRoutes = require('./routes/discussRoutes');
 const dailyWorkRoutes = require('./routes/dailyWorkRoutes');
 
 const app = express();
@@ -32,7 +31,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/task', taskRoutes);
-app.use('/api/discuss', discussRoutes);
 app.use('/api/daily-work', dailyWorkRoutes);
 
 // Serve static assets if in production
