@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
-import AdminHomePage from '../admin/Admin.component';
-import UserHomePage from '../user/User.component';
 import Loading from '../loading/Loading.component';
 
-const UserDiv = ({ user }) => (
-  <div>{user.role === 'user' ? <UserHomePage /> : <AdminHomePage />}</div>
-);
+const UserDiv = ({ user }) => {
+  if (user && user.role === 'user') return <Redirect to='/user-home' />;
+  else return <Redirect to='/admin-home' />;
+};
 
 const LogInForm = ({ auth, isLoading }) => {
   if (isLoading) {
@@ -16,11 +17,11 @@ const LogInForm = ({ auth, isLoading }) => {
   }
 
   if (auth && auth.user && auth.user.role === 'admin') {
-    return <AdminHomePage />;
+    return <Redirect to='/admin-home' />;
   }
 
   if (auth && auth.user && auth.user.role === 'user') {
-    return <UserHomePage />;
+    return <Redirect to='/user-home' />;
   }
 
   return (

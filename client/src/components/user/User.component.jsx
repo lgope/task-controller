@@ -1,4 +1,5 @@
 import React, { useEffect, Fragment, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
@@ -8,7 +9,6 @@ import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
 
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
-// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
 
 const User = ({
@@ -16,7 +16,7 @@ const User = ({
   getUserWorks,
   saveTodayWork,
   dailyWorks,
-  error,
+  // error,
   // userTasks,
   // task,
   // dailyW,
@@ -26,15 +26,21 @@ const User = ({
   const [title, setTitle] = useState('');
   const [des, setDes] = useState('');
 
-  console.log('working page error ', error);
+  // console.log('working page error ', error);
 
-  console.log('user id::: check 11 :: ', dailyWorks.userDailyWorks);
-  console.log('isData Changged: ', isDataChange);
+  console.log('user id::: check 11 :: ', user);
+  // console.log('isData Changged: ', isDataChange);
 
   useEffect(() => {
     console.log('useEffect called user com');
-    getUserWorks(user._id);
+    if (user) {
+      getUserWorks(user._id);
+    }
   }, [isDataChange]);
+
+  if (!user || user.role === 'admin') {
+    return <Redirect to='/' />;
+  }
 
   const handleAddBtnClick = () => {
     setIsopen(true);
@@ -78,8 +84,6 @@ const User = ({
 
       <div className='row'>
         <div className='col-sm-12 col-md-8 col-mx-8'>
-          {/* {dailyW.loading && <Loading />} */}
-
           {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
             <>
               <h4>Daily Works : 👇</h4>
@@ -202,7 +206,7 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   // userTasks: state.userRoutes.tasks,
   task: state.task.task,
-  error: state.error,
+  // error: state.error,
   dailyW: state.dailyWorks,
   dailyWorks: state.dailyWorks.userWorks,
 });

@@ -6,9 +6,8 @@ import { Redirect } from 'react-router-dom';
 import { getAllUsers } from '../../actions/adminActions';
 import UserListTable from './UserListTable.component';
 import AddUserForm from './AddUserForm.component';
-// import Loading from '../loading/Loading.component';
 
-function UsersInfo({ auth, user, getAllUsers, allUsers, loading, error }) {
+function UsersInfo({ auth, user, getAllUsers, allUsers }) {
   const [isDataChanged, setIsDataChanged] = useState(false);
   console.log('isDataChanged : ', isDataChanged);
   useEffect(() => {
@@ -48,9 +47,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   user: state.auth.user,
   allUsers: state.admin.allUsers,
-  loading: state.admin.loading,
   tasks: state.userRoutes.tasks,
-  error: state.error,
 });
 
 export default connect(mapStateToProps, { getAllUsers })(UsersInfo);
