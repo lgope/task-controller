@@ -29,6 +29,19 @@ const AppNavbar = ({ auth }) => {
           </strong>
         </span>
       </NavItem>
+      <NavItem>
+        <NavLink>
+          {auth.user && auth.user.role === 'admin' ? (
+            <Link className='option' to='/admin-home'>
+              Home
+            </Link>
+          ) : (
+            <Link className='option' to='/user-home'>
+              Home
+            </Link>
+          )}
+        </NavLink>
+      </NavItem>
 
       {auth && auth.user && auth.user.role === 'admin' && (
         <>

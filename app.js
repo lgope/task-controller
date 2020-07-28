@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
+const compression = require('compression');
 
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -25,6 +26,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // Body Parser Middleware
 app.use(express.json());
+
+// compress all responses
+app.use(compression());
 
 // auth Routes
 app.use('/api/auth', authRoutes);

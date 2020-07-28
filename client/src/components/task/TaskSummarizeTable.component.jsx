@@ -7,13 +7,13 @@ import { MDBDataTable } from 'mdbreact';
 
 // import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
+import img_loader from '../../images/img_loader.gif';
 
 const TaskSummarizeTable = ({
   tasks,
   getUserTasks,
   updateTaskProgress,
   loading,
-  error,
 }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   let data;
@@ -97,17 +97,8 @@ const TaskSummarizeTable = ({
   return (
     <Fragment>
       {loading && (
-        <div
-          class='text-center justify-content-center'
-          style={{ right: '80px' }}
-        >
-          <img
-            className='rounded'
-            src='https://user-images.githubusercontent.com/58518192/88486811-40616e00-cfa2-11ea-89ef-f9bd3a0662d0.gif'
-            alt='loading'
-            height='250px'
-            width='350px'
-          />
+        <div>
+          <img src={img_loader} alt='loading' height='250px' width='350px' />
         </div>
       )}
       {!loading && data && (
@@ -117,7 +108,9 @@ const TaskSummarizeTable = ({
         </>
       )}
 
-      <p>{!tasks && <h3>No task assigned yet! 🙂</h3>}</p>
+      <p>
+        {!loading && tasks.length <= 0 && <h3>No task assigned yet! 🙂</h3>}
+      </p>
     </Fragment>
   );
 };
@@ -125,7 +118,6 @@ const TaskSummarizeTable = ({
 const mapStateToProps = state => ({
   tasks: state.userRoutes.tasks,
   loading: state.userRoutes.loading,
-  error: state.error,
 });
 export default connect(mapStateToProps, { getUserTasks, updateTaskProgress })(
   TaskSummarizeTable

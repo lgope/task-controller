@@ -19,8 +19,8 @@ const TaskInfo = ({
   tasks,
   getAllTask,
   assignTask,
-  loading,
-  error,
+  // loading,
+  // error,
 }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   const [isopen, setIsopen] = useState(false);
@@ -38,8 +38,7 @@ const TaskInfo = ({
     return <Redirect to='/' />;
   }
 
-  if ((user && user.role === 'user') || (auth && !auth.user)) {
-    showAlert('error', 'This route is only for ADMIN! You are Not allowed ✋');
+  if (!user || user.role === 'user') {
     return <Redirect to='/' />;
   }
 
@@ -134,7 +133,7 @@ const TaskInfo = ({
           style={{ borderRadius: '10px' }}
           onClick={handleAddBtnClick}
         >
-          Add New
+          Assign New Task
         </button>
       </div>
       <div className='row'>
@@ -219,8 +218,8 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   allUsers: state.admin.allUsers.users,
   tasks: state.task.tasks,
-  loading: state.task.loading,
-  error: state.error,
+  // loading: state.task.loading,
+  // error: state.error,
 });
 export default connect(mapStateToProps, {
   getAllTask,

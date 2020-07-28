@@ -1,12 +1,12 @@
 import React from 'react';
-import './styles.css';
+import loadingImage from '../../images/animation_200_kcz98a90.gif';
 
 const Loading = () => {
   return (
     <div className='text-center'>
       <img
-        src='https://user-images.githubusercontent.com/58518192/88335995-0ac84500-cd56-11ea-8ea4-6898756f9cfd.gif'
-        className='rounded'
+        src={loadingImage}
+        className='rounded loading_img'
         alt='loadingImage'
       />
     </div>

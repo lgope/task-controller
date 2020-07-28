@@ -1,15 +1,21 @@
 import React, { useEffect, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllTask } from '../../actions/taskActions';
 import { getAllWorks } from '../../actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
 
-const Admin = ({ user, getAllTask, getAllWorks, allWorks, error }) => {
+const Admin = ({ user, getAllTask, getAllWorks, allWorks }) => {
   useEffect(() => {
     getAllWorks();
     getAllTask();
   }, ['']);
+
+  if (!user || user.role === 'user') {
+    return <Redirect to='/' />;
+  }
+
   return (
     <Fragment>
       <h2>Welcome to Admin Panel {user.name} 🎉</h2>
@@ -25,7 +31,6 @@ const Admin = ({ user, getAllTask, getAllWorks, allWorks, error }) => {
 const mapStateToProps = state => ({
   user: state.auth.user,
   allWorks: state.dailyWorks.allWorks,
-  error: state.error,
 });
 
 export default connect(mapStateToProps, { getAllTask, getAllWorks })(Admin);
