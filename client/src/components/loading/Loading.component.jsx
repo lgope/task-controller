@@ -1,5 +1,5 @@
 import React from 'react';
-import loadingImage from '../../images/animation_200_kcz98a90.gif';
+import loadingImage from '../../images/webp.webp';
 
 const Loading = () => {
   return (

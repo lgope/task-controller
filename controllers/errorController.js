@@ -15,7 +15,6 @@ const handleDuplicateFieldsDB = (err) => {
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
 
-  // console.log('chack point 5');
 
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
@@ -39,7 +38,6 @@ const sendErrorDev = async (err, req, res) => {
   }
 
   // B) RENDERED WEBSITE
-  console.error('ERROR 💥', err);
   return res.status(err.statusCode).render('error', {
     title: 'Something went wrong!',
     msg: `${err.message}`,
@@ -59,7 +57,6 @@ const sendErrorProd = async (err, req, res) => {
 
     // B) Programming or other unknown error: don't leak error details
     // 1) Log error
-    console.error('ERROR 💥', err);
     // 2) Send generic message
     return res.status(500).json({
       status: 'error',
@@ -70,7 +67,6 @@ const sendErrorProd = async (err, req, res) => {
   // B) RENDERED WEBSITE
   // A) Operational, trusted error: send message to client
   if (err.isOperational) {
-    // console.log(err);
     return res.status(err.statusCode).render('error', {
       title: 'Something went wrong!',
       msg: `${err.message}`,
@@ -79,7 +75,6 @@ const sendErrorProd = async (err, req, res) => {
 
   // B) Programming or other unknown error: don't leak error details
   // 1) Log error
-  console.error('ERROR 💥', err);
   // 2) Send generic message
   return res.status(err.statusCode).render('error', {
     title: 'Something went wrong!',
@@ -88,8 +83,6 @@ const sendErrorProd = async (err, req, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  //   console.log('Hi', err.stack);
-  // console.log(process.env.NODE_ENV);
 
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';

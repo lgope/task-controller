@@ -1,61 +1,134 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
-
 import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
+
 import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 import Loading from '../loading/Loading.component';
 
-const UserDiv = ({ user }) => {
-  if (user && user.role === 'user') return <Redirect to='/user-home' />;
-  else return <Redirect to='/admin-home' />;
-};
+const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState(null);
 
-const LogInForm = ({ auth, isLoading }) => {
+  const handleClearError = useCallback(() => {
+    // Clear errors
+    clearErrors();
+  }, [clearErrors]);
+
+  useEffect(() => {
+    // Check for register error
+    if (error.id === 'LOGIN_FAIL') {
+      setMsg(error.msg.message);
+    } else {
+      setMsg(null);
+    }
+  }, [error, handleClearError, auth.isAuthenticated]);
+
   if (isLoading) {
     return <Loading />;
   }
 
-  if (auth && auth.user && auth.user.role === 'admin') {
-    return <Redirect to='/admin-home' />;
-  }
-
-  if (auth && auth.user && auth.user.role === 'user') {
+  if (auth.user && auth.user.role === 'user') {
     return <Redirect to='/user-home' />;
   }
 
+  if (auth.user && auth.user.role === 'admin') {
+    return <Redirect to='/admin-home' />;
+  }
+
+  const handleChangeEmail = event => setEmail(event.target.value);
+  const handleChangePassword = event => setPassword(event.target.value);
+
+  const handleOnSubmit = event => {
+    event.preventDefault();
+    if (email && password) {
+      const user = { email, password };
+
+      // Attempt to login
+      login(user);
+      setEmail('');
+      setPassword('');
+      handleClearError();
+    }
+  };
+
   return (
     <Fragment>
-      {auth && auth.user && <UserDiv user={auth.user} />}
+      {!auth.user && (
+        <div className='container'>
+          <div className='row no-gutter'>
+            <div className='col-md-2 col-lg-3'></div>
+            <div className='col-md-8 col-lg-6'>
+              <div className='login d-flex align-items-center py-5'>
+                <div className='container'>
+                  <div className='row'>
+                    <div className='col-md-12 col-lg-12 mx-auto'>
+                      <h3 className='login-heading mb-4'>Welcome back!</h3>
+                      {msg ? <Alert color='danger'>{msg}</Alert> : null}
+                      <form>
+                        <div className='form-label-group'>
+                          <input
+                            type='email'
+                            id='inputEmail'
+                            className='form-control'
+                            placeholder='Email address'
+                            required
+                            autoFocus
+                            value={email}
+                            onChange={handleChangeEmail}
+                          />
+                          <label htmlFor='inputEmail'>Email address</label>
+                        </div>
 
-      {!auth ||
-        (!auth.user && (
-          <section className='banner-area relative'>
-            <div className='overlay overlay-bg'></div>
-            <div className='container'>
-              <div className='row fullscreen align-items-center justify-content-between'>
-                <div className='col-lg-6 col-md-7 col-sm-8'>
-                  <div className='banner-content'>
-                    <h1>
-                      Task Controller <br />
-                    </h1>
-                    <p>
-                      Task controller this app will help to track daily tasks
-                      and works
-                    </p>
+                        <div className='form-label-group'>
+                          <input
+                            type='password'
+                            id='inputPassword'
+                            className='form-control'
+                            placeholder='Password'
+                            required
+                            value={password}
+                            onChange={handleChangePassword}
+                          />
+                          <label htmlFor='inputPassword'>Password</label>
+                        </div>
+
+                        <div className='custom-control custom-checkbox mb-3'>
+                          <input
+                            type='checkbox'
+                            className='custom-control-input'
+                            id='customCheck1'
+                          />
+                          <label
+                            className='custom-control-label'
+                            htmlFor='customCheck1'
+                          >
+                            Remember password
+                          </label>
+                        </div>
+                        <button
+                          className='btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2'
+                          type='submit'
+                          onClick={handleOnSubmit}
+                        >
+                          Sign in
+                        </button>
+                        <div className='text-center'>
+                          <a className='small' href='#'>
+                            Forgot password?
+                          </a>
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                </div>
-                <div className='col-lg-5 col-md-5 col-sm-4'>
-                  <img
-                    src='https://user-images.githubusercontent.com/58518192/88472695-774e6a00-cf37-11ea-970c-df3f66b3bfcb.png'
-                    alt='image'
-                    className='img-fluid'
-                  />
                 </div>
               </div>
             </div>
-          </section>
-        ))}
+          </div>
+        </div>
+      )}
     </Fragment>
   );
 };
@@ -63,5 +136,6 @@ const LogInForm = ({ auth, isLoading }) => {
 const mapStateToProps = state => ({
   auth: state.auth,
   isLoading: state.auth.isLoading,
+  error: state.error,
 });
 export default connect(mapStateToProps, { login, clearErrors })(LogInForm);

@@ -7,7 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   Container,
 } from 'reactstrap';
 
@@ -29,36 +28,22 @@ const AppNavbar = ({ auth }) => {
           </strong>
         </span>
       </NavItem>
-      <NavItem>
-        <NavLink>
-          {auth.user && auth.user.role === 'admin' ? (
-            <Link className='option' to='/admin-home'>
-              Home
-            </Link>
-          ) : (
-            <Link className='option' to='/user-home'>
-              Home
-            </Link>
-          )}
-        </NavLink>
+      <NavItem className='p-2'>
+        {auth.user && auth.user.role === 'admin' ? (
+          <Link to='/admin-home'>Home</Link>
+        ) : (
+          <Link to='/user-home'>Home</Link>
+        )}
       </NavItem>
 
       {auth && auth.user && auth.user.role === 'admin' && (
         <>
-          <NavItem>
-            <NavLink>
-              <Link className='option' to='/users-info'>
-                User Info
-              </Link>
-            </NavLink>
+          <NavItem className='p-2'>
+            <Link to='/users-info'>User Info</Link>
           </NavItem>
 
-          <NavItem>
-            <NavLink>
-              <Link className='option' to='/tasks-info'>
-                Task Info
-              </Link>
-            </NavLink>
+          <NavItem className='p-2'>
+            <Link to='/tasks-info'>Task Info</Link>
           </NavItem>
         </>
       )}
@@ -91,8 +76,6 @@ const AppNavbar = ({ auth }) => {
     </Navbar>
   );
 };
-
-// TODO: render navbar based on user rolo (auth)
 
 const mapStateToProps = state => ({
   auth: state.auth,

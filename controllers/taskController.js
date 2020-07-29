@@ -9,7 +9,6 @@ exports.assignTask = catchAsync(async (req, res, next) => {
 
   if (!taskName || !userEmail) return next(new AppError('Please enter all fields 🙂', 400));
 
-  console.log(taskName, userEmail);
   // next(new AppError('User not found with that email!', 404));
 
   const newTask = await Task.create({ taskName, user: userEmail });
