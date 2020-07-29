@@ -14,7 +14,6 @@ import {
 
 import { addUser } from '../../actions/adminActions';
 import { clearErrors } from '../../actions/errorActions';
-// import { showAlert } from '../alert';
 
 // TODO: Name input field and save
 
@@ -42,7 +41,6 @@ const AddUserForm = ({
     // Check for register error
     if (error.id === 'ADD_USER_FAIL') {
       setMsg(error.msg.message);
-      console.log(error.msg.message);
     } else {
       setMsg(null);
     }
@@ -64,12 +62,7 @@ const AddUserForm = ({
     addUser(body);
     setIsDataChanged(!isDataChanged);
     clearErrors();
-    setName('');
-    setDesi('');
-    setEmail('');
-    setPass('');
-    // toggle();
-    // showAlert('success', 'New user Saved!');
+    document.getElementById('input_form').reset();
   };
 
   return (
@@ -81,7 +74,7 @@ const AddUserForm = ({
         <ModalHeader toggle={toggle}>Add New User Form.</ModalHeader>
         <ModalBody>
           {msg ? <Alert color='danger'>{msg}</Alert> : null}
-          <Form>
+          <Form id='input_form'>
             <FormGroup>
               <Label for='name'>Name</Label>
               <Input

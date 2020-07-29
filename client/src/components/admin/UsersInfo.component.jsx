@@ -9,7 +9,6 @@ import AddUserForm from './AddUserForm.component';
 
 function UsersInfo({ auth, user, getAllUsers, allUsers }) {
   const [isDataChanged, setIsDataChanged] = useState(false);
-  console.log('isDataChanged : ', isDataChanged);
   useEffect(() => {
     getAllUsers();
   }, [isDataChanged]);

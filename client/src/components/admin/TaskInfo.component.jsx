@@ -8,7 +8,6 @@ import { assignTask } from '../../actions/adminActions';
 import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 
-// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
 
 const TaskInfo = ({
@@ -19,8 +18,6 @@ const TaskInfo = ({
   tasks,
   getAllTask,
   assignTask,
-  // loading,
-  // error,
 }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   const [isopen, setIsopen] = useState(false);
@@ -41,8 +38,6 @@ const TaskInfo = ({
   if (!user || user.role === 'user') {
     return <Redirect to='/' />;
   }
-
-  console.log('all users', allUsers);
 
   const handleEmailChange = e => setEmail(e.target.value);
   const handleTaskChange = e => setTask(e.target.value);
@@ -126,7 +121,7 @@ const TaskInfo = ({
           <MDBDataTable striped bordered hover fixed data={data} />
         </>
       )}
-      <div className='add_btn'>
+      <div className='add_btn row-cols-1 pb-3'>
         <button
           type='button'
           className='btn btn-outline-success'
@@ -136,73 +131,76 @@ const TaskInfo = ({
           Assign New Task
         </button>
       </div>
-      <div className='row'>
+      <div className='row pb-5 mb-5'>
         <div className='col-mx-12 col-md-12 col-sm-12'>
           {isopen && (
             <form id='works_input_form' onSubmit={handleSubmit}>
-              <tr className='text-center'>
-                <td>
-                  <div className='form-group'>
-                    <select
-                      className='selectpicker form-control'
-                      data-style='btn-outline-secondary'
-                      name='userEmail'
-                      data-show-subtext='true'
-                      data-live-search='true'
-                      searchable='Search here..'
-                      onChange={handleEmailChange}
-                      required
-                    >
-                      <option disabled selected>
-                        Assigned User
-                      </option>
-                      {allUsers.map(user => (
-                        <option data-subtext={user.name}>{user.email}</option>
-                      ))}
-                    </select>
-                  </div>
-                </td>
-                <td>
-                  <div className='form-group  p-2'>
-                    <textarea
-                      className='form-control'
-                      id='title'
-                      rows='1'
-                      cols='26'
-                      placeholder='Task'
-                      required
-                      onChange={handleTaskChange}
-                    ></textarea>
-                  </div>
-                </td>
-                <td></td>
-                <td>
-                  <button
-                    type='submit'
-                    className='btn btn-success'
-                    title='Save'
-                    style={{ borderRadius: '10px' }}
-                  >
-                    <i
-                      className='far fa-check-circle'
-                      style={{ fontSize: '20px' }}
-                    ></i>
-                  </button>
+              <table>
+                <tbody>
+                  <tr className='text-center'>
+                    <td>
+                      <div className='form-group'>
+                        <select
+                          className='form-control'
+                          data-style='btn-outline-secondary'
+                          name='userEmail'
+                          onChange={handleEmailChange}
+                          required
+                        >
+                          <option disabled selected defaultValue=''>
+                            Assigned User
+                          </option>
+                          {allUsers.map(user => (
+                            <option key={user.email} data-subtext={user.name}>
+                              {user.email}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </td>
+                    <td>
+                      <div className='form-group  p-2'>
+                        <textarea
+                          className='form-control'
+                          id='title'
+                          rows='1'
+                          cols='26'
+                          placeholder='Task'
+                          required
+                          onChange={handleTaskChange}
+                        ></textarea>
+                      </div>
+                    </td>
+                    <td></td>
+                    <td>
+                      <button
+                        type='submit'
+                        className='btn btn-success'
+                        title='Save'
+                        style={{ borderRadius: '10px' }}
+                      >
+                        <i
+                          className='far fa-check-circle'
+                          style={{ fontSize: '20px' }}
+                        ></i>
+                      </button>
 
-                  <button
-                    type='button'
-                    className='btn btn-outline-warning'
-                    title='Cancle'
-                    onClick={cancelBtnClick}
-                    style={{ borderRadius: '10px' }}
-                  >
-                    <i
-                      className='fas fa-minus cc_pointer'
-                      style={{ fontSize: '15px' }}
-                    ></i>
-                  </button>
-                </td>
-              </tr>
+                      <button
+                        type='button'
+                        className='btn btn-outline-warning'
+                        title='Cancle'
+                        onClick={cancelBtnClick}
+                        style={{ borderRadius: '10px' }}
+                      >
+                        <i
+                          className='fas fa-minus cc_pointer'
+                          style={{ fontSize: '15px' }}
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           )}
         </div>
@@ -218,8 +216,6 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   allUsers: state.admin.allUsers.users,
   tasks: state.task.tasks,
-  // loading: state.task.loading,
-  // error: state.error,
 });
 export default connect(mapStateToProps, {
   getAllTask,

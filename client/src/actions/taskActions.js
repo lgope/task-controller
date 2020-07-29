@@ -23,31 +23,27 @@ export const getAllTask = () => (dispatch, getState) => {
   axios
     .get(`/api/task/get-all-task`, tokenConfig(getState))
     .then(res => {
-      // console.log('task data 1:', res.data);
       dispatch({
         type: actions.GET_TASKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      // console.log('err', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
 export const updateTaskProgress = (id, body) => (dispatch, getState) => {
   dispatch(setTasksLoading());
-  console.log('object 12');
   axios
     .put(`/api/task/progress-update/${id}`, body, tokenConfig(getState))
     .then(res => {
-      console.log('updated tasks 🔔🔔🔔🔔', res.data);
+      // TODO: optimaized loading time
       dispatch({
         type: actions.UPDATE_PROGRESS,
       });
     })
     .catch(err => {
-      console.log('err', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

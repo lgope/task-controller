@@ -6,7 +6,7 @@ exports.auth = (req, res, next) => {
   const token = req.header('x-auth-token');
 
   // Check for token
-  if (!token) return next(new AppError('No token, authorization denied', 401));
+  if (!token) return  next(new AppError('No token, authorization denied', 401));
 
   try {
     // Verify token
@@ -14,7 +14,6 @@ exports.auth = (req, res, next) => {
 
     // Add user from payload
     req.user = decoded;
-    console.log('auth done');
     next();
   } catch (error) {
     // res.status(400).json({ msg: 'Token is not valid' });

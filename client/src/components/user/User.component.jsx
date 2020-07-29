@@ -4,35 +4,19 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-// import { getUserTasks } from '../../actions/userActions';
 import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
 
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
 import { showAlert } from '../alert';
 
-const User = ({
-  user,
-  getUserWorks,
-  saveTodayWork,
-  dailyWorks,
-  // error,
-  // userTasks,
-  // task,
-  // dailyW,
-}) => {
+const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
   const [isopen, setIsopen] = useState(false);
   const [isDataChange, setIsDataChange] = useState(false);
   const [title, setTitle] = useState('');
   const [des, setDes] = useState('');
 
-  // console.log('working page error ', error);
-
-  console.log('user id::: check 11 :: ', user);
-  // console.log('isData Changged: ', isDataChange);
-
   useEffect(() => {
-    console.log('useEffect called user com');
     if (user) {
       getUserWorks(user._id);
     }
@@ -69,8 +53,6 @@ const User = ({
       setIsDataChange(!isDataChange);
       setIsopen(false);
       showAlert('success', 'Your work has been saved!');
-      setTitle('');
-      setDes('');
     }
   };
 
@@ -127,72 +109,76 @@ const User = ({
         <div className='col-mx-12 col-md-12 col-sm-12'>
           {isopen && (
             <form id='works_input_form'>
-              <tr className='text-center'>
-                <td>
-                  <div className='form-group p-3'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='date'
-                      value={dayjs(Date.now()).format('MMMM DD YYYY')}
-                      readOnly
-                    />
-                  </div>
-                </td>
-                <td>
-                  <div className='form-group  p-2'>
-                    <textarea
-                      class='form-control'
-                      id='title'
-                      rows='2'
-                      cols='26'
-                      placeholder='Daily Work Title'
-                      required
-                      onChange={handleTitleChange}
-                    ></textarea>
-                  </div>
-                </td>
-                <td>
-                  <div className='form-group  p-2'>
-                    <textarea
-                      class='form-control'
-                      id='des'
-                      rows='2'
-                      cols='40'
-                      placeholder='Description'
-                      required
-                      onChange={handleDescriptionChange}
-                    ></textarea>
-                  </div>
-                </td>
-                <td>
-                  <button
-                    type='submit'
-                    className='btn btn-success'
-                    onClick={handleSaveBtnClick}
-                    title='Save'
-                    style={{ borderRadius: '10px' }}
-                  >
-                    <i
-                      className='far fa-check-circle'
-                      style={{ fontSize: '20px' }}
-                    ></i>
-                  </button>
+              <table>
+                <tbody>
+                  <tr className='text-center'>
+                    <td>
+                      <div className='form-group p-3'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='date'
+                          value={dayjs(Date.now()).format('MMMM DD YYYY')}
+                          readOnly
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div className='form-group  p-2'>
+                        <textarea
+                          className='form-control'
+                          id='title'
+                          rows='2'
+                          cols='26'
+                          placeholder='Daily Work Title'
+                          required
+                          onChange={handleTitleChange}
+                        ></textarea>
+                      </div>
+                    </td>
+                    <td>
+                      <div className='form-group  p-2'>
+                        <textarea
+                          className='form-control'
+                          id='des'
+                          rows='2'
+                          cols='40'
+                          placeholder='Description'
+                          required
+                          onChange={handleDescriptionChange}
+                        ></textarea>
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        type='submit'
+                        className='btn btn-success'
+                        onClick={handleSaveBtnClick}
+                        title='Save'
+                        style={{ borderRadius: '10px' }}
+                      >
+                        <i
+                          className='far fa-check-circle'
+                          style={{ fontSize: '20px' }}
+                        ></i>
+                      </button>
 
-                  <button
-                    type='button'
-                    className='btn btn-outline-warning'
-                    title='Cancle'
-                    onClick={cancelBtnClick}
-                    style={{ borderRadius: '10px' }}
-                  >
-                    <i
-                      className='fas fa-minus cc_pointer'
-                      style={{ fontSize: '15px' }}
-                    ></i>
-                  </button>
-                </td>
-              </tr>
+                      <button
+                        type='button'
+                        className='btn btn-outline-warning'
+                        title='Cancle'
+                        onClick={cancelBtnClick}
+                        style={{ borderRadius: '10px' }}
+                      >
+                        <i
+                          className='fas fa-minus cc_pointer'
+                          style={{ fontSize: '15px' }}
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           )}
         </div>
@@ -204,14 +190,11 @@ const User = ({
 // TODO: progress change
 const mapStateToProps = state => ({
   user: state.auth.user,
-  // userTasks: state.userRoutes.tasks,
   task: state.task.task,
-  // error: state.error,
   dailyW: state.dailyWorks,
   dailyWorks: state.dailyWorks.userWorks,
 });
 export default connect(mapStateToProps, {
-  // getUserTasks,
   getUserWorks,
   saveTodayWork,
 })(User);

@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import { updateTaskProgress } from '../../actions/taskActions';
 import { MDBDataTable } from 'mdbreact';
 
-// import Loading from '../loading/Loading.component';
 import { showAlert } from '../alert';
-import img_loader from '../../images/img_loader.gif';
+import img_loader from '../../images/img_loader.webp';
 
 const TaskSummarizeTable = ({
   tasks,
@@ -18,7 +17,6 @@ const TaskSummarizeTable = ({
   const [isDataChanged, setIsDataChanged] = useState(false);
   let data;
 
-  console.log('task loading', loading);
   useEffect(() => {
     getUserTasks();
   }, [isDataChanged]);
@@ -90,8 +88,6 @@ const TaskSummarizeTable = ({
       ],
       rows: rowsData,
     };
-
-    console.log(data.rows);
   }
 
   return (
@@ -108,9 +104,7 @@ const TaskSummarizeTable = ({
         </>
       )}
 
-      <p>
-        {!loading && tasks.length <= 0 && <h3>No task assigned yet! 🙂</h3>}
-      </p>
+      <h3>{!loading && tasks.length <= 0 && 'No task assigned yet! 🙂'}</h3>
     </Fragment>
   );
 };

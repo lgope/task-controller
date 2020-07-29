@@ -3,7 +3,7 @@ import React from 'react';
 const AppFooter = () => {
   return (
     <footer
-      className='page-footer font-small white pt-4 text-info'
+      className='page-footer font-small white mt-4 pt-4 text-info'
       style={{ position: 'fixed', height: '65px', bottom: 0, width: '100%' }}
     >
       <div className='container text-center text-md-left'>
@@ -11,7 +11,11 @@ const AppFooter = () => {
           <div className='col-md-7 col-lg-8'>
             <p className='text-center text-md-left text-info'>
               © {new Date().getFullYear()} Copyright:
-              <a href='https://lakshmandev.netlify.app/' target='blank'>
+              <a
+                href='https://lakshmandev.netlify.app/'
+                aria-label='portfolio'
+                target='blank'
+              >
                 <strong className='text-success'> Lakshman</strong>
               </a>
             </p>
@@ -24,6 +28,7 @@ const AppFooter = () => {
                   <a
                     href='https://twitter.com/LakshmanGope'
                     className='btn-floating btn-sm rgba-white-slight mx-1'
+                    aria-label='Twitter'
                     target='blank'
                   >
                     <i className='fab fa-twitter text-info'></i>
@@ -32,6 +37,7 @@ const AppFooter = () => {
                 <li className='list-inline-item'>
                   <a
                     className='btn-floating btn-sm rgba-white-slight mx-1'
+                    aria-label='GitHub'
                     href='https://github.com/lgope'
                     target='blank'
                   >
@@ -41,6 +47,7 @@ const AppFooter = () => {
                 <li className='list-inline-item'>
                   <a
                     className='btn-floating btn-sm rgba-white-slight mx-1'
+                    aria-label='LinkedIn'
                     href='https://www.linkedin.com/in/lakshman-gope-ba8847154/'
                     target='blank'
                   >

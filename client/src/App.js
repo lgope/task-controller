@@ -23,28 +23,24 @@ import TaskInfo from './components/admin/TaskInfo.component';
 import User from './components/user/User.component';
 
 const App = () => {
-  // const currPage = localStorage.getItem('currPage');
-  // console.log('currPage', currPage)
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
-  // if (currPage) {
-  //   return <Redirect to={currPage} />
-  // }
   return (
     <Provider store={store}>
-      {/* redirect previous page if user reload any page */}
-      {/* {currPage && <Redirect to={currPage} />} */}
-      <div className='App'>
+      <Switch>
+        <Route exact path='/' component={LogInForm} />
+      </Switch>
+      <div>
         <AppNavbar />
         <Container>
           <Switch>
-            <Route exact path='/' component={LogInForm} />
+            <Route exact path='/user-home' component={User} />
+            
             <Route exact path='/admin-home' component={Admin} />
-            <Route path='/users-info' component={UsersInfo} />
-            <Route path='/tasks-info' component={TaskInfo} />
-            <Route path='/user-home' component={User} />
+            <Route exact path='/users-info' component={UsersInfo} />
+            <Route exact path='/tasks-info' component={TaskInfo} />
           </Switch>
         </Container>
         <AppFooter />

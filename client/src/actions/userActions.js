@@ -8,14 +8,12 @@ export const getUserTasks = () => (dispatch, getState) => {
   axios
     .get('/api/user', tokenConfig(getState))
     .then(res => {
-      console.log('tasks', res.data);
       dispatch({
         type: actions.GET_USER_TASKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('err', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

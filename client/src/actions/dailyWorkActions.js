@@ -11,14 +11,12 @@ export const saveTodayWork = body => (dispatch, getState) => {
   axios
     .post(`api/daily-work/save-today-work`, body, tokenConfig(getState))
     .then(res => {
-      console.log('today',res.data);
       dispatch({
         type: actions.SAVE_TODAY_WORKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('save error', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -29,14 +27,12 @@ export const getUserWorks = id => (dispatch, getState) => {
   axios
     .get(`api/daily-work/get-user-works/${id}`, tokenConfig(getState))
     .then(res => {
-      console.log('get-user-works', res.data);
       dispatch({
         type: actions.GET_USER_WORKS,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('get-user-works errors : ', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -47,14 +43,12 @@ export const getAllWorks = id => (dispatch, getState) => {
   axios
     .get(`api/daily-work/get-all-work`, tokenConfig(getState))
     .then(res => {
-      console.log('get-ALL-user-works', res.data);
       dispatch({
         type: actions.GET_ALL_USERS_WORK,
         payload: res.data,
       });
     })
     .catch(err => {
-      console.log('get-user-works errors : ', err.response);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
