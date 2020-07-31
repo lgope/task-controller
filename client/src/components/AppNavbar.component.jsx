@@ -9,8 +9,6 @@ import {
   NavItem,
   Container,
 } from 'reactstrap';
-
-import LoginModal from './auth/LoginModal.component';
 import Logout from './auth/Logout.component';
 import { connect } from 'react-redux';
 
@@ -54,26 +52,23 @@ const AppNavbar = ({ auth }) => {
     </Fragment>
   );
 
-  const guestLinks = (
-    <Fragment>
-      <NavItem>
-        <LoginModal />
-      </NavItem>
-    </Fragment>
-  );
-
   return (
-    <Navbar expand='sm' className='mb-5'>
-      <Container>
-        <NavbarBrand href='/'>Task Controller</NavbarBrand>
-        <NavbarToggler onClick={handleToggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className='ml-auto' navbar>
-            {auth && auth.isAuthenticated ? authLinks : guestLinks}
-          </Nav>
-        </Collapse>
-      </Container>
-    </Navbar>
+    <Fragment>
+      {auth.isAuthenticated && (
+        <Navbar expand='sm' className='mb-5'>
+          <Container>
+            <NavbarBrand href='/'>Task Controller</NavbarBrand>
+            <NavbarToggler onClick={handleToggle} />
+            <Collapse isOpen={isOpen} navbar>
+              <Nav className='ml-auto' navbar>
+                {/* {auth && auth.isAuthenticated ? authLinks : guestLinks} */}
+                {authLinks}
+              </Nav>
+            </Collapse>
+          </Container>
+        </Navbar>
+      )}
+    </Fragment>
   );
 };
 

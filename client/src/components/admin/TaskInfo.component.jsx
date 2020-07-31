@@ -9,9 +9,11 @@ import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 
 import { showAlert } from '../alert';
+import SaveBtn from '../buttons/SaveBtn.component';
+import CancleBtn from '../buttons/CancleBtn.component';
 
 const TaskInfo = ({
-  auth,
+  isAuthenticated,
   user,
   getAllUsers,
   allUsers,
@@ -30,12 +32,7 @@ const TaskInfo = ({
     getAllTask();
   }, [isDataChanged]);
 
-  //   TODO: fixed paste link not to redirect.
-  if (auth && !auth.user) {
-    return <Redirect to='/' />;
-  }
-
-  if (!user || user.role === 'user') {
+  if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
@@ -65,6 +62,7 @@ const TaskInfo = ({
       setEmail('');
       setTask('');
       setIsopen(false);
+      showAlert('success', 'Task Assigned!');
     } else {
       showAlert('error', 'All fields are Required!');
     }
@@ -173,30 +171,8 @@ const TaskInfo = ({
                     </td>
                     <td></td>
                     <td>
-                      <button
-                        type='submit'
-                        className='btn btn-success'
-                        title='Save'
-                        style={{ borderRadius: '10px' }}
-                      >
-                        <i
-                          className='far fa-check-circle'
-                          style={{ fontSize: '20px' }}
-                        ></i>
-                      </button>
-
-                      <button
-                        type='button'
-                        className='btn btn-outline-warning'
-                        title='Cancle'
-                        onClick={cancelBtnClick}
-                        style={{ borderRadius: '10px' }}
-                      >
-                        <i
-                          className='fas fa-minus cc_pointer'
-                          style={{ fontSize: '15px' }}
-                        ></i>
-                      </button>
+                      <SaveBtn onClickFunc='' />
+                      <CancleBtn onClickFunc={cancelBtnClick} />
                     </td>
                   </tr>
                 </tbody>
@@ -209,10 +185,8 @@ const TaskInfo = ({
   );
 };
 
-// TODO: ensure user for visible taks progress edit option (get user from state.auth.user)
-
 const mapStateToProps = state => ({
-  auth: state.auth,
+  isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
   allUsers: state.admin.allUsers.users,
   tasks: state.task.tasks,

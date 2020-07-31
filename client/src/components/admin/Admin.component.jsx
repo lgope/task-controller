@@ -6,19 +6,25 @@ import { getAllWorks } from '../../actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
 
-const Admin = ({ user, getAllTask, getAllWorks, allWorks }) => {
+const Admin = ({
+  user,
+  isAuthenticated,
+  getAllTask,
+  getAllWorks,
+  allWorks,
+}) => {
   useEffect(() => {
     getAllWorks();
     getAllTask();
   }, ['']);
 
-  if (!user || user.role === 'user') {
+  if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
   return (
     <Fragment>
-      <h2>Welcome to Admin Panel {user.name} 🎉</h2>
+      <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
       <br />
       <h4>All daily works info: 👇</h4>
       {allWorks.dailyWorks && allWorks.dailyWorks.length > 0 && (
@@ -30,6 +36,7 @@ const Admin = ({ user, getAllTask, getAllWorks, allWorks }) => {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated,
   allWorks: state.dailyWorks.allWorks,
 });
 

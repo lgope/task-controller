@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
 
 import { getAllUsers } from '../../actions/adminActions';
 import UserListTable from './UserListTable.component';
 import AddUserForm from './AddUserForm.component';
 
-function UsersInfo({ auth, user, getAllUsers, allUsers }) {
+function UsersInfo({ isAuthenticated, user, getAllUsers, allUsers }) {
   const [isDataChanged, setIsDataChanged] = useState(false);
+
   useEffect(() => {
     getAllUsers();
   }, [isDataChanged]);
 
-  if (auth && !auth.user) {
-    return <Redirect to='/' />;
-  }
-
-  if (user && user.role === 'user') {
-    swal(
-      'Oops!',
-      'This route is only for ADMIN! You are Not allowed ✋',
-      'error'
-    );
+  if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
@@ -43,7 +34,7 @@ function UsersInfo({ auth, user, getAllUsers, allUsers }) {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
   allUsers: state.admin.allUsers,
   tasks: state.userRoutes.tasks,
