@@ -29,18 +29,16 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Switch>
-        <Route exact path='/' component={LogInForm} />
-      </Switch>
       <div>
         <AppNavbar />
         <Container>
           <Switch>
-            <Route exact path='/user-home' component={User} />
-            
+            <Route exact path='/' component={LogInForm} />
+            <Route path='/user-home' component={User} />
+
             <Route exact path='/admin-home' component={Admin} />
-            <Route exact path='/users-info' component={UsersInfo} />
-            <Route exact path='/tasks-info' component={TaskInfo} />
+            <Route path='/users-info' component={UsersInfo} />
+            <Route  path='/tasks-info' component={TaskInfo} />
           </Switch>
         </Container>
         <AppFooter />

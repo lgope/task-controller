@@ -9,8 +9,16 @@ import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
 import { showAlert } from '../alert';
+import SaveBtn from '../buttons/SaveBtn.component';
+import CancleBtn from '../buttons/CancleBtn.component';
 
-const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
+const User = ({
+  user,
+  isAuthenticated,
+  getUserWorks,
+  saveTodayWork,
+  dailyWorks,
+}) => {
   const [isopen, setIsopen] = useState(false);
   const [isDataChange, setIsDataChange] = useState(false);
   const [title, setTitle] = useState('');
@@ -20,9 +28,10 @@ const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
     if (user) {
       getUserWorks(user._id);
     }
-  }, [isDataChange]);
+  }, [user, isDataChange]);
 
-  if (!user || user.role === 'admin') {
+  // check user role is user && auth
+  if ((user && user.role === 'admin') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
@@ -59,8 +68,8 @@ const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
   return (
     <Fragment>
       <div className='row'>
-        <h5 className='col-md-8'>User name: {user.name}</h5>
-        <h5 className='col-md-4'>Designation: {user.designation}</h5>
+        <h5 className='col-md-8'>User name: {user && user.name}</h5>
+        <h5 className='col-md-4'>Designation: {user && user.designation}</h5>
       </div>
       <br />
 
@@ -150,31 +159,8 @@ const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
                       </div>
                     </td>
                     <td>
-                      <button
-                        type='submit'
-                        className='btn btn-success'
-                        onClick={handleSaveBtnClick}
-                        title='Save'
-                        style={{ borderRadius: '10px' }}
-                      >
-                        <i
-                          className='far fa-check-circle'
-                          style={{ fontSize: '20px' }}
-                        ></i>
-                      </button>
-
-                      <button
-                        type='button'
-                        className='btn btn-outline-warning'
-                        title='Cancle'
-                        onClick={cancelBtnClick}
-                        style={{ borderRadius: '10px' }}
-                      >
-                        <i
-                          className='fas fa-minus cc_pointer'
-                          style={{ fontSize: '15px' }}
-                        ></i>
-                      </button>
+                      <SaveBtn onClickFunc={handleSaveBtnClick} />
+                      <CancleBtn onClickFunc={cancelBtnClick} />
                     </td>
                   </tr>
                 </tbody>
@@ -190,6 +176,7 @@ const User = ({ user, getUserWorks, saveTodayWork, dailyWorks }) => {
 // TODO: progress change
 const mapStateToProps = state => ({
   user: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated,
   task: state.task.task,
   dailyW: state.dailyWorks,
   dailyWorks: state.dailyWorks.userWorks,

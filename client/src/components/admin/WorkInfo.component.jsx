@@ -58,7 +58,7 @@ const DailyWorksTable = ({ dailyWorks }) => {
       hover
       small
       scrollY
-      maxHeight='400px'
+      maxHeight='550px'
       data={data}
     />
   );
