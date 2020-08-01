@@ -1,22 +1,14 @@
 import React, { useEffect, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getAllTask } from '../../actions/taskActions';
-import { getAllWorks } from '../../actions/dailyWorkActions';
+import { getAllWorks } from '../../redux/actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
 
-const Admin = ({
-  user,
-  isAuthenticated,
-  getAllTask,
-  getAllWorks,
-  allWorks,
-}) => {
+const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
   useEffect(() => {
     getAllWorks();
-    getAllTask();
-  }, ['']);
+  }, [getAllWorks]);
 
   if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
@@ -26,7 +18,12 @@ const Admin = ({
     <Fragment>
       <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
       <br />
-      <h4>All daily works info: 👇</h4>
+      <h4>
+        All daily works info:{' '}
+        <span role='img' aria-label='down-sign'>
+          👇
+        </span>
+      </h4>
       {allWorks.dailyWorks && allWorks.dailyWorks.length > 0 && (
         <WorkInfo dailyWorks={allWorks.dailyWorks} />
       )}
@@ -40,4 +37,4 @@ const mapStateToProps = state => ({
   allWorks: state.dailyWorks.allWorks,
 });
 
-export default connect(mapStateToProps, { getAllTask, getAllWorks })(Admin);
+export default connect(mapStateToProps, { getAllWorks })(Admin);

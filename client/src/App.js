@@ -5,8 +5,8 @@ import { Container } from 'reactstrap';
 
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import store from './store';
-import { loadUser } from './actions/authActions';
+import store from './redux/store';
+import { loadUser } from './redux/actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';

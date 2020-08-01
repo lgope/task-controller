@@ -11,7 +11,7 @@ const CancleBtn = ({ onClickFunc }) => {
     >
       <img
         src={require('../../images/delete.webp')}
-        alt='delete image'
+        alt='delete'
         title='Close'
         height='20px'
         width='20px'

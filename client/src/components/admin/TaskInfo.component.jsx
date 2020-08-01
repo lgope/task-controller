@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { getAllTask } from '../../actions/taskActions';
-import { getAllUsers } from '../../actions/adminActions';
-import { assignTask } from '../../actions/adminActions';
+import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
+import { getAllTask } from '../../redux/actions/taskActions';
+import { getAllUsers } from '../../redux/actions/adminActions';
+import { assignTask } from '../../redux/actions/adminActions';
 
 import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
@@ -28,9 +29,9 @@ const TaskInfo = ({
   let data;
 
   useEffect(() => {
-    getAllUsers();
     getAllTask();
-  }, [isDataChanged]);
+    getAllUsers();
+  }, [isDataChanged, getAllTask, getAllUsers]);
 
   if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
@@ -71,7 +72,7 @@ const TaskInfo = ({
   let rowsData = [];
 
   if (tasks.tasks && tasks.tasks.length > 0) {
-    tasks.tasks.map(task => {
+    tasks.tasks.forEach(task => {
       rowsData.push({
         createdAt: dayjs(task.createdAt).format('h:mm a, MMMM DD, YYYY'),
         user: task.user,
@@ -115,72 +116,65 @@ const TaskInfo = ({
       <div>{tasks.tasks && tasks.tasks.length <= 0 && <h1>No task!</h1>}</div>;
       {tasks.tasks && tasks.tasks.length > 0 && (
         <>
-          <h4>Tasks Info : 👇</h4>
+          <h4>
+            Tasks Info :{' '}
+            <span role='img' aria-label='down-sign'>
+              👇
+            </span>
+          </h4>
           <MDBDataTable striped bordered hover fixed data={data} />
         </>
       )}
-      <div className='add_btn row-cols-1 pb-3'>
-        <button
-          type='button'
-          className='btn btn-outline-success'
-          style={{ borderRadius: '10px' }}
-          onClick={handleAddBtnClick}
-        >
-          Assign New Task
-        </button>
-      </div>
-      <div className='row pb-5 mb-5'>
-        <div className='col-mx-12 col-md-12 col-sm-12'>
+      <Row className='row-cols-1 pb-3'>
+        <Col>
+          <Button
+            outline
+            color='success'
+            style={{ borderRadius: '10px' }}
+            onClick={handleAddBtnClick}
+          >
+            Assign New Task
+          </Button>
+        </Col>
+      </Row>
+      <Row className='pb-5 mb-5'>
+        <Col lg='6' md='8' sm='12'>
           {isopen && (
-            <form id='works_input_form' onSubmit={handleSubmit}>
-              <table>
-                <tbody>
-                  <tr className='text-center'>
-                    <td>
-                      <div className='form-group'>
-                        <select
-                          className='form-control'
-                          data-style='btn-outline-secondary'
-                          name='userEmail'
-                          onChange={handleEmailChange}
-                          required
-                        >
-                          <option disabled selected defaultValue=''>
-                            Assigned User
-                          </option>
-                          {allUsers.map(user => (
-                            <option key={user.email} data-subtext={user.name}>
-                              {user.email}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </td>
-                    <td>
-                      <div className='form-group  p-2'>
-                        <textarea
-                          className='form-control'
-                          id='title'
-                          rows='1'
-                          cols='26'
-                          placeholder='Task'
-                          required
-                          onChange={handleTaskChange}
-                        ></textarea>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <SaveBtn onClickFunc='' />
-                      <CancleBtn onClickFunc={cancelBtnClick} />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+            <Form id='works_input_form' onSubmit={handleSubmit}>
+              <FormGroup>
+                <Input
+                  type='select'
+                  name='userEmail'
+                  id='userEmail'
+                  required
+                  onChange={handleEmailChange}
+                >
+                  <option disabled selected defaultValue=''>
+                    Assigned User
+                  </option>
+                  {allUsers &&
+                    allUsers.map(user => (
+                      <option key={user.email} data-subtext={user.name}>
+                        {user.email}
+                      </option>
+                    ))}
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type='textarea'
+                  id='task'
+                  placeholder='Task'
+                  required
+                  onChange={handleTaskChange}
+                />
+              </FormGroup>
+              <SaveBtn onClickFunc='' />
+              <CancleBtn onClickFunc={cancelBtnClick} />
+            </Form>
           )}
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Fragment>
   );
 };

@@ -12,8 +12,8 @@ import {
   Alert,
 } from 'reactstrap'; // ADD_USER_FAIL
 
-import { addUser } from '../../actions/adminActions';
-import { clearErrors } from '../../actions/errorActions';
+import { addUser } from '../../redux/actions/adminActions';
+import { clearErrors } from '../../redux/actions/errorActions';
 
 // TODO: Name input field and save
 
@@ -84,7 +84,6 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Name'
                 required
-                value={name}
                 onChange={handleChangeName}
               />
 
@@ -96,7 +95,6 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Designation'
                 required
-                value={desi}
                 onChange={handleChangeDesignation}
               />
 
@@ -108,7 +106,6 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Email'
                 required
-                value={email}
                 onChange={handleChangeEmail}
               />
 
@@ -120,7 +117,6 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Password'
                 required
-                value={pass}
                 onChange={handleChangePassword}
               />
               <Button

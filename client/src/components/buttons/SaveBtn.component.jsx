@@ -11,7 +11,7 @@ const SaveBtn = ({ onClickFunc }) => {
     >
       <img
         src={require('../../images/add.webp')}
-        alt='add image'
+        alt='add'
         title='Save'
         height='25px'
         width='25px'

@@ -6,14 +6,15 @@ import dayjs from 'dayjs';
 const DailyWorksTable = ({ dailyWorks }) => {
   let rowsData = [];
 
-  dailyWorks.map(da => {
+  // storing user daily works data in rows data
+  dailyWorks.forEach(da =>
     rowsData.push({
       another: '5%',
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
-    });
-  });
+    })
+  );
 
   const data = {
     columns: [

@@ -4,13 +4,14 @@ import { MDBDataTable } from 'mdbreact';
 function UserListTable({ users }) {
   let rowsData = [];
 
-  users.map(user => {
+  // storing users data in rows data
+  users.forEach(user =>
     rowsData.push({
       userName: user.name,
       designation: user.designation,
       email: user.email,
-    });
-  });
+    })
+  );
   const data = {
     columns: [
       {
