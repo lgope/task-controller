@@ -1,10 +1,14 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-import { getUserWorks, saveTodayWork } from '../../actions/dailyWorkActions';
+import {
+  getUserWorks,
+  saveTodayWork,
+} from '../../redux/actions/dailyWorkActions';
 
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
@@ -28,7 +32,11 @@ const User = ({
     if (user) {
       getUserWorks(user._id);
     }
-  }, [user, isDataChange]);
+  }, [user, isDataChange, getUserWorks]);
+
+  useCallback(() => {
+    console.log('useCallback called!!');
+  }, []);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
@@ -40,7 +48,6 @@ const User = ({
   };
 
   const cancelBtnClick = () => {
-    document.getElementById('works_input_form').reset();
     setIsopen(false);
   };
 
@@ -58,7 +65,6 @@ const User = ({
       };
       saveTodayWork(body);
 
-      document.getElementById('works_input_form').reset();
       setIsDataChange(!isDataChange);
       setIsopen(false);
       showAlert('success', 'Your work has been saved!');
@@ -67,108 +73,85 @@ const User = ({
 
   return (
     <Fragment>
-      <div className='row'>
-        <h5 className='col-md-8'>User name: {user && user.name}</h5>
-        <h5 className='col-md-4'>Designation: {user && user.designation}</h5>
-      </div>
+      <Row>
+        <Col md='8'>
+          <h5>User name: {user && user.name}</h5>
+        </Col>
+        <Col md='4'>
+          <h5>Designation: {user && user.designation}</h5>
+        </Col>
+      </Row>
       <br />
 
-      <div className='row'>
-        <div className='col-sm-12 col-md-8 col-mx-8'>
+      <Row>
+        <Col lg='8' md='8' sm='12'>
           {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
             <>
-              <h4>Daily Works : 👇</h4>
+              <h4>
+                Daily Works :{' '}
+                <span role='img' aria-label='down-sign'>
+                  👇
+                </span>
+              </h4>
               <DailyWorksTable dailyWorks={dailyWorks.userDailyWorks} />
-              <div className='add_btn'>
-                <button
-                  type='button'
-                  className='btn btn-outline-success'
-                  style={{ borderRadius: '10px' }}
-                  onClick={handleAddBtnClick}
-                >
-                  Add New
-                </button>
-              </div>
             </>
           )}
 
           {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length === 0 && (
-            <>
-              <h4>No daily works Saved Yet! Add Now.. 👇</h4>
-              <div className='add_btn'>
-                <button
-                  type='button'
-                  className='btn btn-outline-success'
-                  style={{ borderRadius: '10px' }}
-                  onClick={handleAddBtnClick}
-                >
-                  Add New
-                </button>
-              </div>
-            </>
+            <h4>
+              No daily works Saved Yet! Add Now..{' '}
+              <span role='img' aria-label='down-sign'>
+                👇
+              </span>
+            </h4>
           )}
-        </div>
 
-        <div className='col-sm-12 col-md-4 col-mx-4'>
-          <TaskSummarizeTable />
-        </div>
-      </div>
+          {/* work add btn */}
+          <Button outline color='success' onClick={handleAddBtnClick}>
+            Add New
+          </Button>
 
-      <div className='row'>
-        <div className='col-mx-12 col-md-12 col-sm-12'>
           {isopen && (
-            <form id='works_input_form'>
-              <table>
-                <tbody>
-                  <tr className='text-center'>
-                    <td>
-                      <div className='form-group p-3'>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='date'
-                          value={dayjs(Date.now()).format('MMMM DD YYYY')}
-                          readOnly
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div className='form-group  p-2'>
-                        <textarea
-                          className='form-control'
-                          id='title'
-                          rows='2'
-                          cols='26'
-                          placeholder='Daily Work Title'
-                          required
-                          onChange={handleTitleChange}
-                        ></textarea>
-                      </div>
-                    </td>
-                    <td>
-                      <div className='form-group  p-2'>
-                        <textarea
-                          className='form-control'
-                          id='des'
-                          rows='2'
-                          cols='40'
-                          placeholder='Description'
-                          required
-                          onChange={handleDescriptionChange}
-                        ></textarea>
-                      </div>
-                    </td>
-                    <td>
-                      <SaveBtn onClickFunc={handleSaveBtnClick} />
-                      <CancleBtn onClickFunc={cancelBtnClick} />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+            <Form className='pt-2 pb-2 mb-5'>
+              <FormGroup>
+                <Input
+                  type='text'
+                  id='date'
+                  value={dayjs(Date.now()).format('MMMM DD YYYY')}
+                  readOnly
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type='textarea'
+                  className='form-control'
+                  id='title'
+                  placeholder='Daily Work Title'
+                  required
+                  onChange={handleTitleChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type='textarea'
+                  className='form-control'
+                  id='des'
+                  placeholder='Description'
+                  required
+                  onChange={handleDescriptionChange}
+                />
+              </FormGroup>
+              <SaveBtn onClickFunc={handleSaveBtnClick} />
+              <CancleBtn onClickFunc={cancelBtnClick} />
+            </Form>
           )}
-        </div>
-      </div>
+        </Col>
+
+        {/* task summarize table */}
+        <Col lg='4' md='4' sm='12'>
+          <TaskSummarizeTable />
+        </Col>
+      </Row>
     </Fragment>
   );
 };

@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { getUserTasks } from '../../actions/userActions';
+import { getUserTasks } from '../../redux/actions/userActions';
 
 import { connect } from 'react-redux';
-import { updateTaskProgress } from '../../actions/taskActions';
+import { updateTaskProgress } from '../../redux/actions/taskActions';
 import { MDBDataTable } from 'mdbreact';
 
 import { showAlert } from '../alert';
@@ -19,7 +19,7 @@ const TaskSummarizeTable = ({
 
   useEffect(() => {
     getUserTasks();
-  }, [isDataChanged]);
+  }, [isDataChanged, getUserTasks]);
 
   let rowsData = [];
   const handleProgressChange = e => {
@@ -33,7 +33,7 @@ const TaskSummarizeTable = ({
   };
 
   if (tasks.length > 0) {
-    tasks.map(task => {
+    tasks.forEach(task => {
       rowsData.push({
         taskName: task.taskName,
         pro_search: task.progress,
@@ -99,7 +99,12 @@ const TaskSummarizeTable = ({
       )}
       {!loading && data && (
         <>
-          <h4>Tasks : 👇</h4>
+          <h4>
+            Tasks :{' '}
+            <span role='img' aria-label='down-sign'>
+              👇
+            </span>
+          </h4>
           <MDBDataTable striped bordered hover data={data} />;
         </>
       )}

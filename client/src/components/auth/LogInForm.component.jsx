@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 
-import { login } from '../../actions/authActions';
-import { clearErrors } from '../../actions/errorActions';
+import { login } from '../../redux/actions/authActions';
+import { clearErrors } from '../../redux/actions/errorActions';
 import Loading from '../loading/Loading.component';
 
 const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
@@ -116,7 +116,7 @@ const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
                           Sign in
                         </button>
                         <div className='text-center'>
-                          <a className='small' href='#'>
+                          <a className='small' href='/'>
                             Forgot password?
                           </a>
                         </div>

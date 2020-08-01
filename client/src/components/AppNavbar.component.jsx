@@ -1,22 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Container,
-} from 'reactstrap';
+import { Navbar, Nav, NavItem, Container } from 'reactstrap';
 import Logout from './auth/Logout.component';
 import { connect } from 'react-redux';
 
 const AppNavbar = ({ auth }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = () => setIsOpen(!isOpen);
-
   const authLinks = (
     <Fragment>
       <NavItem>
@@ -34,7 +22,7 @@ const AppNavbar = ({ auth }) => {
         )}
       </NavItem>
 
-      {auth && auth.user && auth.user.role === 'admin' && (
+      {auth.user && auth.user.role === 'admin' && (
         <>
           <NavItem className='p-2'>
             <Link to='/users-info'>User Info</Link>
@@ -57,14 +45,14 @@ const AppNavbar = ({ auth }) => {
       {auth.isAuthenticated && (
         <Navbar expand='sm' className='mb-5'>
           <Container>
-            <NavbarBrand href='/'>Task Controller</NavbarBrand>
-            <NavbarToggler onClick={handleToggle} />
-            <Collapse isOpen={isOpen} navbar>
-              <Nav className='ml-auto' navbar>
-                {/* {auth && auth.isAuthenticated ? authLinks : guestLinks} */}
-                {authLinks}
-              </Nav>
-            </Collapse>
+            <Link
+              to={auth.user.role === 'admin' ? '/admin-home' : '/user-home'}
+            >
+              <h5>Task Controller</h5>
+            </Link>
+            <Nav className='ml-auto' navbar>
+              {authLinks}
+            </Nav>
           </Container>
         </Navbar>
       )}
