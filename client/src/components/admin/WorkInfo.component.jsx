@@ -43,7 +43,7 @@ const DailyWorksTable = ({ dailyWorks }) => {
         overflowY: 'scroll',
       },
       {
-        label: 'Des',
+        label: 'Description',
         field: 'description',
         sort: 'asc',
         width: 270,
@@ -52,17 +52,7 @@ const DailyWorksTable = ({ dailyWorks }) => {
     rows: rowsData,
   };
 
-  return (
-    <MDBDataTable
-      striped
-      bordered
-      hover
-      small
-      scrollY
-      maxHeight='550px'
-      data={data}
-    />
-  );
+  return <MDBDataTable striped bordered hover small data={data} />;
 };
 
 export default DailyWorksTable;

@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { getUserTasks } from '../../redux/actions/userActions';
-
 import { connect } from 'react-redux';
-import { updateTaskProgress } from '../../redux/actions/taskActions';
 import { MDBDataTable } from 'mdbreact';
+import dayjs from 'dayjs';
+
+import { getUserTasks } from '../../redux/actions/userActions';
+import { updateTaskProgress } from '../../redux/actions/taskActions';
 
 import { showAlert } from '../alert';
 import img_loader from '../../images/img_loader.webp';
@@ -35,6 +36,7 @@ const TaskSummarizeTable = ({
   if (tasks.length > 0) {
     tasks.forEach(task => {
       rowsData.push({
+        createdAt: dayjs(task.createdAt).format('MMMM DD YYYY'),
         taskName: task.taskName,
         pro_search: task.progress,
         progress: (
@@ -74,16 +76,28 @@ const TaskSummarizeTable = ({
     data = {
       columns: [
         {
+          label: 'Assigned Date',
+          field: 'createdAt',
+          sort: 'asc',
+          width: 100,
+        },
+        {
           label: 'Task',
           field: 'taskName',
           sort: 'asc',
-          width: 270,
+          width: 100,
         },
         {
           label: 'Progress',
           field: 'progress',
           sort: 'asc',
-          width: 270,
+          width: 100,
+        },
+        {
+          label: 'Comment',
+          field: 'comment',
+          sort: 'asc',
+          width: 100,
         },
       ],
       rows: rowsData,

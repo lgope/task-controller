@@ -19,10 +19,7 @@ const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
       <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
       <br />
       <h4>
-        All daily works info:{' '}
-        <span role='img' aria-label='down-sign'>
-          👇
-        </span>
+        All daily works info:
       </h4>
       {allWorks.dailyWorks && allWorks.dailyWorks.length > 0 && (
         <WorkInfo dailyWorks={allWorks.dailyWorks} />

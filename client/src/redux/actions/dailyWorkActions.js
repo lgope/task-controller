@@ -27,9 +27,10 @@ export const getUserWorks = id => (dispatch, getState) => {
   axios
     .get(`api/daily-work/get-user-works/${id}`, tokenConfig(getState))
     .then(res => {
+      // console.log('res.data ', res.data.userDailyWorks);
       dispatch({
         type: actions.GET_USER_WORKS,
-        payload: res.data,
+        payload: res.data.userDailyWorks,
       });
     })
     .catch(err => {
