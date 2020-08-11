@@ -9,13 +9,7 @@ const SaveBtn = ({ onClickFunc }) => {
       title='Save'
       style={{ borderRadius: '10px' }}
     >
-      <img
-        src={require('../../images/add.webp')}
-        alt='add'
-        title='Save'
-        height='25px'
-        width='25px'
-      />
+      Save
     </button>
   );
 };

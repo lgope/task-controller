@@ -27,6 +27,7 @@ const User = ({
   const [isDataChange, setIsDataChange] = useState(false);
   const [title, setTitle] = useState('');
   const [des, setDes] = useState('');
+  const [dailyWorksData, setDailyWorksData] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -34,26 +35,27 @@ const User = ({
     }
   }, [user, isDataChange, getUserWorks]);
 
-  useCallback(() => {
-    console.log('useCallback called!!');
-  }, []);
+  // if (dailyWorks.length > 0) {
+  setDailyWorksData(dailyWorks);
+  // }
+  // let dailyWorksData = dailyWorks;
+  console.log('dailyWorksData ', dailyWorks);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
-  const handleAddBtnClick = () => {
-    setIsopen(true);
-  };
+  const handleAddBtnClick = () => setIsopen(true);
 
-  const cancelBtnClick = () => {
-    setIsopen(false);
-  };
+  const cancelBtnClick = () => setIsopen(false);
 
   const handleTitleChange = e => setTitle(e.target.value);
   const handleDescriptionChange = e => setDes(e.target.value);
-
+  const handleResetDate = e => {
+    console.log('date');
+    // dailyWorksData = '';
+  };
   const handleSaveBtnClick = e => {
     e.preventDefault();
     if (title && des) {
@@ -72,7 +74,7 @@ const User = ({
   };
 
   return (
-    <Fragment>
+    <div className='user_homepage'>
       <Row>
         <Col md='8'>
           <h5>User name: {user && user.name}</h5>
@@ -84,27 +86,22 @@ const User = ({
       <br />
 
       <Row>
-        <Col lg='8' md='8' sm='12'>
-          {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length > 0 && (
-            <>
-              <h4>
-                Daily Works :{' '}
-                <span role='img' aria-label='down-sign'>
-                  👇
-                </span>
-              </h4>
-              <DailyWorksTable dailyWorks={dailyWorks.userDailyWorks} />
-            </>
-          )}
+        <Col lg='7' md='10' sm='12'>
+          {/* {dailyWorksData && ( */}
+          <div>
+            <h4>Daily Works : </h4>
 
-          {dailyWorks.userDailyWorks && dailyWorks.userDailyWorks.length === 0 && (
-            <h4>
-              No daily works Saved Yet! Add Now..{' '}
-              <span role='img' aria-label='down-sign'>
-                👇
-              </span>
-            </h4>
-          )}
+            <DailyWorksTable
+              handleResetDate={handleResetDate}
+              dailyWorks={dailyWorksData}
+            />
+          </div>
+          {/* )} */}
+
+          {dailyWorks.userDailyWorks &&
+            dailyWorks.userDailyWorks.length === 0 && (
+              <h4>No daily works Saved Yet! Add Now.. </h4>
+            )}
 
           {/* work add btn */}
           <Button outline color='success' onClick={handleAddBtnClick}>
@@ -148,11 +145,11 @@ const User = ({
         </Col>
 
         {/* task summarize table */}
-        <Col lg='4' md='4' sm='12'>
+        <Col lg='5' md='10' sm='12'>
           <TaskSummarizeTable />
         </Col>
       </Row>
-    </Fragment>
+    </div>
   );
 };
 

@@ -83,7 +83,7 @@ const TaskInfo = ({
     data = {
       columns: [
         {
-          label: 'Created At',
+          label: 'Assigned Date',
           field: 'createdAt',
           sort: 'asc',
           width: 140,
@@ -116,12 +116,7 @@ const TaskInfo = ({
       <div>{tasks.tasks && tasks.tasks.length <= 0 && <h1>No task!</h1>}</div>;
       {tasks.tasks && tasks.tasks.length > 0 && (
         <>
-          <h4>
-            Tasks Info :{' '}
-            <span role='img' aria-label='down-sign'>
-              👇
-            </span>
-          </h4>
+          <h4>Tasks Info :</h4>
           <MDBDataTable striped bordered hover fixed data={data} />
         </>
       )}

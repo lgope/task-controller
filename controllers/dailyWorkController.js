@@ -57,10 +57,26 @@ exports.getAllDailyWorks = catchAsync(async (req, res, next) => {
   const dailyWorks = await DailyWork.find();
 
   if (!dailyWorks)
-    return next(new AppError('Something Wrong To get all works! Try again.', 404));
+    return next(
+      new AppError('Something Wrong To get all works! Try again.', 404)
+    );
 
   return res.status(200).json({
     status: 'success',
     dailyWorks,
   });
+});
+
+// get all daily works, this routes is only for admin
+exports.getDailyWorksByDate = catchAsync(async (req, res, next) => {
+  const { fromDate, toDate } = req.params;
+  // console.log(fromDate, toDate);
+  const dailyWorks = await DailyWork.find({
+    date: {
+      $lt: `2020-09-26T00:00:00.000+00:00`,
+      $gt: `2020-05-26T00:00:00.000+00:00`,
+    },
+  });
+
+  console.log('daily w : ', dailyWorks.length, dailyWorks);
 });

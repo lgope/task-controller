@@ -1,14 +1,18 @@
 import React from 'react';
-import { MDBDataTable } from 'mdbreact';
-
+import { Row, Col, Form } from 'reactstrap';
 import dayjs from 'dayjs';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
+  const { SearchBar } = Search;
 
-const DailyWorksTable = ({ dailyWorks }) => {
   let rowsData = [];
 
   // storing user daily works data in rows data
   dailyWorks.forEach(da =>
     rowsData.push({
+      id: da._id,
       another: '5%',
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
@@ -16,45 +20,75 @@ const DailyWorksTable = ({ dailyWorks }) => {
     })
   );
 
-  const data = {
-    columns: [
-      {
-        label: 'Date',
-        field: 'date',
-        sort: 'asc',
-        width: 90,
-        height: 40,
-        overflowY: 'scroll',
-      },
-      {
-        label: 'Daily work Title',
-        field: 'title',
-        sort: 'asc',
-        width: 100,
-        height: 40,
-        overflowY: 'scroll',
-      },
-      {
-        label: 'Des',
-        field: 'description',
-        sort: 'asc',
-        width: 270,
-      },
-    ],
-    rows: rowsData,
+  const options = {
+    // pageStartIndex: 0,
+    sizePerPage: 5,
+    hideSizePerPage: true,
+    hidePageListOnlyOnePage: true,
   };
+  const columns = [
+    {
+      dataField: 'date',
+      text: 'Date',
+      sort: true,
+    },
+    {
+      dataField: 'title',
+      text: 'Daily work Title',
+      sort: true,
+    },
+    {
+      dataField: 'description',
+      text: 'Description',
+      sort: true,
+    },
+  ];
 
   return (
-    <MDBDataTable
-      striped
-      bordered
-      hover
-      small
-      scrollY
-      maxHeight='400px'
-      data={data}
-    />
+    <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
+      {props => (
+        <div>
+          <button onClick={handleResetDate}>Reset</button>
+          <Row>
+            <Col lg='10' md='8' sm='8'>
+              <Form>
+                <input
+                  type='date'
+                  id='fromDate'
+                  name='date'
+                  placeholder='From Date'
+                  // onChange={handleFromDate}
+                />
+                <input
+                  className='m-3'
+                  type='date'
+                  id='toDate'
+                  name='date'
+                  placeholder='To Date'
+                  // onChange={handleFromDate}
+                />
+              </Form>
+            </Col>
+            <Col lg='2' md='4' sm='4'>
+              <SearchBar
+                {...props.searchProps}
+                className='custome-search-field'
+                style={{ color: 'black' }}
+                placeholder='Search'
+              />
+            </Col>
+          </Row>
+          <BootstrapTable
+            hover
+            {...props.baseProps}
+            pagination={paginationFactory(options)}
+          />
+        </div>
+      )}
+    </ToolkitProvider>
   );
 };
 
 export default DailyWorksTable;
+
+// return <MDBDataTable striped bordered hover small data={data} />;
