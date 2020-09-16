@@ -13,8 +13,8 @@ import {
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
 import { showAlert } from '../alert';
-import SaveBtn from '../buttons/SaveBtn.component';
-import CancleBtn from '../buttons/CancleBtn.component';
+import SaveBtn from '../form/SaveBtn.component';
+import CancleBtn from '../form/CancleBtn.component';
 
 const User = ({
   user,
@@ -22,6 +22,8 @@ const User = ({
   getUserWorks,
   saveTodayWork,
   dailyWorks,
+  updateWork,
+  isWorkDataChange,
 }) => {
   const [isopen, setIsopen] = useState(false);
   const [isDataChange, setIsDataChange] = useState(false);
@@ -30,16 +32,16 @@ const User = ({
   const [dailyWorksData, setDailyWorksData] = useState('');
 
   useEffect(() => {
+    console.log('date 1', dailyWorksData);
     if (user) {
       getUserWorks(user._id);
     }
   }, [user, isDataChange, getUserWorks]);
 
   // if (dailyWorks.length > 0) {
-  setDailyWorksData(dailyWorks);
   // }
   // let dailyWorksData = dailyWorks;
-  console.log('dailyWorksData ', dailyWorks);
+  console.log('dailyWorksData ', dailyWorksData);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
@@ -52,10 +54,7 @@ const User = ({
 
   const handleTitleChange = e => setTitle(e.target.value);
   const handleDescriptionChange = e => setDes(e.target.value);
-  const handleResetDate = e => {
-    console.log('date');
-    // dailyWorksData = '';
-  };
+
   const handleSaveBtnClick = e => {
     e.preventDefault();
     if (title && des) {
@@ -74,7 +73,7 @@ const User = ({
   };
 
   return (
-    <div className='user_homepage'>
+    <div className='container'>
       <Row>
         <Col md='8'>
           <h5>User name: {user && user.name}</h5>
@@ -86,18 +85,19 @@ const User = ({
       <br />
 
       <Row>
-        <Col lg='7' md='10' sm='12'>
-          {/* {dailyWorksData && ( */}
-          <div>
-            <h4>Daily Works : </h4>
+        <Col lg='12' md='12' sm='12'>
+          {dailyWorks && user && (
+            <div>
+              <h4>Daily Works : </h4>
 
-            <DailyWorksTable
-              handleResetDate={handleResetDate}
-              dailyWorks={dailyWorksData}
-            />
-          </div>
-          {/* )} */}
-
+              <DailyWorksTable
+                isDataChange={isDataChange}
+                setIsDataChange={setIsDataChange}
+                userId={user._id}
+                dailyWorks={dailyWorks}
+              />
+            </div>
+          )}
           {dailyWorks.userDailyWorks &&
             dailyWorks.userDailyWorks.length === 0 && (
               <h4>No daily works Saved Yet! Add Now.. </h4>
@@ -143,9 +143,12 @@ const User = ({
             </Form>
           )}
         </Col>
-
+      </Row>
+      <br />
+      <hr />
+      <Row>
         {/* task summarize table */}
-        <Col lg='5' md='10' sm='12'>
+        <Col lg='12' md='12' sm='12'>
           <TaskSummarizeTable />
         </Col>
       </Row>

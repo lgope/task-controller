@@ -6,6 +6,8 @@ export const GET_ALL_USERS_WORK = 'GET_ALL_USERS_WORK';
 
 export const GET_USER_WORKS = 'GET_USER_WORKS';
 
+export const UPDATE_USER_WORK = 'UPDATE_USER_WORK';
+
 export const SAVE_TODAY_WORKS = 'SAVE_TODAY_WORKS';
 
 export const GET_ALL_WORK = 'GET_ALL_WORK';
@@ -21,6 +23,8 @@ export const USER_TASKS_LOADING = 'USER_TASKS_LOADING';
 export const GET_TASKS = 'GET_TASKS';
 
 export const GET_TASK = 'GET_TASK';
+
+export const UPDATE_TASK = 'UPDATE_TASK';
 
 export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
 

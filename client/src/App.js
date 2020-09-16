@@ -33,13 +33,10 @@ const App = () => {
         <AppNavbar />
         <Switch>
           <Route path='/user-home' component={User} />
-          <Container>
-            <Route exact path='/' component={LogInForm} />
-
-            <Route exact path='/admin-home' component={Admin} />
-            <Route path='/users-info' component={UsersInfo} />
-            <Route path='/tasks-info' component={TaskInfo} />
-          </Container>
+          <Route exact path='/' component={LogInForm} />
+          <Route exact path='/admin-home' component={Admin} />
+          <Route path='/users-info' component={UsersInfo} />
+          <Route path='/tasks-info' component={TaskInfo} />
         </Switch>
         <AppFooter />
       </div>

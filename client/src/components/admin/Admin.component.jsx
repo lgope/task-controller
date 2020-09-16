@@ -15,16 +15,14 @@ const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
   }
 
   return (
-    <Fragment>
+    <div className='container'>
       <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
       <br />
-      <h4>
-        All daily works info:
-      </h4>
+      <h4>All daily works info:</h4>
       {allWorks.dailyWorks && allWorks.dailyWorks.length > 0 && (
         <WorkInfo dailyWorks={allWorks.dailyWorks} />
       )}
-    </Fragment>
+    </div>
   );
 };
 

@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 
 import { showAlert } from '../alert';
-import SaveBtn from '../buttons/SaveBtn.component';
-import CancleBtn from '../buttons/CancleBtn.component';
+import SaveBtn from '../form/SaveBtn.component';
+import CancleBtn from '../form/CancleBtn.component';
 
 const TaskInfo = ({
   isAuthenticated,
@@ -112,7 +112,7 @@ const TaskInfo = ({
   }
 
   return (
-    <Fragment>
+    <div className='container'>
       <div>{tasks.tasks && tasks.tasks.length <= 0 && <h1>No task!</h1>}</div>;
       {tasks.tasks && tasks.tasks.length > 0 && (
         <>
@@ -170,7 +170,7 @@ const TaskInfo = ({
           )}
         </Col>
       </Row>
-    </Fragment>
+    </div>
   );
 };
 
