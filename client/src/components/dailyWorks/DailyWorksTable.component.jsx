@@ -1,10 +1,24 @@
-import React from 'react';
-import { Row, Col, Form } from 'reactstrap';
+import React, { useState } from 'react';
+import { Row, Col, Form, Button } from 'reactstrap';
 import dayjs from 'dayjs';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
+
+import { connect } from 'react-redux';
+import { getFilterdWorks } from '../../redux/actions/dailyWorkActions';
+
+import EditModal from '../form/EditModal.component';
+
+const DailyWorksTable = ({
+  isDataChange,
+  setIsDataChange,
+  userId,
+  dailyWorks,
+  getFilterdWorks,
+}) => {
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const { SearchBar } = Search;
 
   let rowsData = [];
@@ -17,6 +31,14 @@ const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
+      action: (
+        <EditModal
+          buttonLabel='edit'
+          data={da}
+          isDataChange={isDataChange}
+          setIsDataChange={setIsDataChange}
+        />
+      ),
     })
   );
 
@@ -42,22 +64,43 @@ const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
       text: 'Description',
       sort: true,
     },
+    {
+      dataField: 'action',
+      text: 'Action',
+      headerAlign: 'center',
+      align: 'center',
+    },
   ];
+
+  const handleTextFieldChange = (mySetFunction, event) => {
+    mySetFunction(event.currentTarget.value);
+  };
+
+  const handleBtnClick = e => {
+    e.preventDefault();
+    getFilterdWorks(userId, fromDate, toDate);
+    console.log(fromDate, toDate);
+  };
+
+  const handleResetDate = e => {
+    e.preventDefault();
+    setIsDataChange(!isDataChange);
+  };
 
   return (
     <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
       {props => (
         <div>
-          <button onClick={handleResetDate}>Reset</button>
           <Row>
-            <Col lg='10' md='8' sm='8'>
-              <Form>
+            <Col lg='6' md='8' sm='8'>
+              <Form onSubmit={handleBtnClick}>
                 <input
                   type='date'
                   id='fromDate'
                   name='date'
                   placeholder='From Date'
-                  // onChange={handleFromDate}
+                  required
+                  onChange={e => handleTextFieldChange(setFromDate, e)}
                 />
                 <input
                   className='m-3'
@@ -65,11 +108,24 @@ const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
                   id='toDate'
                   name='date'
                   placeholder='To Date'
-                  // onChange={handleFromDate}
+                  required
+                  onChange={e => handleTextFieldChange(setToDate, e)}
                 />
+
+                <Button type='submit' outline color='info'>
+                  Click
+                </Button>
               </Form>
             </Col>
-            <Col lg='2' md='4' sm='4'>
+            <Col lg='3' md='4' sm='4'>
+              <button
+                className='text-info all_dailywork_btn'
+                onClick={handleResetDate}
+              >
+                All
+              </button>
+            </Col>
+            <Col lg='3' md='4' sm='4'>
               <SearchBar
                 {...props.searchProps}
                 className='custome-search-field'
@@ -89,6 +145,8 @@ const DailyWorksTable = ({ handleResetDate, dailyWorks }) => {
   );
 };
 
-export default DailyWorksTable;
+export default connect(null, {
+  getFilterdWorks,
+})(DailyWorksTable);
 
 // return <MDBDataTable striped bordered hover small data={data} />;

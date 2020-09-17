@@ -4,9 +4,13 @@ const catchAsync = require('../utils/catchAsync');
 // Global Error Handler
 const AppError = require('../utils/appError');
 
+// Global Error Handler
+const factory = require('./handlerFactory');
+
 // Models
 const DailyWork = require('../models/dailyWorkModel');
 const User = require('../models/userModel');
+const moment = require('moment');
 
 // TODO: update | delete functionality on demand
 
@@ -68,15 +72,27 @@ exports.getAllDailyWorks = catchAsync(async (req, res, next) => {
 });
 
 // get all daily works, this routes is only for admin
-exports.getDailyWorksByDate = catchAsync(async (req, res, next) => {
-  const { fromDate, toDate } = req.params;
-  // console.log(fromDate, toDate);
-  const dailyWorks = await DailyWork.find({
-    date: {
-      $lt: `2020-09-26T00:00:00.000+00:00`,
-      $gt: `2020-05-26T00:00:00.000+00:00`,
-    },
-  });
+exports.getDailyWorksByDate = factory.getDataByDate(DailyWork)
 
-  console.log('daily w : ', dailyWorks.length, dailyWorks);
-});
+// catchAsync(async (req, res, next) => {
+//   const {userId, fromDate, toDate } = req.params;
+  
+//   const fromD = moment(fromDate).subtract(1,'days').format().split("T")[0]
+//   const toD = moment(toDate).add(1,'days').format().split("T")[0]
+
+//   console.log(fromD, toD);
+//   console.log('hh ',fromDate, toDate);
+  
+//   const filteredDailyWorks = await DailyWork.find({ userId,
+//     date: {
+//       $gt: `${fromD}T00:00:00.000+00:00`,
+//       $lt: `${toD}T00:00:00.000+00:00`,
+//     },
+//   });
+//   res.status(200).json(filteredDailyWorks)
+// });
+
+
+// delete controller
+exports.updateDailyWork = factory.updateOne(DailyWork);
+exports.deleteDailyWork = factory.deleteOne(DailyWork);

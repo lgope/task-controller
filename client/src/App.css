@@ -78,3 +78,16 @@
     color: #777;
   }
 }
+
+.edit_modal_btn {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+}
+.all_dailywork_btn {
+  font-size: 15px;
+  padding: 8px;
+  margin: 10px;
+  border: none;
+  background-color: rgb(255, 251, 251);
+}

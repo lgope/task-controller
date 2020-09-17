@@ -38,6 +38,23 @@ export const getUserWorks = id => (dispatch, getState) => {
     });
 };
 
+// upate daily works | user route
+export const updateWork = (id, body) => (dispatch, getState) => {
+  dispatch(setWorksLoading());
+  axios
+    .patch(`api/daily-work/update-dailyWork/${id}`, body,tokenConfig(getState))
+    .then(res => {
+      // console.log('res.data ', res.data.userDailyWorks);
+      dispatch({
+        type: actions.UPDATE_USER_WORK,
+        payload: res.data.dailyWork,
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
 // get all daily works | admin route
 export const getAllWorks = id => (dispatch, getState) => {
   dispatch(setWorksLoading());
@@ -46,6 +63,23 @@ export const getAllWorks = id => (dispatch, getState) => {
     .then(res => {
       dispatch({
         type: actions.GET_ALL_USERS_WORK,
+        payload: res.data,
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+// get all daily works based on date | admin route
+export const getFilterdWorks = (userId,fromDate, toDate) => (dispatch, getState) => {
+  dispatch(setWorksLoading());
+  axios
+    .get(`api/daily-work/get-works-by-date/${userId}/${fromDate}/${toDate}`, tokenConfig(getState))
+    .then(res => {
+      // console.log('date data ', res.data);
+      dispatch({
+        type: actions.GET_USER_WORKS,
         payload: res.data,
       });
     })

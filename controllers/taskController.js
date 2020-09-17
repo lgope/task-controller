@@ -1,6 +1,9 @@
 // assign task to a user
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const moment = require('moment');
+
+const factory = require('./handlerFactory');
 
 const Task = require('../models/taskModel');
 
@@ -51,20 +54,40 @@ exports.getAllTasks = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateProgress = catchAsync(async (req, res, next) => {
-  const task = await Task.findById(req.params.id);
-  if (!task) return next(new AppError('Task not found with ID!', 404));
-  const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
+// exports.updateProgress = catchAsync(async (req, res, next) => {
+//   const task = await Task.findById(req.params.id);
+//   if (!task) return next(new AppError('Task not found with ID!', 404));
+//   const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
+
+//   if (!updatedTask) return next(new AppError('Something wrong!', 400));
+
+//   return res.status(201).json({
+//     status: 'success',
+//     task: updatedTask,
+//   });
+// });
+
+exports.updateTask = factory.updateOne(Task);
+
+exports.getTasksByDate =   catchAsync(async (req, res, next) => {
+  const { userEmail, fromDate, toDate } = req.params;
+
+  const fromD = moment(fromDate).subtract(1, 'days').format().split('T')[0];
+  const toD = moment(toDate).add(1, 'days').format().split('T')[0];
+
+
+  const filteredData = await Task.find({
+    user: userEmail,
+    createdAt: {
+      $gt: `${fromD}T00:00:00.000+00:00`,
+      $lt: `${toD}T00:00:00.000+00:00`,
+    },
   });
 
-  if (!updatedTask) return next(new AppError('Something wrong!', 400));
-
-  return res.status(201).json({
-    status: 'success',
-    task: updatedTask,
-  });
+  res.status(200).json(filteredData);
 });
 
 // update a task by id

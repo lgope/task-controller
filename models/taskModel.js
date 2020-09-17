@@ -15,6 +15,9 @@ const taskSchema = new mongoose.Schema({
     default: 0,
     required: [true, 'Task must have a progress'],
   },
+  comment: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -19,7 +19,7 @@ function UsersInfo({ isAuthenticated, user, getAllUsers, allUsers }) {
   }
 
   return (
-    <div>
+    <div className='container'>
       {allUsers.users ? (
         <UserListTable users={allUsers.users} />
       ) : (

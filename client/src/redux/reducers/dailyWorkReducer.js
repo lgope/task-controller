@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
     case actions.SAVE_TODAY_WORKS:
       return {
         ...state,
-        todayWorks: action.payload,
+        todayWorks: [action.payload, ...state.todayWorks], // [action.payload, ...state.items]
         loading: false,
       };
 
@@ -27,6 +27,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         allWorks: action.payload,
+        loading: false,
+      };
+
+    case actions.UPDATE_USER_WORK:
+      return {
+        ...state,
+        userWorks: [...state.userWorks], // TODO: update object
         loading: false,
       };
 
