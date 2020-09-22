@@ -20,13 +20,21 @@ router.get('/:id', taskController.getTask);
 router.post('/assign-task', ensureAdmin, taskController.assignTask);
 
 // @route GET api/task/get-works-by-date
-// @desc get-all-work
+// @desc get-all-tasks
 // @access only For Admin and Private
 router.get(
   '/get-tasks-by-date/:userEmail/:fromDate/:toDate',
   taskController.getTasksByDate
 );
+// ! get-all-tasks -> only for admin
+router.get(
+  '/get-tasks-by-date/:fromDate/:toDate',
+  taskController.getTasksByDate
+);
 
 router.patch('/update-task/:id', ensureUser, taskController.updateTask)
+
+router
+  .delete('/delete-task/:id', taskController.deleteTask)
 
 module.exports = router;

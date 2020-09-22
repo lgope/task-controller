@@ -15,13 +15,7 @@ import { updateTask } from '../../redux/actions/taskActions';
 
 import { showAlert } from '../alert';
 
-const EditModal = ({
-  buttonLabel,
-  task,
-  updateTask,
-  isDataChanged,
-  setIsDataChanged,
-}) => {
+const EditModal = ({ task, updateTask }) => {
   const [modal, setModal] = useState(false);
   const [progress, setProgress] = useState(task.progress);
   const [comment, setComment] = useState(task.comment);
@@ -34,7 +28,7 @@ const EditModal = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(progress, comment);
+    // console.log(progress, comment);
     const body = {
       progress,
       comment,
@@ -43,7 +37,7 @@ const EditModal = ({
     // updateWork(data._id, body);
     updateTask(task._id, body);
 
-    setIsDataChanged(!isDataChanged);
+    // setIsDataChanged(!isDataChanged);
     showAlert('success', 'Task updated!');
   };
 
@@ -74,8 +68,8 @@ const EditModal = ({
             <FormGroup>
               <Input
                 type='text'
-                name='des'
-                id='des'
+                name='comment'
+                id='comment'
                 value={comment}
                 onChange={e => handleTextFieldChange(setComment, e)} // {handleSetCompanyName}
               />

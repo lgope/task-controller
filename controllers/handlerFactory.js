@@ -16,68 +16,83 @@ exports.deleteOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
-    const dailyWork = await Model.findByIdAndUpdate(req.params.id, req.body);
-    if (!dailyWork) {
+    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!doc) {
       return next(new AppError('No doccument found with that id', 404));
     }
+
     res.status(200).json({
       status: 'success',
-      dailyWork,
+      doc,
     });
   });
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    const job = await Model.create(req.body);
+    const doc = await Model.create(req.body);
     res.status(201).json({
       status: 'success',
-      job,
+      doc,
     });
   });
 
 exports.getOne = Model =>
   catchAsync(async (req, res, next) => {
-    let job = await Model.findById(req.params.id);
+    let doc = await Model.findById(req.params.id);
 
-    if (!job) {
+    if (!doc) {
       return next(new AppError('No Document found with that id', 404));
     }
     res.status(200).json({
       status: 'success',
-      job,
+      doc,
     });
   });
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    const jobs = await Model.find().sort({ createdAt: -1 });
+    const doc = await Model.find().sort({ createdAt: -1 });
 
     // SEND Response res
     res.status(200).json({
       status: 'success',
-      results: jobs.length,
-      jobs,
+      results: doc.length,
+      doc,
     });
   });
-
 
 // get data by date
 exports.getDataByDate = Model =>
   catchAsync(async (req, res, next) => {
     const { userId, fromDate, toDate } = req.params;
 
+    console.log(userId, fromDate, toDate);
     const fromD = moment(fromDate).subtract(1, 'days').format().split('T')[0];
     const toD = moment(toDate).add(1, 'days').format().split('T')[0];
+    let filteredData;
 
     console.log(fromD, toD);
     console.log('hh ', fromDate, toDate);
 
-    const filteredData = await Model.find({
-      userId,
-      date: {
-        $gt: `${fromD}T00:00:00.000+00:00`,
-        $lt: `${toD}T00:00:00.000+00:00`,
-      },
-    });
+    if (userId) {
+      filteredData = await Model.find({
+        userId,
+        date: {
+          $gt: `${fromD}T00:00:00.000+00:00`,
+          $lt: `${toD}T00:00:00.000+00:00`,
+        },
+      });
+    } else {
+      filteredData = await Model.find({
+        date: {
+          $gt: `${fromD}T00:00:00.000+00:00`,
+          $lt: `${toD}T00:00:00.000+00:00`,
+        },
+      });
+    }
+
+    // console.log('data ', filteredData);
     res.status(200).json(filteredData);
   });

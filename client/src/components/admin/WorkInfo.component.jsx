@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MDBDataTable } from 'mdbreact';
-
 import dayjs from 'dayjs';
+import { connect } from 'react-redux';
+import { Row } from 'reactstrap';
 
-const DailyWorksTable = ({ dailyWorks }) => {
+import {
+  deleteDailyWorks,
+  getFilterdWorks,
+} from '../../redux/actions/dailyWorkActions';
+import DateForm from '../form/DateForm.component';
+
+const DailyWorksTable = ({
+  dailyWorks,
+  setIsDataChanged,
+  isDataChanged,
+  deleteDailyWorks,
+  getFilterdWorks,
+}) => {
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   let rowsData = [];
 
+  const onDeleteClick = id => {
+    deleteDailyWorks(id);
+  };
   // storing daily works data in rows data
   dailyWorks.forEach(da =>
     rowsData.push({
       userName: da.userName,
-      date: dayjs(da.date).format('MMMM DD YYYY'),
+      date: dayjs(da.createdAt).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
+      action: (
+        <button
+          className='btn btn-link text-danger edit_modal_btn'
+          title='Delete'
+          onClick={() => onDeleteClick(da._id)}
+        >
+          <i className='fas fa-trash-alt'></i>
+        </button>
+      ),
     })
   );
+
+  const handleBtnClick = e => {
+    e.preventDefault();
+    getFilterdWorks(fromDate, toDate);
+    // console.log('user ', user);
+    console.log(fromDate, toDate);
+  };
+
+  const handleResetDate = e => {
+    e.preventDefault();
+    setIsDataChanged(!isDataChanged);
+  };
 
   const data = {
     columns: [
@@ -48,11 +87,30 @@ const DailyWorksTable = ({ dailyWorks }) => {
         sort: 'asc',
         width: 270,
       },
+      {
+        label: 'Action',
+        field: 'action',
+      },
     ],
     rows: rowsData,
   };
 
-  return <MDBDataTable striped bordered hover small data={data} />;
+  return (
+    <>
+      <Row>
+        <DateForm
+          onSubmitClick={handleBtnClick}
+          setFromDate={setFromDate}
+          setToDate={setToDate}
+          handleReset={handleResetDate}
+        />
+      </Row>
+      <MDBDataTable striped bordered hover small data={data} />;
+    </>
+  );
 };
 
-export default DailyWorksTable;
+export default connect(null, {
+  deleteDailyWorks,
+  getFilterdWorks,
+})(DailyWorksTable);

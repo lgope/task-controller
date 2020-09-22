@@ -48,6 +48,7 @@ router.post('/', (req, res, next) => {
                 _id: user.id,
                 name: user.name,
                 email: user.email,
+                designation: user.designation,
                 role: user.role,
               },
             });
@@ -59,6 +60,7 @@ router.post('/', (req, res, next) => {
                 _id: user.id,
                 name: user.name,
                 email: user.email,
+                designation: user.designation,
                 role: user.role,
               },
             });

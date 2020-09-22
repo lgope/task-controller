@@ -10,7 +10,7 @@ const Task = require('../models/taskModel');
 // const Discuss = require('../models/discussModel');
 
 // get all user tasks
-exports.getAllTasks = catchAsync(async (req, res, next) => {
+exports.getUserTasks = catchAsync(async (req, res, next) => {
   // find user by id
   const user = await User.findById(req.user.id);
 
@@ -18,8 +18,9 @@ exports.getAllTasks = catchAsync(async (req, res, next) => {
   if (!user) return next(new AppError('User not found!', 404));
 
   // get all task by user email
-  const tasks = await Task.find({ user: user.email }).sort({ createdAt: -1 });
+  const tasks = await Task.find({userEmail: user.email}).sort({ createdAt: -1 });
 
   // SEND RESPONSE
+  // console.log('tasks ', tasks);
   res.status(200).json(tasks);
 });

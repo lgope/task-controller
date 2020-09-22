@@ -6,6 +6,6 @@ const { auth, ensureUser } = require('../middleware/auth');
 // @route GET api/user/
 // @desc Get All User task
 // @access only For user and Private
-router.get('/', auth, ensureUser, userController.getAllTasks);
+router.get('/', auth, ensureUser, userController.getUserTasks);
 
 module.exports = router;

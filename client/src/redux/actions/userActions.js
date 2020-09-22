@@ -6,10 +6,11 @@ import { tokenConfig } from './authActions';
 export const getUserTasks = () => (dispatch, getState) => {
   dispatch(setTasksLoading());
   axios
-    .get('/api/user', tokenConfig(getState))
+    .get(`/api/user`, tokenConfig(getState))
     .then(res => {
+      console.log('ut ', res.data);
       dispatch({
-        type: actions.GET_USER_TASKS,
+        type: actions.GET_USER_TASKS, // TODO: ! getusertask not working
         payload: res.data,
       });
     })

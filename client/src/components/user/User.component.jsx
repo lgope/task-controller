@@ -41,7 +41,7 @@ const User = ({
   // if (dailyWorks.length > 0) {
   // }
   // let dailyWorksData = dailyWorks;
-  console.log('dailyWorksData ', dailyWorksData);
+  // console.log('dailyWorksData ', dailyWorksData);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
@@ -65,8 +65,6 @@ const User = ({
         description: des,
       };
       saveTodayWork(body);
-
-      setIsDataChange(!isDataChange);
       setIsopen(false);
       showAlert('success', 'Your work has been saved!');
     }
@@ -74,14 +72,16 @@ const User = ({
 
   return (
     <div className='container'>
-      <Row>
-        <Col md='8'>
-          <h5>User name: {user && user.name}</h5>
-        </Col>
-        <Col md='4'>
-          <h5>Designation: {user && user.designation}</h5>
-        </Col>
-      </Row>
+      {user && (
+        <Row>
+          <Col md='8'>
+            <h5>User name: {user.name}</h5>
+          </Col>
+          <Col md='4'>
+            <h5>Designation: {user.designation}</h5>
+          </Col>
+        </Row>
+      )}
       <br />
 
       <Row>
@@ -98,10 +98,9 @@ const User = ({
               />
             </div>
           )}
-          {dailyWorks.userDailyWorks &&
-            dailyWorks.userDailyWorks.length === 0 && (
-              <h4>No daily works Saved Yet! Add Now.. </h4>
-            )}
+          {dailyWorks && dailyWorks.length === 0 && (
+            <h4>No daily works Saved Yet! Add Now.. </h4>
+          )}
 
           {/* work add btn */}
           <Button outline color='success' onClick={handleAddBtnClick}>

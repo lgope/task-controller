@@ -57,32 +57,31 @@ exports.getUserDailyWorks = catchAsync(async (req, res, next) => {
 });
 
 // get all daily works, this routes is only for admin
-exports.getAllDailyWorks = catchAsync(async (req, res, next) => {
-  const dailyWorks = await DailyWork.find();
+exports.getAllDailyWorks = factory.getAll(DailyWork);
 
-  if (!dailyWorks)
-    return next(
-      new AppError('Something Wrong To get all works! Try again.', 404)
-    );
+// catchAsync(async (req, res, next) => {
+//   const dailyWorks = await DailyWork.find();
 
-  return res.status(200).json({
-    status: 'success',
-    dailyWorks,
-  });
-});
+//   if (!dailyWorks)
+//     return next(
+//       new AppError('Something Wrong To get all works! Try again.', 404)
+//     );
+
+//   return res.status(200).json(dailyWorks);
+// });
 
 // get all daily works, this routes is only for admin
-exports.getDailyWorksByDate = factory.getDataByDate(DailyWork)
+exports.getDailyWorksByDate = factory.getDataByDate(DailyWork);
 
 // catchAsync(async (req, res, next) => {
 //   const {userId, fromDate, toDate } = req.params;
-  
+
 //   const fromD = moment(fromDate).subtract(1,'days').format().split("T")[0]
 //   const toD = moment(toDate).add(1,'days').format().split("T")[0]
 
 //   console.log(fromD, toD);
 //   console.log('hh ',fromDate, toDate);
-  
+
 //   const filteredDailyWorks = await DailyWork.find({ userId,
 //     date: {
 //       $gt: `${fromD}T00:00:00.000+00:00`,
@@ -91,7 +90,6 @@ exports.getDailyWorksByDate = factory.getDataByDate(DailyWork)
 //   });
 //   res.status(200).json(filteredDailyWorks)
 // });
-
 
 // delete controller
 exports.updateDailyWork = factory.updateOne(DailyWork);
