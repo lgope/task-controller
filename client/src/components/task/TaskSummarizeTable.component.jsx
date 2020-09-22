@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'reactstrap';
 import { connect } from 'react-redux';
-import { MDBDataTable } from 'mdbreact';
 import dayjs from 'dayjs';
 
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -10,7 +9,11 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 import EditTaskModal from './EditTaskModal.component';
 import { getUserTasks } from '../../redux/actions/userActions';
-import { updateTask, getFilterdTasks } from '../../redux/actions/taskActions';
+import {
+  updateTask,
+  geUsertFilterdTasks,
+} from '../../redux/actions/taskActions';
+import DateForm from '../form/DateForm.component';
 
 import { showAlert } from '../alert';
 import img_loader from '../../images/img_loader.webp';
@@ -20,7 +23,7 @@ const TaskSummarizeTable = ({
   tasks,
   getUserTasks,
   updateTask,
-  getFilterdTasks,
+  geUsertFilterdTasks,
   loading,
 }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
@@ -31,19 +34,11 @@ const TaskSummarizeTable = ({
 
   useEffect(() => {
     getUserTasks();
-    console.log('called !!');
   }, [isDataChanged, getUserTasks]);
 
   let rowsData = [];
-  // const handleProgressChange = e => {
-  //   const body = {
-  //     progress: e.target.value,
-  //   };
 
-  //   updateTask(e.target.id, body);
-  //   setIsDataChanged(!isDataChanged);
-  //   showAlert('success', 'Task updated!');
-  // };
+  console.log('tasks ', tasks);
 
   if (tasks.length > 0) {
     tasks.forEach(task => {
@@ -52,14 +47,7 @@ const TaskSummarizeTable = ({
         taskName: task.taskName,
         progress: task.progress,
         comment: task.comment,
-        action: (
-          <EditTaskModal
-            buttonLabel='edit'
-            task={task}
-            isDataChanged={isDataChanged}
-            setIsDataChanged={setIsDataChanged}
-          />
-        ),
+        action: <EditTaskModal task={task} />,
       });
     });
   }
@@ -67,8 +55,8 @@ const TaskSummarizeTable = ({
   const options = {
     // pageStartIndex: 0,
     sizePerPage: 5,
-    hideSizePerPage: true,
-    hidePageListOnlyOnePage: true,
+    // hideSizePerPage: true,
+    // hidePageListOnlyOnePage: true,
   };
 
   const columns = [
@@ -100,13 +88,9 @@ const TaskSummarizeTable = ({
     },
   ];
 
-  const handleTextFieldChange = (mySetFunction, event) => {
-    mySetFunction(event.currentTarget.value);
-  };
-
   const handleBtnClick = e => {
     e.preventDefault();
-    getFilterdTasks(user.email, fromDate, toDate);
+    geUsertFilterdTasks(user.email, fromDate, toDate);
     console.log('user ', user);
 
     console.log(fromDate, toDate);
@@ -118,22 +102,6 @@ const TaskSummarizeTable = ({
   };
 
   return (
-    // <Fragment>
-    //   {loading && (
-    //     <div>
-    //       <img src={img_loader} alt='loading' height='250px' width='350px' />
-    //     </div>
-    //   )}
-    //   {!loading && data && (
-    //     <>
-    //       <h4>Tasks :</h4>
-    //       <MDBDataTable striped bordered hover data={data} />;
-    //     </>
-    //   )}
-
-    //   <h3>{!loading && tasks.length <= 0 && 'No task assigned yet!'}</h3>
-    // </Fragment>
-
     <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
       {props => (
         <div>
@@ -141,40 +109,12 @@ const TaskSummarizeTable = ({
             <Col lg='12'>
               <h4>All Tasks :</h4>
             </Col>
-            <Col lg='6' md='8' sm='8'>
-              <Form onSubmit={handleBtnClick}>
-                {/* <Form> */}
-                <input
-                  type='date'
-                  id='fromDate'
-                  name='date'
-                  placeholder='From Date'
-                  required
-                  onChange={e => handleTextFieldChange(setFromDate, e)}
-                />
-                <input
-                  className='m-3'
-                  type='date'
-                  id='toDate'
-                  name='date'
-                  placeholder='To Date'
-                  required
-                  onChange={e => handleTextFieldChange(setToDate, e)}
-                />
-
-                <Button type='submit' outline color='info'>
-                  Click
-                </Button>
-              </Form>
-            </Col>
-            <Col lg='3' md='4' sm='4'>
-              <button
-                className='text-info all_dailywork_btn'
-                onClick={handleResetDate}
-              >
-                All
-              </button>
-            </Col>
+            <DateForm
+              onSubmitClick={handleBtnClick}
+              setFromDate={setFromDate}
+              setToDate={setToDate}
+              handleReset={handleResetDate}
+            />
             <Col lg='3' md='4' sm='4'>
               <SearchBar
                 {...props.searchProps}
@@ -198,13 +138,13 @@ const TaskSummarizeTable = ({
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  tasks: state.userRoutes.tasks,
-  loading: state.userRoutes.loading,
+  tasks: state.userReducer.tasks,
+  loading: state.userReducer.loading,
 });
 export default connect(mapStateToProps, {
   getUserTasks,
   updateTask,
-  getFilterdTasks,
+  geUsertFilterdTasks,
 })(TaskSummarizeTable);
 
 // TODO: save double progress at a time problem

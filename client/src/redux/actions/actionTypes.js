@@ -8,6 +8,8 @@ export const GET_USER_WORKS = 'GET_USER_WORKS';
 
 export const UPDATE_USER_WORK = 'UPDATE_USER_WORK';
 
+export const DELETE_USER_WORK = 'DELETE_USER_WORK';
+
 export const SAVE_TODAY_WORKS = 'SAVE_TODAY_WORKS';
 
 export const GET_ALL_WORK = 'GET_ALL_WORK';
@@ -27,6 +29,8 @@ export const GET_TASK = 'GET_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 
 export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+
+export const DELTE_TASK = 'DELTE_TASK';
 
 export const SUBMIT_DISCUSS = 'SUBMIT_DISCUSS';
 

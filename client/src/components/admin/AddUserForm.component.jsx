@@ -17,14 +17,7 @@ import { clearErrors } from '../../redux/actions/errorActions';
 
 // TODO: Name input field and save
 
-const AddUserForm = ({
-  buttonLabel,
-  isDataChanged,
-  setIsDataChanged,
-  addUser,
-  clearErrors,
-  error,
-}) => {
+const AddUserForm = ({ buttonLabel, addUser, clearErrors, error }) => {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState('');
   const [desi, setDesi] = useState('');
@@ -46,11 +39,9 @@ const AddUserForm = ({
     }
   }, [error]);
 
-  const handleChangeName = event => setName(event.target.value);
-  const handleChangeDesignation = event => setDesi(event.target.value);
-  const handleChangeEmail = event => setEmail(event.target.value);
-  const handleChangePassword = event => setPass(event.target.value);
-
+  const handleTextFieldChange = (mySetFunction, event) => {
+    mySetFunction(event.currentTarget.value);
+  };
   const handleOnSubmit = event => {
     event.preventDefault();
     const body = {
@@ -60,7 +51,6 @@ const AddUserForm = ({
       password: pass,
     };
     addUser(body);
-    setIsDataChanged(!isDataChanged);
     clearErrors();
     document.getElementById('input_form').reset();
   };
@@ -84,7 +74,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Name'
                 required
-                onChange={handleChangeName}
+                onChange={e => handleTextFieldChange(setName, e)}
               />
 
               <Label for='designation'>Designation</Label>
@@ -95,7 +85,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Designation'
                 required
-                onChange={handleChangeDesignation}
+                onChange={e => handleTextFieldChange(setDesi, e)}
               />
 
               <Label for='email'>Email</Label>
@@ -106,7 +96,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Email'
                 required
-                onChange={handleChangeEmail}
+                onChange={e => handleTextFieldChange(setEmail, e)}
               />
 
               <Label for='password'>Password</Label>
@@ -117,7 +107,7 @@ const AddUserForm = ({
                 className='mb-3'
                 placeholder='Password'
                 required
-                onChange={handleChangePassword}
+                onChange={e => handleTextFieldChange(setPass, e)}
               />
               <Button
                 color='dark'

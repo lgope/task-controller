@@ -38,7 +38,9 @@ const App = () => {
           <Route path='/users-info' component={UsersInfo} />
           <Route path='/tasks-info' component={TaskInfo} />
         </Switch>
-        <AppFooter />
+        <br />
+        <br />
+      <AppFooter />
       </div>
     </Provider>
   );

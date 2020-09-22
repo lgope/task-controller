@@ -11,7 +11,6 @@ function UsersInfo({ isAuthenticated, user, getAllUsers, allUsers }) {
 
   useEffect(() => {
     getAllUsers();
-    console.log('getAllUsers();');
   }, [isDataChanged, getAllUsers]);
 
   if ((user && user.role === 'user') || isAuthenticated === false) {
@@ -20,11 +19,7 @@ function UsersInfo({ isAuthenticated, user, getAllUsers, allUsers }) {
 
   return (
     <div className='container'>
-      {allUsers.users ? (
-        <UserListTable users={allUsers.users} />
-      ) : (
-        <div>Loading</div>
-      )}
+      {allUsers ? <UserListTable users={allUsers} /> : <div>Loading...</div>}
       <AddUserForm
         buttonLabel={'Add New User'}
         isDataChanged={isDataChanged}

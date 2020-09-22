@@ -10,7 +10,7 @@ export default combineReducers({
   error: errorReducer,
   auth: authReducer,
   admin: adminReducer,
-  userRoutes: userReducer,
+  userReducer: userReducer,
   task: taskReducer,
   dailyWorks: dailyWorkReducer,
 });

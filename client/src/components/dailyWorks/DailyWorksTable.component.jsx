@@ -6,7 +6,8 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 import { connect } from 'react-redux';
-import { getFilterdWorks } from '../../redux/actions/dailyWorkActions';
+import { getUserFilterdWorks } from '../../redux/actions/dailyWorkActions';
+import DateForm from '../form/DateForm.component';
 
 import EditModal from '../form/EditModal.component';
 
@@ -15,7 +16,7 @@ const DailyWorksTable = ({
   setIsDataChange,
   userId,
   dailyWorks,
-  getFilterdWorks,
+  getUserFilterdWorks,
 }) => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
@@ -31,14 +32,7 @@ const DailyWorksTable = ({
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
       description: da.description,
-      action: (
-        <EditModal
-          buttonLabel='edit'
-          data={da}
-          isDataChange={isDataChange}
-          setIsDataChange={setIsDataChange}
-        />
-      ),
+      action: <EditModal data={da} />,
     })
   );
 
@@ -78,7 +72,7 @@ const DailyWorksTable = ({
 
   const handleBtnClick = e => {
     e.preventDefault();
-    getFilterdWorks(userId, fromDate, toDate);
+    getUserFilterdWorks(userId, fromDate, toDate);
     console.log(fromDate, toDate);
   };
 
@@ -92,39 +86,12 @@ const DailyWorksTable = ({
       {props => (
         <div>
           <Row>
-            <Col lg='6' md='8' sm='8'>
-              <Form onSubmit={handleBtnClick}>
-                <input
-                  type='date'
-                  id='fromDate'
-                  name='date'
-                  placeholder='From Date'
-                  required
-                  onChange={e => handleTextFieldChange(setFromDate, e)}
-                />
-                <input
-                  className='m-3'
-                  type='date'
-                  id='toDate'
-                  name='date'
-                  placeholder='To Date'
-                  required
-                  onChange={e => handleTextFieldChange(setToDate, e)}
-                />
-
-                <Button type='submit' outline color='info'>
-                  Click
-                </Button>
-              </Form>
-            </Col>
-            <Col lg='3' md='4' sm='4'>
-              <button
-                className='text-info all_dailywork_btn'
-                onClick={handleResetDate}
-              >
-                All
-              </button>
-            </Col>
+            <DateForm
+              onSubmitClick={handleBtnClick}
+              setFromDate={setFromDate}
+              setToDate={setToDate}
+              handleReset={handleResetDate}
+            />
             <Col lg='3' md='4' sm='4'>
               <SearchBar
                 {...props.searchProps}
@@ -146,7 +113,7 @@ const DailyWorksTable = ({
 };
 
 export default connect(null, {
-  getFilterdWorks,
+  getUserFilterdWorks,
 })(DailyWorksTable);
 
 // return <MDBDataTable striped bordered hover small data={data} />;

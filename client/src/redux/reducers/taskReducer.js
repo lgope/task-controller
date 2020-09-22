@@ -8,6 +8,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case actions.ADD_TASK:
+      return {
+        tasks: state.tasks.concat(action.payload),
+        loading: false,
+      };
+
     case actions.GET_TASK:
       return {
         ...state,
@@ -21,9 +27,11 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
-    case actions.UPDATE_PROGRESS:
+  //  task update is only for user -> userReducer.js
+
+    case actions.DELETE_TASK:
       return {
-        ...state,
+        tasks: state.tasks.filter(task => task._id !== action.payload),
         loading: false,
       };
 

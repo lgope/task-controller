@@ -13,13 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { updateWork } from '../../redux/actions/dailyWorkActions';
 
-const EditModal = ({
-  buttonLabel,
-  data,
-  updateWork,
-  isDataChange,
-  setIsDataChange,
-}) => {
+const EditModal = ({ data, updateWork }) => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(data.title);
   const [des, setDes] = useState(data.description);
@@ -32,15 +26,13 @@ const EditModal = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(title, des);
+
     const body = {
       title,
       description: des,
     };
 
     updateWork(data._id, body);
-
-    setIsDataChange(!isDataChange);
   };
 
   return (

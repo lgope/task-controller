@@ -5,7 +5,7 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user: {
+  userEmail: {
     type: String,
     ref: 'User',
     required: [true, 'Task must belong to a user.'],

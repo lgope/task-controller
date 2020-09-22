@@ -17,8 +17,8 @@ export default function (state = initialState, action) {
 
     case actions.SAVE_USER:
       return {
-        ...state,
-        savedUser: action.payload
+        allUsers: state.allUsers.concat(action.payload),
+        loading: false
       };
 
     case actions.USERS_LOADING:

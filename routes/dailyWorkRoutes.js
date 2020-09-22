@@ -23,6 +23,11 @@ router.get(
   dailyWorkController.getDailyWorksByDate
 );
 
+router.get(
+  '/get-works-by-date/:fromDate/:toDate',
+  dailyWorkController.getDailyWorksByDate
+);
+
 // @route GET api/daily-work/get-all-work
 // @desc get-all-work
 // @access only For Admin and Private
@@ -35,12 +40,14 @@ router.get(
 // @route PATCH api/daily-work/update-work/:id
 // @desc get-all-work
 // @access only For User and Private
-router.get(
-  '/get-user-works/:id',
-  ensureUser,
-  dailyWorkController.updateDailyWork
-);
+// router.get(
+//   '/get-user-works/:id',
+//   ensureUser,
+//   dailyWorkController.updateDailyWork
+// );
 
 router.patch('/update-dailyWork/:id', dailyWorkController.updateDailyWork);
+
+router.delete('/delete-dailyWork/:id', dailyWorkController.deleteDailyWork);
 
 module.exports = router;

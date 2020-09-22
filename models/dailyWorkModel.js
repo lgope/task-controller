@@ -20,7 +20,7 @@ const dailyWorkSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Daily work must have a description.'],
   },
-  date: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },

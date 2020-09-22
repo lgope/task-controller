@@ -7,22 +7,24 @@ const factory = require('./handlerFactory');
 
 const Task = require('../models/taskModel');
 
-exports.assignTask = catchAsync(async (req, res, next) => {
-  const { taskName, userEmail } = req.body;
+exports.assignTask = factory.createOne(Task);
 
-  if (!taskName || !userEmail) return next(new AppError('Please enter all fields 🙂', 400));
+// catchAsync(async (req, res, next) => {
+//   const { taskName, userEmail } = req.body;
 
-  // next(new AppError('User not found with that email!', 404));
+//   if (!taskName || !userEmail) return next(new AppError('Please enter all fields 🙂', 400));
 
-  const newTask = await Task.create({ taskName, user: userEmail });
+//   // next(new AppError('User not found with that email!', 404));
 
-  return res.status(201).json({
-    status: 'success',
-    newTask,
-  });
-});
+//   const newTask = await Task.create({ taskName, user: userEmail });
 
-// get one taks
+//   return res.status(201).json({
+//     status: 'success',
+//     newTask,
+//   });
+// });
+
+// get one task
 exports.getTask = catchAsync(async (req, res, next) => {
   const task = await Task.findById(req.params.id);
 
@@ -39,20 +41,19 @@ exports.getTask = catchAsync(async (req, res, next) => {
 });
 
 // get all tasks
-exports.getAllTasks = catchAsync(async (req, res, next) => {
-  const tasks = await Task.find().sort({ user: -1, createdAt: -1 });
-  // const users = await User.find({ role: { $ne: 'admin' } })
-  //   .sort({ createdAt: -1 })
-  //   .select('-password');
+exports.getAllTasks = factory.getAll(Task);
 
-  if (!tasks) return next(new AppError('Tasks not found!', 404));
+// catchAsync(async (req, res, next) => {
+//   const tasks = await Task.find().sort({ user: -1, createdAt: -1 });
+//   // const users = await User.find({ role: { $ne: 'admin' } })
+//   //   .sort({ createdAt: -1 })
+//   //   .select('-password');
 
-  // SEND RESPONSE
-  return res.status(200).json({
-    status: 'success',
-    tasks,
-  });
-});
+//   if (!tasks) return next(new AppError('Tasks not found!', 404));
+
+//   // SEND RESPONSE
+//   return res.status(200).json(tasks);
+// });
 
 // exports.updateProgress = catchAsync(async (req, res, next) => {
 //   const task = await Task.findById(req.params.id);
@@ -71,21 +72,31 @@ exports.getAllTasks = catchAsync(async (req, res, next) => {
 // });
 
 exports.updateTask = factory.updateOne(Task);
+exports.deleteTask = factory.deleteOne(Task);
 
-exports.getTasksByDate =   catchAsync(async (req, res, next) => {
+exports.getTasksByDate = catchAsync(async (req, res, next) => {
   const { userEmail, fromDate, toDate } = req.params;
 
   const fromD = moment(fromDate).subtract(1, 'days').format().split('T')[0];
   const toD = moment(toDate).add(1, 'days').format().split('T')[0];
+  let filteredData;
 
-
-  const filteredData = await Task.find({
-    user: userEmail,
-    createdAt: {
-      $gt: `${fromD}T00:00:00.000+00:00`,
-      $lt: `${toD}T00:00:00.000+00:00`,
-    },
-  });
+  if (userEmail) {
+    filteredData = await Task.find({
+      userEmail,
+      createdAt: {
+        $gt: `${fromD}T00:00:00.000+00:00`,
+        $lt: `${toD}T00:00:00.000+00:00`,
+      },
+    });
+  } else {
+    filteredData = await Task.find({
+      createdAt: {
+        $gt: `${fromD}T00:00:00.000+00:00`,
+        $lt: `${toD}T00:00:00.000+00:00`,
+      },
+    });
+  }
 
   res.status(200).json(filteredData);
 });
