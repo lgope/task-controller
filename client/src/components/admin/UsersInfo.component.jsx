@@ -33,7 +33,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
   allUsers: state.admin.allUsers,
-  tasks: state.userRoutes.tasks,
 });
 
 export default connect(mapStateToProps, { getAllUsers })(UsersInfo);

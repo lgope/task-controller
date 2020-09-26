@@ -13,6 +13,8 @@ import {
 import { connect } from 'react-redux';
 import { updateWork } from '../../redux/actions/dailyWorkActions';
 
+import { showAlert } from '../alert';
+
 const EditModal = ({ data, updateWork }) => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(data.title);
@@ -33,6 +35,7 @@ const EditModal = ({ data, updateWork }) => {
     };
 
     updateWork(data._id, body);
+    showAlert('success', 'Work updated successfully!');
   };
 
   return (
@@ -45,13 +48,6 @@ const EditModal = ({ data, updateWork }) => {
         <i className='fas fa-sliders-h'></i>
         {/* {buttonLabel} */}
       </button>
-      {/* <button
-        className='btn btn-link text-danger ml-2 edit_modal_btn'
-        title='Delete'
-        onClick={() => console.log(data.title, data._id)}
-      >
-        <i className='fas fa-trash-alt'></i>
-      </button> */}
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Edit Modal 🛠</ModalHeader>
@@ -63,7 +59,7 @@ const EditModal = ({ data, updateWork }) => {
                 name='title'
                 id='title'
                 value={title}
-                onChange={e => handleTextFieldChange(setTitle, e)} // {handleSetCompanyName}
+                onChange={e => handleTextFieldChange(setTitle, e)}
               />
             </FormGroup>
             <FormGroup>
@@ -72,7 +68,7 @@ const EditModal = ({ data, updateWork }) => {
                 name='des'
                 id='des'
                 value={des}
-                onChange={e => handleTextFieldChange(setDes, e)} // {handleSetCompanyName}
+                onChange={e => handleTextFieldChange(setDes, e)}
               />
             </FormGroup>
           </ModalBody>

@@ -17,6 +17,7 @@ import { showAlert } from '../alert';
 import SaveBtn from '../form/SaveBtn.component';
 import CancleBtn from '../form/CancleBtn.component';
 import DateForm from '../form/DateForm.component';
+import ShowModal from '../form/ShowModal.component';
 
 const TaskInfo = ({
   isAuthenticated,
@@ -62,6 +63,7 @@ const TaskInfo = ({
   // delete task on delete button click
   const onDeleteClick = id => {
     deleteTasks(id);
+    showAlert('success', 'Task Deleted successfully!');
   };
 
   const handleBtnClick = e => {
@@ -83,6 +85,7 @@ const TaskInfo = ({
       const body = {
         userEmail: email,
         taskName: task,
+        comment: '',
       };
 
       assignTask(body);
@@ -90,7 +93,7 @@ const TaskInfo = ({
       setEmail('');
       setTask('');
       setIsopen(false);
-      showAlert('success', 'Task Assigned!');
+      showAlert('success', 'Task Assigned successfully!');
     } else {
       showAlert('error', 'All fields are Required!');
     }
@@ -105,7 +108,15 @@ const TaskInfo = ({
         userEmail: task.userEmail,
         taskName: task.taskName,
         progress: task.progress,
-        comment: task.comment,
+        comment:
+          task.comment.length >= 25 ? (
+            <ShowModal
+              buttonLabel={task.comment.substr(0, 25) + '...'}
+              data={task.comment}
+            />
+          ) : (
+            task.comment
+          ),
         action: (
           <button
             className='btn btn-link text-danger edit_modal_btn'
@@ -158,13 +169,13 @@ const TaskInfo = ({
     };
   }
 
-  if (loading) {
-    return <h4>Loading....</h4>;
-  }
+  // if (loading) {
+  //   return <h4>Loading....</h4>;
+  // }
 
   return (
     <div className='container'>
-      <div>{tasks && tasks.length <= 0 && <h1>No task!</h1>}</div>;
+      <div>{tasks && tasks.length < 0 && <h1>No task!</h1>}</div>;
       {tasks && tasks.length > 0 && (
         <>
           <h4>Tasks Info :</h4>

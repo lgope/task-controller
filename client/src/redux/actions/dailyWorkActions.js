@@ -7,7 +7,7 @@ import { tokenConfig } from './authActions';
 
 // save todays work | user route
 export const saveTodayWork = body => (dispatch, getState) => {
-  dispatch(setWorksLoading());
+  // dispatch(setWorksLoading());
   axios
     .post(`api/daily-work/save-today-work`, body, tokenConfig(getState))
     .then(res => {
@@ -41,7 +41,7 @@ export const getUserWorks = id => (dispatch, getState) => {
 
 // upate daily works | user route
 export const updateWork = (id, body) => (dispatch, getState) => {
-  dispatch(setWorksLoading());
+  // dispatch(setWorksLoading());
   axios
     .patch(`api/daily-work/update-dailyWork/${id}`, body,tokenConfig(getState))
     .then(res => {
@@ -74,7 +74,7 @@ export const getAllWorks = id => (dispatch, getState) => {
 
 // get all daily works based on date | admin route
 export const getUserFilterdWorks = (userId,fromDate, toDate) => (dispatch, getState) => {
-  dispatch(setWorksLoading());
+  // dispatch(setWorksLoading());
   axios
     .get(`api/daily-work/get-works-by-date/${userId}/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
@@ -91,7 +91,7 @@ export const getUserFilterdWorks = (userId,fromDate, toDate) => (dispatch, getSt
 
 // get all daily works based on date | admin route
 export const getFilterdWorks = (fromDate, toDate) => (dispatch, getState) => {
-  dispatch(setWorksLoading());
+  // dispatch(setWorksLoading());
   axios
     .get(`api/daily-work/get-works-by-date/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {

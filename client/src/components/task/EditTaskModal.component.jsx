@@ -38,7 +38,7 @@ const EditModal = ({ task, updateTask }) => {
     updateTask(task._id, body);
 
     // setIsDataChanged(!isDataChanged);
-    showAlert('success', 'Task updated!');
+    showAlert('success', 'Task updated successfully!');
   };
 
   return (

@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import { getUserFilterdWorks } from '../../redux/actions/dailyWorkActions';
 import DateForm from '../form/DateForm.component';
 
-import EditModal from '../form/EditModal.component';
+import ShowModal from '../form/ShowModal.component';
+import EditModal from './EditModal.component';
 
 const DailyWorksTable = ({
   isDataChange,
@@ -28,10 +29,17 @@ const DailyWorksTable = ({
   dailyWorks.forEach(da =>
     rowsData.push({
       id: da._id,
-      another: '5%',
       date: dayjs(da.date).format('MMMM DD YYYY'),
       title: da.title,
-      description: da.description,
+      description:
+        da.description.length >= 25 ? (
+          <ShowModal
+            buttonLabel={da.description.substr(0, 25) + '...'}
+            data={da.description}
+          />
+        ) : (
+          da.description
+        ),
       action: <EditModal data={da} />,
     })
   );

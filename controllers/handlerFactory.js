@@ -79,14 +79,14 @@ exports.getDataByDate = Model =>
     if (userId) {
       filteredData = await Model.find({
         userId,
-        date: {
+        createdAt: {
           $gt: `${fromD}T00:00:00.000+00:00`,
           $lt: `${toD}T00:00:00.000+00:00`,
         },
       });
     } else {
       filteredData = await Model.find({
-        date: {
+        createdAt: {
           $gt: `${fromD}T00:00:00.000+00:00`,
           $lt: `${toD}T00:00:00.000+00:00`,
         },

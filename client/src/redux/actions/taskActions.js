@@ -35,7 +35,7 @@ export const getAllTask = () => (dispatch, getState) => {
 
 
 export const updateTask = (id, body) => (dispatch, getState) => {
-  dispatch(setTasksLoading());
+  // dispatch(setTasksLoading());
   axios
     .patch(`/api/task/update-task/${id}`, body, tokenConfig(getState))
     .then(res => {
@@ -51,7 +51,7 @@ export const updateTask = (id, body) => (dispatch, getState) => {
 
 // get all task based on date only for admin
 export const getFilterdTasks = (fromDate, toDate) => (dispatch, getState) => {
-  dispatch(setTasksLoading());
+  // dispatch(setTasksLoading());
   axios
     .get(`api/task/get-tasks-by-date/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
@@ -68,7 +68,7 @@ export const getFilterdTasks = (fromDate, toDate) => (dispatch, getState) => {
 
 // get all task based on date
 export const geUsertFilterdTasks = (userEmail,fromDate, toDate) => (dispatch, getState) => {
-  dispatch(setTasksLoading());
+  // dispatch(setTasksLoading());
   axios
     .get(`api/task/get-tasks-by-date/${userEmail}/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {

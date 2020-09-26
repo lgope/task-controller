@@ -17,6 +17,7 @@ import DateForm from '../form/DateForm.component';
 
 import { showAlert } from '../alert';
 import img_loader from '../../images/img_loader.webp';
+import ShowModal from '../form/ShowModal.component';
 
 const TaskSummarizeTable = ({
   user,
@@ -43,10 +44,19 @@ const TaskSummarizeTable = ({
   if (tasks.length > 0) {
     tasks.forEach(task => {
       rowsData.push({
+        id: task._id,
         createdAt: dayjs(task.createdAt).format('MMMM DD YYYY'),
         taskName: task.taskName,
         progress: task.progress,
-        comment: task.comment,
+        comment:
+          task.comment.length >= 25 ? (
+            <ShowModal
+              buttonLabel={task.comment.substr(0, 25) + '...'}
+              data={task.comment}
+            />
+          ) : (
+            task.comment
+          ),
         action: <EditTaskModal task={task} />,
       });
     });
@@ -63,22 +73,22 @@ const TaskSummarizeTable = ({
     {
       text: 'Assigned Date',
       dataField: 'createdAt',
-      sort: 'asc',
+      sort: true,
     },
     {
       text: 'Task',
       dataField: 'taskName',
-      sort: 'asc',
+      sort: true,
     },
     {
       text: 'Progress',
       dataField: 'progress',
-      sort: 'asc',
+      sort: true,
     },
     {
       text: 'Comment',
       dataField: 'comment',
-      sort: 'asc',
+      sort: true,
     },
     {
       dataField: 'action',
@@ -102,37 +112,40 @@ const TaskSummarizeTable = ({
   };
 
   return (
-    <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
-      {props => (
-        <div>
-          <Row>
-            <Col lg='12'>
-              <h4>All Tasks :</h4>
-            </Col>
-            <DateForm
-              onSubmitClick={handleBtnClick}
-              setFromDate={setFromDate}
-              setToDate={setToDate}
-              handleReset={handleResetDate}
-            />
-            <Col lg='3' md='4' sm='4'>
-              <SearchBar
-                {...props.searchProps}
-                className='custome-search-field'
-                style={{ color: 'black' }}
-                placeholder='Search'
+    <>
+      {rowsData.length > 0 && (
+        <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
+          {props => (
+            <div>
+              <Row>
+                <Col lg='12'>
+                  <h4>All Tasks :</h4>
+                </Col>
+                <DateForm
+                  onSubmitClick={handleBtnClick}
+                  setFromDate={setFromDate}
+                  setToDate={setToDate}
+                  handleReset={handleResetDate}
+                />
+                <Col lg='3' md='4' sm='4'>
+                  <SearchBar
+                    {...props.searchProps}
+                    className='custome-search-field'
+                    style={{ color: 'black' }}
+                    placeholder='Search'
+                  />
+                </Col>
+              </Row>
+              <BootstrapTable
+                hover
+                {...props.baseProps}
+                pagination={paginationFactory(options)}
               />
-            </Col>
-          </Row>
-          <BootstrapTable
-            keyField='id'
-            hover
-            {...props.baseProps}
-            pagination={paginationFactory(options)}
-          />
-        </div>
+            </div>
+          )}
+        </ToolkitProvider>
       )}
-    </ToolkitProvider>
+    </>
   );
 };
 
