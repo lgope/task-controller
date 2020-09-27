@@ -69,8 +69,6 @@ const TaskInfo = ({
   const handleBtnClick = e => {
     e.preventDefault();
     getFilterdTasks(fromDate, toDate);
-    // console.log('user ', user);
-    // console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {
@@ -133,31 +131,31 @@ const TaskInfo = ({
         {
           label: 'Assigned Date',
           field: 'createdAt',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'User',
           field: 'userEmail',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'Task',
           field: 'taskName',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'Progress',
           field: 'progress',
-          sort: 'asc',
+          sort: true,
           width: 100,
         },
         {
           label: 'Comment',
           field: 'comment',
-          sort: 'asc',
+          sort: true,
           width: 100,
         },
         {
@@ -215,8 +213,8 @@ const TaskInfo = ({
                   required
                   onChange={handleEmailChange}
                 >
-                  <option disabled selected defaultValue=''>
-                    Assigned User
+                  <option disabled selected>
+                    Assign User
                   </option>
                   {allUsers &&
                     allUsers.map(user => (
@@ -235,7 +233,9 @@ const TaskInfo = ({
                   onChange={handleTaskChange}
                 />
               </FormGroup>
-              <SaveBtn onClickFunc='' />
+              <Button outline color='secondary' title='save'>
+                Save
+              </Button>
               <CancleBtn onClickFunc={cancelBtnClick} />
             </Form>
           )}

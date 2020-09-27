@@ -36,16 +36,10 @@ const User = ({
   const [dailyWorksData, setDailyWorksData] = useState('');
 
   useEffect(() => {
-    console.log('date 1', dailyWorksData);
     if (user) {
       getUserWorks(user._id);
     }
   }, [user, isDataChange, getUserWorks]);
-
-  // if (dailyWorks.length > 0) {
-  // }
-  // let dailyWorksData = dailyWorks;
-  console.log('dailyWorksData ', isDailyWorkLoading, isTaskLoading);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
@@ -101,14 +95,14 @@ const User = ({
                 userId={user._id}
                 dailyWorks={dailyWorks}
               />
-              <br />
               {/* work add btn */}
               <Button outline color='success' onClick={handleAddBtnClick}>
                 Add New
               </Button>
             </div>
           )}
-          {dailyWorks.length < 0 && (
+
+          {dailyWorks && dailyWorks.length < 0 && (
             <>
               <h4>No daily works Saved Yet! Add Now.. </h4>
               {/* work add btn */}

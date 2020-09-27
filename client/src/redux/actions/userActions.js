@@ -8,7 +8,6 @@ export const getUserTasks = () => (dispatch, getState) => {
   axios
     .get(`/api/user`, tokenConfig(getState))
     .then(res => {
-      console.log('ut ', res.data);
       dispatch({
         type: actions.GET_USER_TASKS, // TODO: ! getusertask not working
         payload: res.data,

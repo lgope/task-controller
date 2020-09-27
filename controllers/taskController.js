@@ -105,8 +105,6 @@ exports.getTasksByDate = catchAsync(async (req, res, next) => {
 // exports.updateTask = catchAsync(async (req, res, next) => {
 //   const { taskName, user } = req.body;
 
-//   // console.log(taskName, user);
-
 //   if (!taskName || !user)
 //     return next(new AppError('Please enter all fields 🙂', 400));
 
@@ -129,7 +127,7 @@ exports.getTasksByDate = catchAsync(async (req, res, next) => {
 
 // delete one tasks by id
 // exports.deleteTask = catchAsync(async (req, res, next) => {
-//   // console.log(req.params.id);
+
 //   const task = await Task.findByIdAndDelete(req.params.id);
 
 //   if (!task) return next(new AppError('No task found with that ID', 404));

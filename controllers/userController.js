@@ -18,9 +18,10 @@ exports.getUserTasks = catchAsync(async (req, res, next) => {
   if (!user) return next(new AppError('User not found!', 404));
 
   // get all task by user email
-  const tasks = await Task.find({userEmail: user.email}).sort({ createdAt: -1 });
+  const tasks = await Task.find({ userEmail: user.email }).sort({
+    createdAt: -1,
+  });
 
   // SEND RESPONSE
-  // console.log('tasks ', tasks);
   res.status(200).json(tasks);
 });

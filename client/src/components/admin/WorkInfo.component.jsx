@@ -56,8 +56,6 @@ const DailyWorksTable = ({
   const handleBtnClick = e => {
     e.preventDefault();
     getFilterdWorks(fromDate, toDate);
-    // console.log('user ', user);
-    console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {

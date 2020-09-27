@@ -55,7 +55,6 @@ export const getFilterdTasks = (fromDate, toDate) => (dispatch, getState) => {
   axios
     .get(`api/task/get-tasks-by-date/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
-      console.log('date data ', res.data);
       dispatch({
         type: actions.GET_TASKS,
         payload: res.data,
@@ -72,7 +71,6 @@ export const geUsertFilterdTasks = (userEmail,fromDate, toDate) => (dispatch, ge
   axios
     .get(`api/task/get-tasks-by-date/${userEmail}/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
-      // console.log('date data ', res.data);
       dispatch({
         type: actions.GET_USER_TASKS,
         payload: res.data,
@@ -86,13 +84,13 @@ export const geUsertFilterdTasks = (userEmail,fromDate, toDate) => (dispatch, ge
 export const deleteTasks = id => (dispatch, getState) => {
   axios
     .delete(`/api/task/delete-task/${id}`, tokenConfig(getState))
-    .then(res => // console.log('res ', res)
+    .then(res =>
       dispatch({
         type: actions.DELETE_TASK,
         payload: id,
       })
     )
-    .catch(err => // console.log('err ', err)
+    .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };

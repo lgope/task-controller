@@ -79,9 +79,6 @@ exports.getDailyWorksByDate = factory.getDataByDate(DailyWork);
 //   const fromD = moment(fromDate).subtract(1,'days').format().split("T")[0]
 //   const toD = moment(toDate).add(1,'days').format().split("T")[0]
 
-//   console.log(fromD, toD);
-//   console.log('hh ',fromDate, toDate);
-
 //   const filteredDailyWorks = await DailyWork.find({ userId,
 //     date: {
 //       $gt: `${fromD}T00:00:00.000+00:00`,

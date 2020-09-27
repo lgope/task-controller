@@ -7,10 +7,11 @@ const DateForm = ({ onSubmitClick, setFromDate, setToDate, handleReset }) => {
   };
   return (
     <>
-      <Col lg='6' md='8' sm='8'>
+      <Col lg='8' md='8' sm='8'>
         <Form onSubmit={onSubmitClick}>
           {/* <Form> */}
           <input
+            className='from-date'
             type='date'
             id='fromDate'
             name='date'
@@ -19,7 +20,7 @@ const DateForm = ({ onSubmitClick, setFromDate, setToDate, handleReset }) => {
             onChange={e => handleTextFieldChange(setFromDate, e)}
           />
           <input
-            className='m-3'
+            className='m-3 to-date'
             type='date'
             id='toDate'
             name='date'
@@ -28,15 +29,19 @@ const DateForm = ({ onSubmitClick, setFromDate, setToDate, handleReset }) => {
             onChange={e => handleTextFieldChange(setToDate, e)}
           />
 
-          <Button type='submit' outline color='info'>
+          <Button
+            className='date-click-btn'
+            type='submit'
+            outline
+            color='info'
+            title='CLICK'
+          >
             Click
           </Button>
+          <Button outline color='primary' title='ALL' onClick={handleReset}>
+            All
+          </Button>
         </Form>
-      </Col>
-      <Col lg='3' md='4' sm='4'>
-        <button className='text-info all_dailywork_btn' onClick={handleReset}>
-          All
-        </button>
       </Col>
     </>
   );

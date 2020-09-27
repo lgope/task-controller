@@ -39,8 +39,6 @@ const TaskSummarizeTable = ({
 
   let rowsData = [];
 
-  console.log('tasks ', tasks);
-
   if (tasks.length > 0) {
     tasks.forEach(task => {
       rowsData.push({
@@ -101,9 +99,6 @@ const TaskSummarizeTable = ({
   const handleBtnClick = e => {
     e.preventDefault();
     geUsertFilterdTasks(user.email, fromDate, toDate);
-    console.log('user ', user);
-
-    console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {

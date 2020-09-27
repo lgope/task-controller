@@ -28,7 +28,6 @@ const EditModal = ({ task, updateTask }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(progress, comment);
     const body = {
       progress,
       comment,

@@ -84,10 +84,23 @@
   padding: 0;
   margin: 0;
 }
-.all_dailywork_btn {
-  font-size: 15px;
-  padding: 8px;
-  margin: 10px;
-  border: none;
-  background-color: rgb(255, 251, 251);
+
+.from-date,
+.to-date {
+  outline: none;
+}
+
+.from-date {
+  border-color: blue;
+}
+
+.to-date {
+  border-color: chartreuse;
+}
+
+.btn[class*='btn-outline-'] {
+  padding-top: 0.3rem;
+  padding-bottom: 0.4rem;
+  /* padding-top: .7rem;
+  padding-bottom: .7rem; */
 }

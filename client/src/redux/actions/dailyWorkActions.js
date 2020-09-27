@@ -11,7 +11,6 @@ export const saveTodayWork = body => (dispatch, getState) => {
   axios
     .post(`api/daily-work/save-today-work`, body, tokenConfig(getState))
     .then(res => {
-     // console.log('stw ', res.data);
       dispatch({
         type: actions.SAVE_TODAY_WORKS,
         payload: res.data.todaysWork,
@@ -28,7 +27,6 @@ export const getUserWorks = id => (dispatch, getState) => {
   axios
     .get(`api/daily-work/get-user-works/${id}`, tokenConfig(getState))
     .then(res => {
-      // console.log('res.data all w ', res.data.userDailyWorks);
       dispatch({
         type: actions.GET_USER_WORKS,
         payload: res.data.userDailyWorks,
@@ -45,7 +43,6 @@ export const updateWork = (id, body) => (dispatch, getState) => {
   axios
     .patch(`api/daily-work/update-dailyWork/${id}`, body,tokenConfig(getState))
     .then(res => {
-      // console.log('res.data udw ', res.data.dailyWork);
       dispatch({
         type: actions.UPDATE_USER_WORK,
         payload: res.data.doc,
@@ -78,7 +75,6 @@ export const getUserFilterdWorks = (userId,fromDate, toDate) => (dispatch, getSt
   axios
     .get(`api/daily-work/get-works-by-date/${userId}/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
-      // console.log('date data ', res.data);
       dispatch({
         type: actions.GET_USER_WORKS,
         payload: res.data,
@@ -95,7 +91,6 @@ export const getFilterdWorks = (fromDate, toDate) => (dispatch, getState) => {
   axios
     .get(`api/daily-work/get-works-by-date/${fromDate}/${toDate}`, tokenConfig(getState))
     .then(res => {
-      console.log('date data ', res.data);
       dispatch({
         type: actions.GET_ALL_USERS_WORK,
         payload: res.data,
@@ -109,13 +104,13 @@ export const getFilterdWorks = (fromDate, toDate) => (dispatch, getState) => {
 export const deleteDailyWorks = id => (dispatch, getState) => {
   axios
     .delete(`/api/daily-work/delete-dailyWork/${id}`, tokenConfig(getState))
-    .then(res => // console.log('res ', res)
+    .then(res =>
       dispatch({
         type: actions.DELETE_USER_WORK,
         payload: id,
       })
     )
-    .catch(err => // console.log('err ', err)
+    .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
