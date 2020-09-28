@@ -48,8 +48,6 @@ const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
 
       // Attempt to login
       login(user);
-      setEmail('');
-      setPassword('');
       handleClearError();
     }
   };

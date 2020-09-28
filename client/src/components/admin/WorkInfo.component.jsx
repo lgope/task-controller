@@ -9,7 +9,8 @@ import {
   getFilterdWorks,
 } from '../../redux/actions/dailyWorkActions';
 import DateForm from '../form/DateForm.component';
-
+import ShowModal from '../form/ShowModal.component';
+import { showAlert } from '../alert';
 const DailyWorksTable = ({
   dailyWorks,
   setIsDataChanged,
@@ -23,6 +24,7 @@ const DailyWorksTable = ({
 
   const onDeleteClick = id => {
     deleteDailyWorks(id);
+    showAlert('success', 'Work Deleted Successfully!');
   };
   // storing daily works data in rows data
   dailyWorks.forEach(da =>
@@ -30,7 +32,15 @@ const DailyWorksTable = ({
       userName: da.userName,
       date: dayjs(da.createdAt).format('MMMM DD YYYY'),
       title: da.title,
-      description: da.description,
+      description:
+        da.description.length >= 25 ? (
+          <ShowModal
+            buttonLabel={da.description.substr(0, 25) + '...'}
+            data={da.description}
+          />
+        ) : (
+          da.description
+        ),
       action: (
         <button
           className='btn btn-link text-danger edit_modal_btn'
@@ -46,8 +56,6 @@ const DailyWorksTable = ({
   const handleBtnClick = e => {
     e.preventDefault();
     getFilterdWorks(fromDate, toDate);
-    // console.log('user ', user);
-    console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {

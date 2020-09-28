@@ -8,7 +8,6 @@ export const getAllUsers = () => (dispatch, getState) => {
   axios
     .get('/api/admin/get-all-user', tokenConfig(getState))
     .then(res => {
-      // console.log('au ', res.data.users);
       dispatch({
         type: actions.GET_ALL_USERS,
         payload: res.data.users,
@@ -24,7 +23,6 @@ export const addUser = body => (dispatch, getState) => {
   axios
     .post('api/admin/create-user', body, tokenConfig(getState))
     .then(res => {
-      // console.log('cu ', res);
       dispatch({
         type: actions.SAVE_USER,
         payload: res.data.newUser,
@@ -40,7 +38,6 @@ export const assignTask = body => (dispatch, getState) => {
   axios
     .post('api/task/assign-task', body, tokenConfig(getState))
     .then(res => {
-      // console.log('at ', res.data.newTask);
       dispatch({
         type: actions.ADD_TASK,
         payload: res.data.doc,

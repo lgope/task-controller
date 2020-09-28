@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import dayjs from 'dayjs';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import { getUserFilterdWorks } from '../../redux/actions/dailyWorkActions';
 import DateForm from '../form/DateForm.component';
 
-import EditModal from '../form/EditModal.component';
+import ShowModal from '../form/ShowModal.component';
+import EditModal from './EditModal.component';
 
 const DailyWorksTable = ({
   isDataChange,
@@ -28,10 +29,17 @@ const DailyWorksTable = ({
   dailyWorks.forEach(da =>
     rowsData.push({
       id: da._id,
-      another: '5%',
-      date: dayjs(da.date).format('MMMM DD YYYY'),
+      date: dayjs(da.createdAt).format('MMMM DD YYYY'),
       title: da.title,
-      description: da.description,
+      description:
+        da.description.length >= 25 ? (
+          <ShowModal
+            buttonLabel={da.description.substr(0, 25) + '...'}
+            data={da.description}
+          />
+        ) : (
+          da.description
+        ),
       action: <EditModal data={da} />,
     })
   );
@@ -66,14 +74,9 @@ const DailyWorksTable = ({
     },
   ];
 
-  const handleTextFieldChange = (mySetFunction, event) => {
-    mySetFunction(event.currentTarget.value);
-  };
-
   const handleBtnClick = e => {
     e.preventDefault();
     getUserFilterdWorks(userId, fromDate, toDate);
-    console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {
@@ -92,7 +95,7 @@ const DailyWorksTable = ({
               setToDate={setToDate}
               handleReset={handleResetDate}
             />
-            <Col lg='3' md='4' sm='4'>
+            <Col lg='4' md='4' sm='4'>
               <SearchBar
                 {...props.searchProps}
                 className='custome-search-field'

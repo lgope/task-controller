@@ -68,31 +68,26 @@ exports.getDataByDate = Model =>
   catchAsync(async (req, res, next) => {
     const { userId, fromDate, toDate } = req.params;
 
-    console.log(userId, fromDate, toDate);
     const fromD = moment(fromDate).subtract(1, 'days').format().split('T')[0];
     const toD = moment(toDate).add(1, 'days').format().split('T')[0];
     let filteredData;
 
-    console.log(fromD, toD);
-    console.log('hh ', fromDate, toDate);
-
     if (userId) {
       filteredData = await Model.find({
         userId,
-        date: {
+        createdAt: {
           $gt: `${fromD}T00:00:00.000+00:00`,
           $lt: `${toD}T00:00:00.000+00:00`,
         },
       });
     } else {
       filteredData = await Model.find({
-        date: {
+        createdAt: {
           $gt: `${fromD}T00:00:00.000+00:00`,
           $lt: `${toD}T00:00:00.000+00:00`,
         },
       });
     }
 
-    // console.log('data ', filteredData);
     res.status(200).json(filteredData);
   });

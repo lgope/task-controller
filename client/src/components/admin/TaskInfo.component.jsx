@@ -17,6 +17,7 @@ import { showAlert } from '../alert';
 import SaveBtn from '../form/SaveBtn.component';
 import CancleBtn from '../form/CancleBtn.component';
 import DateForm from '../form/DateForm.component';
+import ShowModal from '../form/ShowModal.component';
 
 const TaskInfo = ({
   isAuthenticated,
@@ -62,13 +63,12 @@ const TaskInfo = ({
   // delete task on delete button click
   const onDeleteClick = id => {
     deleteTasks(id);
+    showAlert('success', 'Task Deleted successfully!');
   };
 
   const handleBtnClick = e => {
     e.preventDefault();
     getFilterdTasks(fromDate, toDate);
-    // console.log('user ', user);
-    // console.log(fromDate, toDate);
   };
 
   const handleResetDate = e => {
@@ -83,6 +83,7 @@ const TaskInfo = ({
       const body = {
         userEmail: email,
         taskName: task,
+        comment: '',
       };
 
       assignTask(body);
@@ -90,7 +91,7 @@ const TaskInfo = ({
       setEmail('');
       setTask('');
       setIsopen(false);
-      showAlert('success', 'Task Assigned!');
+      showAlert('success', 'Task Assigned successfully!');
     } else {
       showAlert('error', 'All fields are Required!');
     }
@@ -105,7 +106,15 @@ const TaskInfo = ({
         userEmail: task.userEmail,
         taskName: task.taskName,
         progress: task.progress,
-        comment: task.comment,
+        comment:
+          task.comment.length >= 25 ? (
+            <ShowModal
+              buttonLabel={task.comment.substr(0, 25) + '...'}
+              data={task.comment}
+            />
+          ) : (
+            task.comment
+          ),
         action: (
           <button
             className='btn btn-link text-danger edit_modal_btn'
@@ -122,31 +131,31 @@ const TaskInfo = ({
         {
           label: 'Assigned Date',
           field: 'createdAt',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'User',
           field: 'userEmail',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'Task',
           field: 'taskName',
-          sort: 'asc',
+          sort: true,
           width: 140,
         },
         {
           label: 'Progress',
           field: 'progress',
-          sort: 'asc',
+          sort: true,
           width: 100,
         },
         {
           label: 'Comment',
           field: 'comment',
-          sort: 'asc',
+          sort: true,
           width: 100,
         },
         {
@@ -158,13 +167,13 @@ const TaskInfo = ({
     };
   }
 
-  if (loading) {
-    return <h4>Loading....</h4>;
-  }
+  // if (loading) {
+  //   return <h4>Loading....</h4>;
+  // }
 
   return (
     <div className='container'>
-      <div>{tasks && tasks.length <= 0 && <h1>No task!</h1>}</div>;
+      <div>{tasks && tasks.length < 0 && <h1>No task!</h1>}</div>;
       {tasks && tasks.length > 0 && (
         <>
           <h4>Tasks Info :</h4>
@@ -204,8 +213,8 @@ const TaskInfo = ({
                   required
                   onChange={handleEmailChange}
                 >
-                  <option disabled selected defaultValue=''>
-                    Assigned User
+                  <option disabled selected>
+                    Assign User
                   </option>
                   {allUsers &&
                     allUsers.map(user => (
@@ -224,7 +233,9 @@ const TaskInfo = ({
                   onChange={handleTaskChange}
                 />
               </FormGroup>
-              <SaveBtn onClickFunc='' />
+              <Button outline color='secondary' title='save'>
+                Save
+              </Button>
               <CancleBtn onClickFunc={cancelBtnClick} />
             </Form>
           )}

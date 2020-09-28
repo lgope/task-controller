@@ -10,6 +10,7 @@ import {
   saveTodayWork,
 } from '../../redux/actions/dailyWorkActions';
 
+import Loading from '../loading/Loading.component';
 import DailyWorksTable from '../dailyWorks/DailyWorksTable.component';
 import TaskSummarizeTable from '../task/TaskSummarizeTable.component';
 import { showAlert } from '../alert';
@@ -19,9 +20,12 @@ import CancleBtn from '../form/CancleBtn.component';
 const User = ({
   user,
   isAuthenticated,
+  isTaskLoading,
+  isDailyWorkLoading,
   getUserWorks,
   saveTodayWork,
   dailyWorks,
+  task,
   updateWork,
   isWorkDataChange,
 }) => {
@@ -32,16 +36,10 @@ const User = ({
   const [dailyWorksData, setDailyWorksData] = useState('');
 
   useEffect(() => {
-    console.log('date 1', dailyWorksData);
     if (user) {
       getUserWorks(user._id);
     }
   }, [user, isDataChange, getUserWorks]);
-
-  // if (dailyWorks.length > 0) {
-  // }
-  // let dailyWorksData = dailyWorks;
-  // console.log('dailyWorksData ', dailyWorksData);
 
   // check user role is user && auth
   if ((user && user.role === 'admin') || isAuthenticated === false) {
@@ -70,8 +68,10 @@ const User = ({
     }
   };
 
+  if (isDailyWorkLoading) return <Loading />;
   return (
     <div className='container'>
+      {/* {isDailyWorkLoading || isTaskLoading ? <Loading /> : ''} */}
       {user && (
         <Row>
           <Col md='8'>
@@ -83,10 +83,9 @@ const User = ({
         </Row>
       )}
       <br />
-
       <Row>
         <Col lg='12' md='12' sm='12'>
-          {dailyWorks && user && (
+          {dailyWorks && dailyWorks.length > 0 && user && (
             <div>
               <h4>Daily Works : </h4>
 
@@ -96,16 +95,22 @@ const User = ({
                 userId={user._id}
                 dailyWorks={dailyWorks}
               />
+              {/* work add btn */}
+              <Button outline color='success' onClick={handleAddBtnClick}>
+                Add New
+              </Button>
             </div>
           )}
-          {dailyWorks && dailyWorks.length === 0 && (
-            <h4>No daily works Saved Yet! Add Now.. </h4>
-          )}
 
-          {/* work add btn */}
-          <Button outline color='success' onClick={handleAddBtnClick}>
-            Add New
-          </Button>
+          {dailyWorks && dailyWorks.length < 0 && (
+            <>
+              <h4>No daily works Saved Yet! Add Now.. </h4>
+              {/* work add btn */}
+              <Button outline color='success' onClick={handleAddBtnClick}>
+                Add New
+              </Button>
+            </>
+          )}
 
           {isopen && (
             <Form className='pt-2 pb-2 mb-5'>
@@ -159,6 +164,8 @@ const User = ({
 const mapStateToProps = state => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
+  isDailyWorkLoading: state.dailyWorks.loading,
+  isTaskLoading: state.userReducer.loading,
   task: state.task.task,
   dailyW: state.dailyWorks,
   dailyWorks: state.dailyWorks.userWorks,
