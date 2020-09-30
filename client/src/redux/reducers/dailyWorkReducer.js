@@ -4,7 +4,7 @@ const initialState = {
   allWorks: [],
   userWorks: [],
   todayWorks: [],
-  loading: false,
+  loading: true,
 };
 
 export default function (state = initialState, action) {

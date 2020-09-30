@@ -55,70 +55,72 @@ const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
   return (
     <Fragment>
       {!auth.user && (
-        <div className='container'>
-          <div className='row no-gutter'>
-            <div className='col-md-2 col-lg-3'></div>
-            <div className='col-md-8 col-lg-6'>
-              <div className='login d-flex align-items-center py-5'>
-                <div className='container'>
-                  <div className='row'>
-                    <div className='col-md-12 col-lg-12 mx-auto'>
-                      <h3 className='login-heading mb-4'>Welcome back!</h3>
-                      {msg ? <Alert color='danger'>{msg}</Alert> : null}
-                      <form>
-                        <div className='form-label-group'>
-                          <input
-                            type='email'
-                            id='inputEmail'
-                            className='form-control'
-                            placeholder='Email address'
-                            required
-                            autoFocus
-                            value={email}
-                            onChange={handleChangeEmail}
-                          />
-                          <label htmlFor='inputEmail'>Email address</label>
-                        </div>
+        <div className='login-page'>
+          <div className='container'>
+            <div className='row no-gutter'>
+              <div className='col-md-2 col-lg-3'></div>
+              <div className='col-md-8 col-lg-6'>
+                <div className='login d-flex align-items-center py-5'>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-12 col-lg-12 mx-auto'>
+                        <h3 className='login-heading mb-4'>Welcome back!</h3>
+                        {msg ? <Alert color='danger'>{msg}</Alert> : null}
+                        <form>
+                          <div className='form-label-group'>
+                            <input
+                              type='email'
+                              id='inputEmail'
+                              className='form-control'
+                              placeholder='Email address'
+                              required
+                              autoFocus
+                              value={email}
+                              onChange={handleChangeEmail}
+                            />
+                            <label htmlFor='inputEmail'>Email address</label>
+                          </div>
 
-                        <div className='form-label-group'>
-                          <input
-                            type='password'
-                            id='inputPassword'
-                            className='form-control'
-                            placeholder='Password'
-                            required
-                            value={password}
-                            onChange={handleChangePassword}
-                          />
-                          <label htmlFor='inputPassword'>Password</label>
-                        </div>
+                          <div className='form-label-group'>
+                            <input
+                              type='password'
+                              id='inputPassword'
+                              className='form-control'
+                              placeholder='Password'
+                              required
+                              value={password}
+                              onChange={handleChangePassword}
+                            />
+                            <label htmlFor='inputPassword'>Password</label>
+                          </div>
 
-                        <div className='custom-control custom-checkbox mb-3'>
-                          <input
-                            type='checkbox'
-                            className='custom-control-input'
-                            id='customCheck1'
-                          />
-                          <label
-                            className='custom-control-label'
-                            htmlFor='customCheck1'
+                          <div className='custom-control custom-checkbox mb-3'>
+                            <input
+                              type='checkbox'
+                              className='custom-control-input'
+                              id='customCheck1'
+                            />
+                            <label
+                              className='custom-control-label'
+                              htmlFor='customCheck1'
+                            >
+                              Remember password
+                            </label>
+                          </div>
+                          <button
+                            className='btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2'
+                            type='submit'
+                            onClick={handleOnSubmit}
                           >
-                            Remember password
-                          </label>
-                        </div>
-                        <button
-                          className='btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2'
-                          type='submit'
-                          onClick={handleOnSubmit}
-                        >
-                          Sign in
-                        </button>
-                        <div className='text-center'>
-                          <a className='small' href='/'>
-                            Forgot password?
-                          </a>
-                        </div>
-                      </form>
+                            Sign in
+                          </button>
+                          <div className='text-center'>
+                            <a className='small' href='/'>
+                              Forgot password?
+                            </a>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>

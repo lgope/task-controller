@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import AppNavbar from './components/AppNavbar.component';
 import AppFooter from './components/AppFooter.component';
-import { Container } from 'reactstrap';
 
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { loadUser } from './redux/actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'mdbreact/dist/css/mdb.css';
+// import 'mdbreact/dist/css/mdb.css';
 import './App.css';
 
 import LogInForm from './components/auth/LogInForm.component';
@@ -29,7 +28,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div>
+      <div className='content'>
         <AppNavbar />
         <Switch>
           <Route path='/user-home' component={User} />
@@ -38,10 +37,8 @@ const App = () => {
           <Route path='/users-info' component={UsersInfo} />
           <Route path='/tasks-info' component={TaskInfo} />
         </Switch>
-        <br />
-        <br />
-      <AppFooter />
       </div>
+        <AppFooter />
     </Provider>
   );
 };

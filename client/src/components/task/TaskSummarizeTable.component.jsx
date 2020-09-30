@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Button } from 'reactstrap';
+
+import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
@@ -15,9 +16,8 @@ import {
 } from '../../redux/actions/taskActions';
 import DateForm from '../form/DateForm.component';
 
-import { showAlert } from '../alert';
-import img_loader from '../../images/img_loader.webp';
 import ShowModal from '../form/ShowModal.component';
+import LoadingSkeleton from '../loading/LoadingSkeleton.component';
 
 const TaskSummarizeTable = ({
   user,
@@ -60,12 +60,12 @@ const TaskSummarizeTable = ({
     });
   }
 
-  const options = {
-    // pageStartIndex: 0,
-    sizePerPage: 5,
-    // hideSizePerPage: true,
-    // hidePageListOnlyOnePage: true,
-  };
+  // const options = {
+  //   pageStartIndex: 0,
+  //   sizePerPage: 5,
+  //   hideSizePerPage: true,
+  //   hidePageListOnlyOnePage: true,
+  // };
 
   const columns = [
     {
@@ -106,16 +106,18 @@ const TaskSummarizeTable = ({
     setIsDataChanged(!isDataChanged);
   };
 
+  if (loading) return <LoadingSkeleton />;
+
   return (
     <>
-      {rowsData.length > 0 && (
+      <h4>All Tasks :</h4>
+      {rowsData.length > 0 ? (
         <ToolkitProvider keyField='id' data={rowsData} columns={columns} search>
           {props => (
             <div>
               <Row>
-                <Col lg='12'>
-                  <h4>All Tasks :</h4>
-                </Col>
+                {/* <Col lg='12'>
+                </Col> */}
                 <DateForm
                   onSubmitClick={handleBtnClick}
                   setFromDate={setFromDate}
@@ -134,11 +136,14 @@ const TaskSummarizeTable = ({
               <BootstrapTable
                 hover
                 {...props.baseProps}
-                pagination={paginationFactory(options)}
+                // pagination={paginationFactory(options)}
+                pagination={paginationFactory()}
               />
             </div>
           )}
         </ToolkitProvider>
+      ) : (
+        <h5>No tasks assigned yet..</h5>
       )}
     </>
   );

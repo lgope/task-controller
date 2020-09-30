@@ -42,13 +42,15 @@ const DailyWorksTable = ({
           da.description
         ),
       action: (
-        <button
-          className='btn btn-link text-danger edit_modal_btn'
-          title='Delete'
-          onClick={() => onDeleteClick(da._id)}
-        >
-          <i className='fas fa-trash-alt'></i>
-        </button>
+        <center>
+          <button
+            className='btn btn-link text-danger edit_modal_btn'
+            title='Delete'
+            onClick={() => onDeleteClick(da._id)}
+          >
+            <i className='fas fa-trash-alt'></i>
+          </button>
+        </center>
       ),
     })
   );
@@ -68,35 +70,25 @@ const DailyWorksTable = ({
       {
         label: 'User Name',
         field: 'userName',
-        sort: 'asc',
-        width: 90,
-        height: 40,
-        overflowY: 'scroll',
+        sort: true,
       },
       {
         label: 'Date',
         field: 'date',
-        sort: 'asc',
-        width: 90,
-        height: 40,
-        overflowY: 'scroll',
+        sort: true,
       },
       {
         label: 'Daily work Title',
         field: 'title',
-        sort: 'asc',
-        width: 100,
-        height: 40,
-        overflowY: 'scroll',
+        sort: true,
       },
       {
         label: 'Description',
         field: 'description',
-        sort: 'asc',
-        width: 270,
+        sort: true,
       },
       {
-        label: 'Action',
+        label: <center>Action</center>,
         field: 'action',
       },
     ],
@@ -113,7 +105,7 @@ const DailyWorksTable = ({
           handleReset={handleResetDate}
         />
       </Row>
-      <MDBDataTable striped bordered hover small data={data} />;
+      <MDBDataTable striped bordered hover small data={data} />
     </>
   );
 };

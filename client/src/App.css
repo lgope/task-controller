@@ -1,3 +1,30 @@
+body {
+  font-family: 'Noto Sans JP', sans-serif, Arial, Helvetica;
+  background-color: #f8f9fc;
+}
+
+.login-page {
+  background: url('./images/bg.png');
+}
+
+.content {
+  min-height: calc(100vh - 70px);
+}
+
+.fab {
+  font-size: 20px;
+}
+
+.footer {
+  height: 65px;
+  /* background-color: #dfe2e2; #f8f9fc */
+  background: rgba(0, 127, 61, 0.1);
+}
+
+.user-page {
+  background: url('./images/bg_2.png');
+}
+
 .user_homepage {
   margin-left: 15px;
   margin-right: 15px;
@@ -79,6 +106,14 @@
   }
 }
 
+/* others */
+
+.navbar {
+  background-color: #c7e4e349;
+  /* background-color: #dee7e5; */
+  /* background: rgba(0, 127, 61, 0.1); */
+}
+
 .edit_modal_btn {
   font-size: 15px;
   padding: 0;
@@ -91,11 +126,11 @@
 }
 
 .from-date {
-  border-color: blue;
+  border-color: #17a2b8;
 }
 
 .to-date {
-  border-color: chartreuse;
+  border-color: #007bff;
 }
 
 .btn[class*='btn-outline-'] {
@@ -103,4 +138,27 @@
   padding-bottom: 0.4rem;
   /* padding-top: .7rem;
   padding-bottom: .7rem; */
+}
+
+/* social icons */
+.fa-facebook-f {
+  color: #3b5998;
+}
+.fa-facebook-f:hover {
+  color: rgb(196, 16, 219);
+}
+
+.fa-linkedin-in {
+  color: #0e76a8;
+}
+
+.fa-linkedin-in:hover {
+  color: rgb(196, 16, 219);
+}
+
+.fa-youtube {
+  color: rgb(209, 33, 33);
+}
+.fa-youtube:hover {
+  color: rgb(196, 16, 219);
 }
