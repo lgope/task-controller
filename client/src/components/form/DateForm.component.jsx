@@ -30,7 +30,7 @@ const DateForm = ({ onSubmitClick, setFromDate, setToDate, handleReset }) => {
           />
 
           <Button
-            className='date-click-btn'
+            className='date-click-btn mr-2'
             type='submit'
             outline
             color='info'

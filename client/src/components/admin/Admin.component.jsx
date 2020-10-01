@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { getAllWorks } from '../../redux/actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
+import Loading from '../loading/Loading.component';
 
-const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
+const Admin = ({ user, isAuthenticated, isLoading, getAllWorks, allWorks }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   useEffect(() => {
     getAllWorks();
@@ -15,11 +16,13 @@ const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
     return <Redirect to='/' />;
   }
 
+  if (isLoading) return <Loading />;
+
   return (
     <div className='container'>
       <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
       <br />
-      <h4>All daily works info:</h4>
+      <h4>All daily works information:</h4>
       {allWorks && allWorks.length > 0 && (
         <WorkInfo
           dailyWorks={allWorks}
@@ -35,6 +38,7 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
   allWorks: state.dailyWorks.allWorks,
+  isLoading: state.dailyWorks.loading,
 });
 
 export default connect(mapStateToProps, { getAllWorks })(Admin);

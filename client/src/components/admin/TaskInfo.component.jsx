@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
@@ -14,10 +14,10 @@ import { connect } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 
 import { showAlert } from '../alert';
-import SaveBtn from '../form/SaveBtn.component';
 import CancleBtn from '../form/CancleBtn.component';
 import DateForm from '../form/DateForm.component';
 import ShowModal from '../form/ShowModal.component';
+import Loading from '../loading/Loading.component';
 
 const TaskInfo = ({
   isAuthenticated,
@@ -105,6 +105,7 @@ const TaskInfo = ({
         createdAt: dayjs(task.createdAt).format('h:mm a, MMMM DD, YYYY'),
         userEmail: task.userEmail,
         taskName: task.taskName,
+        // progress: <center>{task.progress}</center>,
         progress: task.progress,
         comment:
           task.comment.length >= 25 ? (
@@ -116,13 +117,15 @@ const TaskInfo = ({
             task.comment
           ),
         action: (
-          <button
-            className='btn btn-link text-danger edit_modal_btn'
-            title='Delete'
-            onClick={() => onDeleteClick(task._id)}
-          >
-            <i className='fas fa-trash-alt'></i>
-          </button>
+          <center>
+            <button
+              className='btn btn-link text-danger edit_modal_btn'
+              title='Delete'
+              onClick={() => onDeleteClick(task._id)}
+            >
+              <i className='fas fa-trash-alt'></i>
+            </button>
+          </center>
         ),
       });
     });
@@ -159,7 +162,7 @@ const TaskInfo = ({
           width: 100,
         },
         {
-          label: 'Action',
+          label: <center>Action</center>,
           field: 'action',
         },
       ],
@@ -167,16 +170,16 @@ const TaskInfo = ({
     };
   }
 
-  // if (loading) {
-  //   return <h4>Loading....</h4>;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className='container'>
-      <div>{tasks && tasks.length < 0 && <h1>No task!</h1>}</div>;
+      <div>{tasks && tasks.length < 0 && <h1>No task!</h1>}</div>
       {tasks && tasks.length > 0 && (
         <>
-          <h4>Tasks Info :</h4>
+          <h4>Tasks Informations :</h4>
           <Row>
             <DateForm
               onSubmitClick={handleBtnClick}
@@ -233,7 +236,7 @@ const TaskInfo = ({
                   onChange={handleTaskChange}
                 />
               </FormGroup>
-              <Button outline color='secondary' title='save'>
+              <Button className='mr-2' outline color='secondary' title='save'>
                 Save
               </Button>
               <CancleBtn onClickFunc={cancelBtnClick} />

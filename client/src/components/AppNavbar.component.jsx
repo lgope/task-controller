@@ -25,11 +25,11 @@ const AppNavbar = ({ auth }) => {
       {auth.user && auth.user.role === 'admin' && (
         <>
           <NavItem className='p-2'>
-            <Link to='/users-info'>User Info</Link>
+            <Link to='/users-info'>Users</Link>
           </NavItem>
 
           <NavItem className='p-2'>
-            <Link to='/tasks-info'>Task Info</Link>
+            <Link to='/tasks-info'>Tasks</Link>
           </NavItem>
         </>
       )}
