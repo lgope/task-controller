@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { getAllWorks } from '../../redux/actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
+import Loading from '../loading/Loading.component';
 
-const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
+const Admin = ({ user, isAuthenticated, isLoading, getAllWorks, allWorks }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   useEffect(() => {
     getAllWorks();
@@ -14,6 +15,8 @@ const Admin = ({ user, isAuthenticated, getAllWorks, allWorks }) => {
   if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className='container'>
@@ -35,6 +38,7 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
   allWorks: state.dailyWorks.allWorks,
+  isLoading: state.dailyWorks.loading,
 });
 
 export default connect(mapStateToProps, { getAllWorks })(Admin);

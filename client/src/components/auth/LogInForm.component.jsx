@@ -5,7 +5,7 @@ import { Alert } from 'reactstrap';
 
 import { login } from '../../redux/actions/authActions';
 import { clearErrors } from '../../redux/actions/errorActions';
-import Loading from '../loading/Loading.component';
+import loadingImage from '../../images/loading30.webp';
 
 const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
   const [email, setEmail] = useState('');
@@ -25,10 +25,6 @@ const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
       setMsg(null);
     }
   }, [error, handleClearError, auth.isAuthenticated]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   if (auth.user && auth.user.role === 'user') {
     return <Redirect to='/user-home' />;
@@ -64,6 +60,12 @@ const LogInForm = ({ auth, isLoading, error, login, clearErrors }) => {
                   <div className='container'>
                     <div className='row'>
                       <div className='col-md-12 col-lg-12 mx-auto'>
+                        {isLoading && (
+                          <center>
+                            <img src={loadingImage} alt='loadingImage' />
+                          </center>
+                        )}
+                        <br />
                         <h3 className='login-heading mb-4'>Welcome back!</h3>
                         {msg ? <Alert color='danger'>{msg}</Alert> : null}
                         <form>
