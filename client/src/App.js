@@ -21,6 +21,9 @@ import TaskInfo from './components/admin/TaskInfo.component';
 // user
 import User from './components/user/User.component';
 
+// 404 not found page
+import NotFound from './components/NotFound.page';
+
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -31,14 +34,15 @@ const App = () => {
       <div className='content'>
         <AppNavbar />
         <Switch>
-          <Route path='/user-home' component={User} />
+          <Route exact path='/user-home' component={User} />
           <Route exact path='/' component={LogInForm} />
           <Route exact path='/admin-home' component={Admin} />
-          <Route path='/users-info' component={UsersInfo} />
-          <Route path='/tasks-info' component={TaskInfo} />
+          <Route exact path='/users-info' component={UsersInfo} />
+          <Route exact path='/tasks-info' component={TaskInfo} />
+          <Route path='*' component={NotFound} />
         </Switch>
       </div>
-        <AppFooter />
+      <AppFooter />
     </Provider>
   );
 };
