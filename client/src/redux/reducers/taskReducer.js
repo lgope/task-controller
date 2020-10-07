@@ -10,6 +10,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case actions.ADD_TASK:
       return {
+        ...state,
         tasks: state.tasks.concat(action.payload),
         loading: false,
       };
@@ -27,10 +28,11 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
-  //  task update is only for user -> userReducer.js
+    //  task update is only for user -> userReducer.js
 
     case actions.DELETE_TASK:
       return {
+        ...state,
         tasks: state.tasks.filter(task => task._id !== action.payload),
         loading: false,
       };

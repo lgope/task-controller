@@ -120,9 +120,19 @@ body {
   margin: 0;
 }
 
+/* date picker fields */
+
 .from-date,
 .to-date {
   outline: none;
+  padding-top: 10px;
+  height: 45px;
+  width: auto;
+  background-color: rgb(236, 238, 237);
+  border: none;
+  border-radius: 10px;
+  /* border-top: black; */
+  border-bottom: 2px solid;
 }
 
 .from-date {
@@ -132,9 +142,10 @@ body {
 .to-date {
   border-color: #007bff;
 }
+/* date picker fields end */
 
 .btn[class*='btn-outline-'] {
-  padding-top: 0.3rem;
+  padding-top: 0.4rem;
   padding-bottom: 0.4rem;
   /* padding-top: .7rem;
   padding-bottom: .7rem; */
@@ -178,7 +189,7 @@ body {
 }
 
 /* offline or online alert */
-.alert {
+.connection-alert {
   position: fixed;
   top: 0;
   left: 50%;
@@ -192,9 +203,9 @@ body {
   -webkit-box-shadow: 0 4rem 4rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.25);
 }
-.alert--success {
+.alert--connected {
   background-color: #20bf6b;
 }
-.alert--error {
+.alert--disconnected {
   background-color: #eb4d4b;
 }
