@@ -19,17 +19,19 @@ const Admin = ({ user, isAuthenticated, isLoading, getAllWorks, allWorks }) => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className='container'>
-      <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
-      <br />
-      <h4>All daily works information:</h4>
-      {allWorks && allWorks.length > 0 && (
-        <WorkInfo
-          dailyWorks={allWorks}
-          isDataChanged={isDataChanged}
-          setIsDataChanged={setIsDataChanged}
-        />
-      )}
+    <div className='admin-home'>
+      <div className='container'>
+        <h2>Welcome to Admin Panel {user && user.name} 🎉</h2>
+        <br />
+        <h4>All daily works information:</h4>
+        {allWorks.length > 0 && (
+          <WorkInfo
+            dailyWorks={allWorks}
+            isDataChanged={isDataChanged}
+            setIsDataChanged={setIsDataChanged}
+          />
+        )}
+      </div>
     </div>
   );
 };

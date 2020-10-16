@@ -18,13 +18,15 @@ function UsersInfo({ isAuthenticated, user, getAllUsers, allUsers }) {
   }
 
   return (
-    <div className='container'>
-      {allUsers ? <UserListTable users={allUsers} /> : <div>Loading...</div>}
-      <AddUserForm
-        buttonLabel={'Add New User'}
-        isDataChanged={isDataChanged}
-        setIsDataChanged={setIsDataChanged}
-      />
+    <div className='admin-userinfo'>
+      <div className='container'>
+        {allUsers ? <UserListTable users={allUsers} /> : <div>Loading...</div>}
+        <AddUserForm
+          buttonLabel={'Add New User'}
+          isDataChanged={isDataChanged}
+          setIsDataChanged={setIsDataChanged}
+        />
+      </div>
     </div>
   );
 }

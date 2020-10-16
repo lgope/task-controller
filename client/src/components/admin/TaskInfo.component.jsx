@@ -39,22 +39,27 @@ const TaskInfo = ({
   const [task, setTask] = useState('');
   let data;
 
+  // getting all tasks from database
   useEffect(() => {
     getAllTask();
   }, [isDataChanged, getAllTask]);
 
+  // redirect user
   if ((user && user.role === 'user') || isAuthenticated === false) {
     return <Redirect to='/' />;
   }
 
+  // save value on change
   const handleEmailChange = e => setEmail(e.target.value);
   const handleTaskChange = e => setTask(e.target.value);
 
+  // getting all user from data base
   const handleAddBtnClick = () => {
     getAllUsers();
     setIsopen(true);
   };
 
+  // close work input form
   const cancelBtnClick = () => {
     document.getElementById('works_input_form').reset();
     setIsopen(false);
@@ -66,16 +71,19 @@ const TaskInfo = ({
     showAlert('success', 'Task Deleted successfully!');
   };
 
+  // getting data based on date
   const handleBtnClick = e => {
     e.preventDefault();
     getFilterdTasks(fromDate, toDate);
   };
 
+  // reset data on all btn click
   const handleResetDate = e => {
     e.preventDefault();
     setIsDataChanged(!isDataChanged);
   };
 
+  // assign new task to a user
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -99,7 +107,7 @@ const TaskInfo = ({
 
   let rowsData = [];
 
-  if (tasks && tasks.length > 0) {
+  if (tasks.length > 0) {
     tasks.forEach(task => {
       rowsData.push({
         createdAt: dayjs(task.createdAt).format('h:mm a, MMMM DD, YYYY'),
@@ -175,75 +183,77 @@ const TaskInfo = ({
   }
 
   return (
-    <div className='container'>
-      <div>{tasks && tasks.length < 0 && <h1>No task!</h1>}</div>
-      {tasks && tasks.length > 0 && (
-        <>
-          <h4>Tasks Informations :</h4>
-          <Row>
-            <DateForm
-              onSubmitClick={handleBtnClick}
-              setFromDate={setFromDate}
-              setToDate={setToDate}
-              handleReset={handleResetDate}
-            />
-            <Col lg='3'>
-              <Button
-                outline
-                color='success'
-                style={{ borderRadius: '10px' }}
-                onClick={handleAddBtnClick}
-              >
-                Assign New Task
-              </Button>
-            </Col>
-          </Row>
-          <MDBDataTable striped bordered hover fixed data={data} />
-        </>
-      )}
-      <Row className='row-cols-1 pb-3'>
-        <Col></Col>
-      </Row>
-      <Row className='pb-5 mb-5'>
-        <Col lg='6' md='8' sm='12'>
-          {isopen && (
-            <Form id='works_input_form' onSubmit={handleSubmit}>
-              <FormGroup>
-                <Input
-                  type='select'
-                  name='userEmail'
-                  id='userEmail'
-                  required
-                  onChange={handleEmailChange}
+    <div className='admin-taskinfo'>
+      <div className='container'>
+        <div>{tasks.length < 0 && <h1>No task!</h1>}</div>
+        {tasks.length > 0 && (
+          <>
+            <h4>Tasks Informations :</h4>
+            <Row>
+              <DateForm
+                onSubmitClick={handleBtnClick}
+                setFromDate={setFromDate}
+                setToDate={setToDate}
+                handleReset={handleResetDate}
+              />
+              <Col lg='3' className='pt-4'>
+                <Button
+                  outline
+                  color='success'
+                  style={{ borderRadius: '10px' }}
+                  onClick={handleAddBtnClick}
                 >
-                  <option disabled selected>
-                    Assign User
-                  </option>
-                  {allUsers &&
-                    allUsers.map(user => (
-                      <option key={user.email} data-subtext={user.name}>
-                        {user.email}
-                      </option>
-                    ))}
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type='textarea'
-                  id='task'
-                  placeholder='Task'
-                  required
-                  onChange={handleTaskChange}
-                />
-              </FormGroup>
-              <Button className='mr-2' outline color='secondary' title='save'>
-                Save
-              </Button>
-              <CancleBtn onClickFunc={cancelBtnClick} />
-            </Form>
-          )}
-        </Col>
-      </Row>
+                  Assign New Task
+                </Button>
+              </Col>
+            </Row>
+            <MDBDataTable striped bordered hover fixed data={data} />
+          </>
+        )}
+        <Row className='row-cols-1 pb-3'>
+          <Col></Col>
+        </Row>
+        <Row className='pb-5 mb-5'>
+          <Col lg='6' md='8' sm='12'>
+            {isopen && (
+              <Form id='works_input_form' onSubmit={handleSubmit}>
+                <FormGroup>
+                  <Input
+                    type='select'
+                    name='userEmail'
+                    id='userEmail'
+                    required
+                    onChange={handleEmailChange}
+                  >
+                    <option disabled selected>
+                      Assign User
+                    </option>
+                    {allUsers &&
+                      allUsers.map(user => (
+                        <option key={user.email} data-subtext={user.name}>
+                          {user.email}
+                        </option>
+                      ))}
+                  </Input>
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    type='textarea'
+                    id='task'
+                    placeholder='Task'
+                    required
+                    onChange={handleTaskChange}
+                  />
+                </FormGroup>
+                <Button className='mr-2' outline color='secondary' title='save'>
+                  Save
+                </Button>
+                <CancleBtn onClickFunc={cancelBtnClick} />
+              </Form>
+            )}
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };
