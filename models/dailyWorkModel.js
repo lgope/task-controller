@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const dailyWorkSchema = new mongoose.Schema({
   userId: {
@@ -27,4 +27,4 @@ const dailyWorkSchema = new mongoose.Schema({
 });
 
 const DailyWork = mongoose.model('DailyWork', dailyWorkSchema);
-module.exports = DailyWork;
+export default DailyWork;

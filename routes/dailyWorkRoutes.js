@@ -1,6 +1,6 @@
-const express = require('express');
-const dailyWorkController = require('../controllers/dailyWorkController');
-const { auth, ensureAdmin, ensureUser } = require('../middleware/auth');
+import express from 'express';
+import * as dailyWorkController from '../controllers/dailyWorkController.js';
+import { auth, ensureAdmin, ensureUser } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -50,4 +50,4 @@ router.patch('/update-dailyWork/:id', dailyWorkController.updateDailyWork);
 
 router.delete('/delete-dailyWork/:id', dailyWorkController.deleteDailyWork);
 
-module.exports = router;
+export default router;

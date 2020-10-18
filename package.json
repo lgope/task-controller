@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Task Controller The MERN Stack Web Application",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",

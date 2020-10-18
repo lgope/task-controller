@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const chalk = require('chalk');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
+import chalk from 'chalk'
 
 dotenv.config({ path: './config.env' });
-const app = require('./app');
+import app from './app.js';
+
 
 // Connect to Mongo // &ssl=true
 mongoose

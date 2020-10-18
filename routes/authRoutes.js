@@ -1,12 +1,11 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-const AppError = require('../utils/appError');
-
-const User = require('../models/userModel');
-const { auth } = require('../middleware/auth');
+import AppError from '../utils/appError.js';
+import User from '../models/userModel.js';
+import { auth } from '../middleware/auth.js';
 
 // @route POST api/auth
 // @desc Auth users
@@ -80,4 +79,4 @@ router.get('/user', auth, (req, res) => {
     .then(user => res.json(user));
 });
 
-module.exports = router;
+export default router;

@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const AppError = require('../utils/appError');
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
 
-exports.auth = (req, res, next) => {
+import AppError from '../utils/appError.js';
+
+export const auth = (req, res, next) => {
   const token = req.header('x-auth-token');
 
   // Check for token
@@ -21,7 +22,7 @@ exports.auth = (req, res, next) => {
   }
 };
 
-exports.ensureAdmin = async (req, res, next) => {
+export const ensureAdmin = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.user.id });
 
@@ -35,7 +36,7 @@ exports.ensureAdmin = async (req, res, next) => {
   }
 };
 
-exports.ensureUser = async (req, res, next) => {
+export const ensureUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.user.id });
 

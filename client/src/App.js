@@ -23,6 +23,8 @@ import User from './components/user/User.component';
 
 // 404 not found page
 import NotFound from './components/NotFound.page';
+import UserRoute from './routes/UserRoute';
+import AdminRoute from './routes/AdminRoute';
 
 const App = () => {
   useEffect(() => {
@@ -34,11 +36,18 @@ const App = () => {
       <div className='content'>
         <AppNavbar />
         <Switch>
-          <Route exact path='/user-home' component={User} />
+          {/* user route */}
+          <UserRoute exact={true} path='/user-home' component={User} />
+
+          {/* login route */}
           <Route exact path='/' component={LogInForm} />
-          <Route exact path='/admin-home' component={Admin} />
-          <Route exact path='/users-info' component={UsersInfo} />
-          <Route exact path='/tasks-info' component={TaskInfo} />
+
+          {/* admin routes */}
+          <AdminRoute exact path='/admin-home' component={Admin} />
+          <AdminRoute exact path='/users-info' component={UsersInfo} />
+          <AdminRoute exact path='/tasks-info' component={TaskInfo} />
+
+          {/* other page */}
           <Route path='*' component={NotFound} />
         </Switch>
       </div>

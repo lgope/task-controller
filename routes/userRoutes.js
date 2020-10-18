@@ -1,11 +1,10 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/userController');
-const { auth, ensureUser } = require('../middleware/auth');
-
+import * as userController from '../controllers/userController.js';
+import { auth, ensureUser } from '../middleware/auth.js';
 // @route GET api/user/
 // @desc Get All User task
 // @access only For user and Private
 router.get('/', auth, ensureUser, userController.getUserTasks);
 
-module.exports = router;
+export default router;

@@ -143,7 +143,7 @@ const DailyWorksTable = ({
                   setToDate={setToDate}
                   handleReset={handleResetDate}
                 />
-                <Col lg='4' md='4' sm='4'>
+                <Col lg='4' md='4' sm='4' className='mt-4'>
                   <SearchBar
                     {...props.searchProps}
                     className='custome-search-field'

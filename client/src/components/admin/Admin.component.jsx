@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllWorks } from '../../redux/actions/dailyWorkActions';
 
 import WorkInfo from './WorkInfo.component';
 import Loading from '../loading/Loading.component';
 
-const Admin = ({ user, isAuthenticated, isLoading, getAllWorks, allWorks }) => {
+const Admin = ({ user, isLoading, getAllWorks, allWorks }) => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   useEffect(() => {
     getAllWorks();
   }, [isDataChanged, getAllWorks]);
-
-  if ((user && user.role === 'user') || isAuthenticated === false) {
-    return <Redirect to='/' />;
-  }
 
   if (isLoading) return <Loading />;
 
@@ -38,7 +33,6 @@ const Admin = ({ user, isAuthenticated, isLoading, getAllWorks, allWorks }) => {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  isAuthenticated: state.auth.isAuthenticated,
   allWorks: state.dailyWorks.allWorks,
   isLoading: state.dailyWorks.loading,
 });
