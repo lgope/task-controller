@@ -1,8 +1,8 @@
-const AppError = require('../utils/appError');
-const catchAsync = require('../utils/catchAsync');
-const moment = require('moment');
+import AppError from '../utils/appError.js';
+import catchAsync from '../utils/catchAsync.js';
+import moment from 'moment';
 
-exports.deleteOne = Model =>
+export const deleteOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
     if (!doc) {
@@ -14,7 +14,7 @@ exports.deleteOne = Model =>
     });
   });
 
-exports.updateOne = Model =>
+export const updateOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -29,7 +29,7 @@ exports.updateOne = Model =>
     });
   });
 
-exports.createOne = Model =>
+export const createOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
     res.status(201).json({
@@ -38,7 +38,7 @@ exports.createOne = Model =>
     });
   });
 
-exports.getOne = Model =>
+export const getOne = Model =>
   catchAsync(async (req, res, next) => {
     let doc = await Model.findById(req.params.id);
 
@@ -51,7 +51,7 @@ exports.getOne = Model =>
     });
   });
 
-exports.getAll = Model =>
+export const getAll = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.find().sort({ createdAt: -1 });
 
@@ -64,7 +64,7 @@ exports.getAll = Model =>
   });
 
 // get data by date
-exports.getDataByDate = Model =>
+export const getDataByDate = Model =>
   catchAsync(async (req, res, next) => {
     const { userId, fromDate, toDate } = req.params;
 

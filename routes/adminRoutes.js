@@ -1,15 +1,14 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { auth, ensureAdmin } = require('../middleware/auth');
+import { auth, ensureAdmin } from '../middleware/auth.js';
 
 // User controller
-const adminController = require('../controllers/adminController');
+import * as adminController from '../controllers/adminController.js';
 
 // @route GET api/admin/get-all-users
 // @desc Get All Users
 // @access only For Admin and Private
 // router.get('/', ensureAuthenticated, ensureAdmin, adminController.getHome);
-
 
 // @route GET api/admin/get-all-users
 // @desc Get All Users
@@ -53,4 +52,4 @@ router.post('/create-user', auth, ensureAdmin, adminController.createUser);
 //   adminController.deleteTask
 // );
 
-module.exports = router;
+export default router;

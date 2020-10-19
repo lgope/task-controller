@@ -1,16 +1,16 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const path = require('path');
-const compression = require('compression');
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import path from 'path';
+import compression from 'compression';
 
-const globalErrorHandler = require('./controllers/errorController');
-const AppError = require('./utils/appError');
-const authRoutes = require('./routes/authRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const userRoutes = require('./routes/userRoutes');
-const taskRoutes = require('./routes/taskRoutes');
-const dailyWorkRoutes = require('./routes/dailyWorkRoutes');
+import globalErrorHandler from './controllers/errorController.js';
+import AppError from './utils/appError.js';
+import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
+import dailyWorkRoutes from './routes/dailyWorkRoutes.js';
 
 const app = express();
 
@@ -54,4 +54,4 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;

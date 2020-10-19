@@ -1,6 +1,6 @@
-const express = require('express');
-const taskController = require('../controllers/taskController');
-const { auth, ensureAdmin, ensureUser } = require('../middleware/auth');
+import express from 'express';
+import * as taskController from '../controllers/taskController.js';
+import { auth, ensureAdmin, ensureUser } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -8,9 +8,7 @@ router.use(auth);
 // @route GET api/user/
 // @desc Get All User task
 // @access only For user and Private
-router
-  .route('/get-all-task')
-  .get(ensureAdmin, taskController.getAllTasks);
+router.route('/get-all-task').get(ensureAdmin, taskController.getAllTasks);
 
 router.get('/:id', taskController.getTask);
 
@@ -32,9 +30,8 @@ router.get(
   taskController.getTasksByDate
 );
 
-router.patch('/update-task/:id', ensureUser, taskController.updateTask)
+router.patch('/update-task/:id', ensureUser, taskController.updateTask);
 
-router
-  .delete('/delete-task/:id', taskController.deleteTask)
+router.delete('/delete-task/:id', taskController.deleteTask);
 
-module.exports = router;
+export default router;

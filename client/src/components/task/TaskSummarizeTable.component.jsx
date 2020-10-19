@@ -124,7 +124,7 @@ const TaskSummarizeTable = ({
                   setToDate={setToDate}
                   handleReset={handleResetDate}
                 />
-                <Col lg='3' md='4' sm='4'>
+                <Col lg='3' md='4' sm='4' className='mt-4'>
                   <SearchBar
                     {...props.searchProps}
                     className='custome-search-field'

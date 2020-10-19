@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Row, Col, Button, Form, FormGroup, Input } from 'reactstrap';
 import {
@@ -20,8 +19,6 @@ import ShowModal from '../form/ShowModal.component';
 import Loading from '../loading/Loading.component';
 
 const TaskInfo = ({
-  isAuthenticated,
-  user,
   getAllUsers,
   allUsers,
   tasks,
@@ -43,11 +40,6 @@ const TaskInfo = ({
   useEffect(() => {
     getAllTask();
   }, [isDataChanged, getAllTask]);
-
-  // redirect user
-  if ((user && user.role === 'user') || isAuthenticated === false) {
-    return <Redirect to='/' />;
-  }
 
   // save value on change
   const handleEmailChange = e => setEmail(e.target.value);
@@ -259,8 +251,6 @@ const TaskInfo = ({
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
   allUsers: state.admin.allUsers,
   tasks: state.task.tasks,
   loading: state.task.loading,

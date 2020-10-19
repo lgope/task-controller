@@ -1,15 +1,15 @@
 // Catch Async Error
-const catchAsync = require('../utils/catchAsync');
+import catchAsync from '../utils/catchAsync.js';
 
 // Global Error Handler
-const AppError = require('../utils/appError');
+import AppError from '../utils/appError.js';
 
 // Models
-const User = require('../models/userModel');
-// const Task = require('../models/taskModel');
+import User from '../models/userModel.js';
+// import Task from '../models/taskModel'
 
 // create user
-exports.createUser = catchAsync(async (req, res, next) => {
+export const createUser = catchAsync(async (req, res, next) => {
   const { name, designation, email, password } = req.body;
 
   //   Simple validation
@@ -30,7 +30,9 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create({ name, designation, email, password });
 
   if (!newUser) {
-    return next(new AppError('Something wrong To add new user! Try again.', 400));
+    return next(
+      new AppError('Something wrong To add new user! Try again.', 400)
+    );
   }
 
   return res.status(201).json({
@@ -40,7 +42,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 // get all users excluding admin data and password field
-exports.getAllUsers = catchAsync(async (req, res, next) => {
+export const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find({ role: { $ne: 'admin' } })
     .sort({ createdAt: -1 })
     .select('-password');
@@ -53,13 +55,3 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     users,
   });
 });
-
-// delete one user by email
-// exports.deleteUser = catchAsync(async (req, res, next) => {
-//   const user = await User.findByIdAndDelete(req.params.id);
-
-//   if (!user) return req.flash('error_msg', 'No user found with that ID');
-
-//   // res.status(200).json({ msg: 'User deleted!' });
-//   req.flash('success_msg', 'User deleted!');
-// });
