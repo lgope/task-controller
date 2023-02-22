@@ -10,7 +10,7 @@
     "bootstrap": "^4.4.1",
     "dayjs": "^1.8.29",
     "moment": "^2.29.4",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-bootstrap-table-next": "^4.0.3",
